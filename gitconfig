@@ -1,0 +1,55 @@
+[core]
+	excludesfile = /Users/alex/.gitignore_global
+[user]
+	signingkey = 28A9D9288CC9C93C
+	email = hello@thealemazing.com
+	name = TheAlemazing
+[commit]
+	gpgsign = true
+[push]
+	default = current
+[pull]
+	default = current
+[branch]
+	autosetuprebase = always
+[rerere]
+	enabled = true
+[rebase]
+	autosquash = true
+[alias]
+	s = status -s
+	co = checkout
+	br = branch
+	r = reset
+	cp = cherry-pick
+	cl = clone
+	ai = add --interactive
+	diff = diff --word-diff
+	grep = grep -Ii
+	branch = branch -a
+
+	# Init empty git {{{
+	empty = "!git commit -am\"[empty] Initial commit\" --allow-empty"
+	# }}}
+	
+	# commit {{{
+	cm = commit -m
+	cma = commit -am
+	amend = commit --amend
+	# }}}
+	
+	# log {{{
+	ll = log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+	lls = log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --stat
+	lla = log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --all 
+	# }}}
+	
+	# reset {{{
+	r1 = reset --HEAD^
+	# }}}
+	
+	# conflict/merge {{{
+	ours = "!f() { git co --ours $@ && git add $@; }; f"
+	theirs = "!f() { git co --theirs $@ && git add $@; }; f"
+	# }}}
+
