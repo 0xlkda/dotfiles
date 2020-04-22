@@ -70,27 +70,19 @@ autocmd FileType python setlocal shiftwidth=4 tabstop=4 softtabstop=4
 autocmd FileType go setlocal noexpandtab shiftwidth=4 tabstop=4 softtabstop=4
 
 let NERDTreeShowHidden = 1
-let NERDTreeIgnore=['\.DSStoree', '\~$', '\.swp', '\.git', 'node_modules', 'venv', '-env', '__pycache__']
+let NERDTreeIgnore=['\.DS_Store', '\~$', '\.swp', '\.git', 'node_modules', 'venv', '-env', '__pycache__']
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
 let NERDTreeAutoDeleteBuffer = 1
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
 
-let g:nerdtree_tabs_open_on_gui_startup = 1
-let g:nerdtree_tabs_open_on_console_startup = 0
-let g:nerdtree_tabs_no_startup_for_diff = 1
-let g:nerdtree_tabs_smart_startup_focus = 1
-let g:nerdtree_tabs_open_on_new_tab = 1
-let g:nerdtree_tabs_meaningful_tab_namess = 1
-let g:nerdtree_tabs_autoclose = 1
-let g:nerdtree_tabs_synchronize_view = 1
-let g:nerdtree_tabs_synchronize_focus = 1
-let g:nerdtree_tabs_focus_on_files = 0
-let g:nerdtree_tabs_startup_cd = 1
-let g:nerdtree_tabs_autofind = 0
+map <leader>f :NERDTreeFind<CR>
+nmap <C-n> :NERDTreeToggle<CR>
 
-autocmd BufEnter NERD_tree* :LeadingSpaceDisable
-autocmd StdinReadPre * let s:std_in = 1
+autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 let g:indentLine_color_term = 100
@@ -149,9 +141,6 @@ map <C-l> <C-W>l
 map <C-h> <C-W>h
 
 map <leader>r :source ~/.vimrc<CR>
-
-map <leader>f :NERDTreeFind<CR>
-nmap <leader>t :NERDTreeToggle<CR>
 
 " Bind <A-n> for mark all
 let g:multi_cursor_select_all_key="n"
