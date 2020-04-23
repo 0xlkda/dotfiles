@@ -147,9 +147,9 @@ map <leader>r :source ~/.vimrc<CR>
 " Bind <A-n> for mark all
 let g:multi_cursor_select_all_key="n"
 
-map <C-f> :GFiles<CR>
-map <C-b> :Buffers<CR>
-map <C-h> :History<CR>
+map <C-F> :GFiles<CR>
+map <C-B> :Buffers<CR>
+map <C-H> :History<CR>
 
 " Enable FZF
 set rtp+=/usr/local/opt/fzf
