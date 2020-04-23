@@ -74,6 +74,8 @@ let NERDTreeIgnore=['\.DS_Store', '\~$', '\.swp', '\.git', 'node_modules', 'venv
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
 let NERDTreeAutoDeleteBuffer = 1
+
+autocmd BufEnter NERD_tree* :LeadingSpaceDisable
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
 
@@ -85,8 +87,8 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-let g:indentLine_color_term = 100
-let g:indentLine_color_gui = '#ff0000'
+let g:indentLine_color_term = 239
+let g:indentLine_color_gui = '#f5f5f5'
 let g:indentLine_char_list = ['|', '¦', '┆', '┊']
 let g:indentLine_concealcursor = 'inc'
 let g:indentLine_conceallevel = 2
@@ -145,7 +147,7 @@ map <leader>r :source ~/.vimrc<CR>
 " Bind <A-n> for mark all
 let g:multi_cursor_select_all_key="n"
 
-map <C-f> :GFiles?<CR>
+map <C-f> :GFiles<CR>
 map <C-b> :Buffers<CR>
 map <C-h> :History<CR>
 
@@ -156,6 +158,9 @@ set rtp+=/usr/local/opt/fzf
 " Prettier shortcut
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
 nmap <silent> <leader>pf :Prettier<CR>
+
+" Coc-pairs
+autocmd FileType markdown let b:coc_pairs_disabled = ['`']
 
 " GoTo code navigation.
 nmap <silent> gd :<C-u>call CocActionAsync('jumpDefinition')<CR>
@@ -204,3 +209,16 @@ command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
 " Add `:OR` command for organize imports of the current buffer.
 command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+" Custom Find with rg
+" --column: Show column number
+" --line-number: Show line number
+" --no-heading: Do not show file headings in results
+" --fixed-strings: Search term as a literal string
+" --ignore-case: Case insensitive search
+" --no-ignore: Do not respect .gitignore, etc...
+" --hidden: Search hidden files and folders
+" --follow: Follow symlinks
+" --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
+" --color: Search color options
+command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)

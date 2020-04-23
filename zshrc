@@ -1,41 +1,33 @@
+export ZPLUG_HOME=/usr/local/opt/zplug
+source $ZPLUG_HOME/init.zsh
+
+zplug "plugins/git", from:oh-my-zsh
+zplug "zsh-users/zsh-history-substring-search"
+zplug "zsh-users/zsh-syntax-highlighting"
+zplug "zsh-users/zsh-autosuggestions"
+zplug "zsh-users/zsh-completions"
+
+if ! zplug check --verbose; then
+    printf "Install? [y/N]: "
+    if read -q; then
+        echo; zplug install
+    fi
+fi
+zplug load
+
 # Prevent duplicate entries
 typeset -U path
 typeset -U fpath
-
-# Path to your oh-my-zsh installation.
-export ZSH="/Users/alex/.config/.oh-my-zsh"
-
-# ZSH internal plugins.
-plugins=(git
-	 alias-finder
-	 common-aliases
-	 copydir
-	 copyfile
-	 docker
-	 docker-compose
-	 encode64
-	 extract
-	 jsontools
-	 node
-	 urltools
-	)
-
-source $ZSH/oh-my-zsh.sh
 
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
 
 # Pure theme setup
-FPATH="$HOME/Projects/opensources/zsh-pure-theme/:$FPATH"
 autoload -U promptinit; promptinit
 prompt pure
 
 # iTerm shell integration
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh" || true
-
-# ZSH external plugins 
-source /Users/alex/Projects/opensources/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /Users/alex/Projects/opensources/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # FZF bootstrap
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -48,6 +40,14 @@ eval "$(nodenv init -)"
 
 # Postgres setup
 export PATH="/usr/local/opt/libpq/bin:$PATH"
+
+# FZF and ripgrep config
+# --files: List files that would be searched but do not search
+# --no-ignore: Do not respect .gitignore, etc...
+# --hidden: Search hidden files and folders
+# --follow: Follow symlinks
+# --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
 
 # Aliases
 alias zshconfig="vim $HOME/.zshrc"
