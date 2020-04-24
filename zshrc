@@ -1,3 +1,4 @@
+export PATH="/usr/local/sbin:$PATH"
 export ZPLUG_HOME=/usr/local/opt/zplug
 source $ZPLUG_HOME/init.zsh
 
@@ -49,6 +50,9 @@ export PATH="/usr/local/opt/libpq/bin:$PATH"
 # --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
 
+# To apply the command to CTRL-T as well
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
 # Aliases
 alias zshconfig="vim $HOME/.zshrc"
 alias reload="source $HOME/.zshrc"
@@ -56,4 +60,3 @@ alias vimconfig="vim $HOME/.vimrc"
 alias afl="alias-finder -l $1"
 alias help="man"
 alias man="tldr $1"
-

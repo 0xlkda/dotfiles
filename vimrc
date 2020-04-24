@@ -2,11 +2,43 @@ packadd! dracula
 colorscheme dracula
 let g:dracula_italic=0
 
+syntax on
+filetype plugin indent on
+
+" Keep <CR> safe!
+autocmd CmdwinEnter * nnoremap <CR> <CR>
+autocmd BufReadPost quickfix nnoremap <CR> <CR>
+
+set wrap
+set linebreak
+set encoding=utf-8 nobomb
+set laststatus=2
+set wildmenu
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
+set expandtab
 set nocompatible
 set nu
 set hidden
 set cmdheight=2
 set updatetime=300
+set nobackup
+set nowb
+set noswapfile
+set backupdir=~/tmp,/tmp
+set backupcopy=yes
+set backupskip=/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*
+set directory=/tmp
+set undolevels=1000
+set showmode
+set switchbuf=useopen,usetab
+set ttyfast
+set lazyredraw
+set splitbelow
+set splitright
+set nowrap
+set linebreak
 
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
@@ -22,37 +54,62 @@ if has('mouse')
   set mouse=a
 endif
 
-set nobackup
-set nowb
-set noswapfile
-set backupdir=~/tmp,/tmp
-set backupcopy=yes
-set backupskip=/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*
-set directory=/tmp
+" Quick resize
+nnoremap <silent> <Right> :vertical resize +5<cr>
+nnoremap <silent> <Left> :vertical resize -5<cr>
+nnoremap <silent> <Up> :resize +5<cr>
+nnoremap <silent> <Down> :resize -5<cr>
 
-set clipboard=unnamedplus
-set undolevels=1000
+" Quick temrinal
+let g:floaterm_keymap_toggle = '<C-j>'
 
-nnoremap <F3> :set invpaste paste?<CR>
-set pastetoggle=<F3>
-set showmode
+" insert mode useful keymap
+inoremap <C-p> <Up>
+inoremap <C-n> <Down>
+inoremap <C-b> <Left>
+inoremap <C-f> <Right>
+inoremap <silent> <C-a> <C-o>:call <SID>home()<CR>
+inoremap <C-e> <End>
+inoremap <C-d> <Del>
+inoremap <C-h> <BS>
+inoremap <silent> <C-k> <C-r>=<SID>kill_line()<CR>
 
-set encoding=utf-8 nobomb
+function! s:home()
+  let start_col = col('.')
+  normal! ^
+  if col('.') == start_col
+    normal! 0
+  endif
+  return ''
+endfunction
 
-syntax on
-set laststatus=2
+function! s:kill_line()
+  let [text_before_cursor, text_after_cursor] = s:split_line_text_at_cursor()
+  if len(text_after_cursor) == 0
+    normal! J
+  else
+    call setline(line('.'), text_before_cursor)
+  endif
+  return ''
+endfunction
 
-set wildmenu
+function! s:split_line_text_at_cursor()
+  let line_text = getline(line('.'))
+  let text_after_cursor  = line_text[col('.')-1 :]
+  let text_before_cursor = (col('.') > 1) ? line_text[: col('.')-2] : ''
+  return [text_before_cursor, text_after_cursor]
+endfunction
 
-filetype plugin indent on
-set tabstop=2
-set softtabstop=2
-set shiftwidth=2
-set expandtab
-
-" insert mode key map
-nmap <S-Enter> <Esc>O
-inoremap <S-Enter> <Esc>O
+" command line mode
+cmap <C-p> <Up>
+cmap <C-n> <Down>
+cmap <C-b> <Left>
+cmap <C-f> <Right>
+cmap <C-a> <Home>
+cmap <C-e> <End>
+cnoremap <C-d> <Del>
+cnoremap <C-h> <BS>
+cnoremap <C-k> <C-f>D<C-c><C-c>:<Up>
 
 " yank to clipboard
 if has("clipboard")
@@ -63,9 +120,44 @@ if has("clipboard")
   endif
 endif
 
+" Search config
+let g:indexed_search_dont_move=1
+noremap <silent> <leader><space> :noh<cr>:call clearmatches()<cr>
+
+" Search and Replace
+nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
+vnoremap <Leader>S :s/\%V//g<Left><Left><Left>
+
 " Disable quote concealing in JSON files
 let g:vim_json_conceal=0
 
+" Allow for typing various quit cmds while accidentally capitalizing a letter
+command! -bar Q quit                      "Allow quitting using :Q
+command! -bar -bang Q quit<bang>          "Allow quitting without saving using :Q!
+command! -bar QA qall                     "Quit all buffers
+command! -bar Qa qall                     "Quit all buffers
+command! -bar -bang QA qall<bang>         "Allow quitting without saving using :Q!
+command! -bar -bang Qa qall<bang>         "Allow quitting without saving using :Q!
+
+" Quick fix open/close
+nmap <silent> ,cq :cclose<CR>
+nmap <silent> ,co :copen<CR>
+
+" toggle folding with za.
+" fold everything with zM
+" unfold everything with zR.
+" Space to toggle folds.
+nnoremap <Space> za
+vnoremap <Space> za
+
+" Indent a file and return cursor to current spot
+map <F9> mzgg=G`z
+
+" Keep selection when indenting/outdenting.
+vnoremap > >gv
+vnoremap < <gv
+
+" Better tab stop for FileType
 autocmd FileType python setlocal shiftwidth=4 tabstop=4 softtabstop=4
 autocmd FileType go setlocal noexpandtab shiftwidth=4 tabstop=4 softtabstop=4
 
@@ -132,22 +224,11 @@ endfunction
 
 let mapleader  = ","
 let g:mapleader = ","
-
-imap jj <Esc>
-imap kk <Esc>
-
-" Move between windows
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-l> <C-W>l
-map <C-h> <C-W>h
-
+imap <C-c> <Esc>
 map <leader>r :source ~/.vimrc<CR>
 
-" Bind <A-n> for mark all
-let g:multi_cursor_select_all_key="n"
-
-map <C-F> :GFiles<CR>
+map <C-P> :Files<CR>
+map <C-F> :GFiles --cached --others --exclude-standard<CR>
 map <C-B> :Buffers<CR>
 map <C-H> :History<CR>
 
@@ -209,16 +290,3 @@ command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
 " Add `:OR` command for organize imports of the current buffer.
 command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
-
-" Custom Find with rg
-" --column: Show column number
-" --line-number: Show line number
-" --no-heading: Do not show file headings in results
-" --fixed-strings: Search term as a literal string
-" --ignore-case: Case insensitive search
-" --no-ignore: Do not respect .gitignore, etc...
-" --hidden: Search hidden files and folders
-" --follow: Follow symlinks
-" --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
-" --color: Search color options
-command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
