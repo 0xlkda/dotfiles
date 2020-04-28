@@ -40,6 +40,12 @@ set splitright
 set nowrap
 set linebreak
 
+" Basic
+let mapleader  = ","
+let g:mapleader = ","
+imap <C-c> <Esc>
+map <leader>r :source ~/.vimrc<CR>
+
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
 set signcolumn=yes
@@ -63,7 +69,7 @@ nnoremap <silent> <Down> :resize -5<cr>
 " Quick temrinal
 let g:floaterm_keymap_toggle = '<C-j>'
 
-" insert mode useful keymap
+" Insert mode useful keymap
 inoremap <C-p> <Up>
 inoremap <C-n> <Down>
 inoremap <C-b> <Left>
@@ -100,7 +106,7 @@ function! s:split_line_text_at_cursor()
   return [text_before_cursor, text_after_cursor]
 endfunction
 
-" command line mode
+" Command line mode
 cmap <C-p> <Up>
 cmap <C-n> <Down>
 cmap <C-b> <Left>
@@ -111,7 +117,7 @@ cnoremap <C-d> <Del>
 cnoremap <C-h> <BS>
 cnoremap <C-k> <C-f>D<C-c><C-c>:<Up>
 
-" yank to clipboard
+" Yank to clipboard
 if has("clipboard")
   set clipboard=unnamed " copy to the system clipboard
 
@@ -143,9 +149,9 @@ command! -bar -bang Qa qall<bang>         "Allow quitting without saving using :
 nmap <silent> ,cq :cclose<CR>
 nmap <silent> ,co :copen<CR>
 
-" toggle folding with za.
-" fold everything with zM
-" unfold everything with zR.
+" Toggle folding with za.
+" Fold everything with zM
+" Unfold everything with zR.
 " Space to toggle folds.
 nnoremap <Space> za
 vnoremap <Space> za
@@ -213,32 +219,30 @@ function! s:save_buffer() abort
           \ "'[": getpos("'["),
           \ "']": getpos("']")
           \ }
-
     silent! update
-
     for [l:key, l:value] in items(l:savemarks)
       call setpos(l:key, l:value)
     endfor
   endif
 endfunction
 
-let mapleader  = ","
-let g:mapleader = ","
-imap <C-c> <Esc>
-map <leader>r :source ~/.vimrc<CR>
-
+" Enable FZF
+set rtp+=/usr/local/opt/fzf
 map <C-P> :Files<CR>
 map <C-F> :GFiles --cached --others --exclude-standard<CR>
 map <C-B> :Buffers<CR>
 map <C-H> :History<CR>
 
-" Enable FZF
-set rtp+=/usr/local/opt/fzf
-
 " Coc.nvim
+inoremap <silent><expr> <c-@> coc#refresh()
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
+
 " Prettier shortcut
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
 nmap <silent> <leader>pf :Prettier<CR>
+nmap <leader>qf  <Plug>(coc-fix-current)
 
 " Coc-pairs
 autocmd FileType markdown let b:coc_pairs_disabled = ['`']
@@ -249,7 +253,7 @@ nmap <silent> gy :<C-u>call CocActionAsync('jumpTypeDefinition')<CR>
 nmap <silent> gi :<C-u>call CocActionAsync('jumpImplementation')<CR>
 nmap <silent> gr :<C-u>call CocActionAsync('jumpReferences')<CR>
 
-" use <tab> for trigger completion and navigate to the next complete item
+" Use <tab> for trigger completion and navigate to the next complete item
 function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~ '\s'
@@ -273,17 +277,6 @@ function! s:show_documentation()
   endif
 endfunction
 nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-" Highlight the symbol and its references when holding the cursor.
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
-inoremap <silent><expr> <c-@> coc#refresh()
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
-
-" Apply AutoFix to problem on the current line.
-nmap <leader>qf  <Plug>(coc-fix-current)
 
 " Add `:Fold` command to fold current buffer.
 command! -nargs=? Fold :call     CocAction('fold', <f-args>)

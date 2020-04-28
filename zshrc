@@ -2,6 +2,8 @@ export PATH="/usr/local/sbin:$PATH"
 export ZPLUG_HOME=/usr/local/opt/zplug
 source $ZPLUG_HOME/init.zsh
 
+zplug "mafredri/zsh-async", from:github
+zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
 zplug "plugins/git", from:oh-my-zsh
 zplug "zsh-users/zsh-history-substring-search"
 zplug "zsh-users/zsh-syntax-highlighting"
@@ -22,10 +24,6 @@ typeset -U fpath
 
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
-
-# Pure theme setup
-autoload -U promptinit; promptinit
-prompt pure
 
 # iTerm shell integration
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh" || true
