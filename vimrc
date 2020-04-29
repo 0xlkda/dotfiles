@@ -34,7 +34,6 @@ set undolevels=1000
 set showmode
 set switchbuf=useopen,usetab
 set ttyfast
-set lazyredraw
 set splitbelow
 set splitright
 set nowrap
