@@ -109,7 +109,7 @@ alias reload='source ~/.zshrc'
 
 # fs
 alias ls='ls -GpF'
-alias ll='ls -alGpF'
+alias la='ls -laGpF'
 
 # vim
 alias vim='nvim'
