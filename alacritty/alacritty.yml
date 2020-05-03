@@ -80,8 +80,9 @@ shell:
     - --login
 
 key_bindings:
-- { key: H,         mods: Command,      action: None                  }
-- { key: M,         mods: Command,      action: None                  }
-- { key: Q,         mods: Command,      action: None                  }
-- { key: Space,     mods: Alt,          chars: " "                    }
-- { key: Space,     mods: Alt,          chars: " "                    }
+- { key: H,         mods: Command,      action: None                   }
+- { key: M,         mods: Command,      action: None                   }
+- { key: Q,         mods: Command,      action: None                   }
+- { key: Space,     mods: Alt,          chars: " "                     }
+- { key: Space,     mods: Alt,          chars: " "                     }
+- { key: Return,    mods: Command,      action: ToggleSimpleFullscreen }

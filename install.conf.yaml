@@ -15,6 +15,9 @@
         create: true
     ~/.vim:
     ~/.vimrc:
+    ~/.hammerspoon/init.lua:
+        path: hammerspoon/init.lua
+        create: true
 
 - shell:
   - git submodule sync --recursive
