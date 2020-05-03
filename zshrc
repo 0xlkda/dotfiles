@@ -52,6 +52,8 @@ export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.g
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 # Aliases
+alias me="cd ~/Projects"
+alias work="cd ~/Noggin"
 alias zshconfig="vim $HOME/.zshrc"
 alias reload="source $HOME/.zshrc"
 alias vimconfig="vim $HOME/.vimrc"
