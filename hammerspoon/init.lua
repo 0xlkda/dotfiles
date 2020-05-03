@@ -15,8 +15,13 @@ function mountApp(appName)
   end
 end
 
-hs.hotkey.bind({"cmd"}, "`", mountApp("Alacritty"))
+-- Disable animation
+hs.window.animationDuration = 0
 
+-- Open app faster
+hs.hotkey.bind({"cmd"}, "`", mountApp("alacritty"))
+
+-- Notify if config is built
 hs.notify.new(
     {
         title = "Hammerspoon",

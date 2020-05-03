@@ -3,7 +3,7 @@ window:
   padding:
     x: 0
     y: 0
-  startup_mode: Fullscreen
+  startup_mode: SimpleFullscreen
 
 # Colors (Dracula)
 colors:
