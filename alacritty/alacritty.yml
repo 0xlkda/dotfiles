@@ -51,6 +51,8 @@ shell:
   program: /usr/local/bin/zsh
   args:
     - --login
+    - -c
+    - 'tmux attach -t TMUX || tmux new -s TMUX'
 
 mouse:
   hide_when_typing: true
