@@ -1,3 +1,30 @@
+# vim: ft=zsh
+setopt    correct    # Correct spelling for commands
+unsetopt  correctall # turn off the infernal correctall for filenames
+
+# Changing directories
+setopt    auto_cd
+setopt    auto_pushd
+setopt    pushd_ignore_dups
+setopt    pushd_minus
+
+# Expansion and globbing
+setopt    glob
+unsetopt  case_glob
+unsetopt  case_match
+
+# Emacs key bindings (use -v for vi key bindings)
+bindkey -e
+
+# Base PATH
+export PATH="$PATH:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin"
+
+# Default editor
+export EDITOR='nvim'
+
+# You may need to manually set your language environment
+export LANG=en_US.UTF-8
+
 # Prevent duplicate entries
 typeset -U path
 typeset -U fpath
@@ -22,12 +49,6 @@ if ! zplug check --verbose; then
 fi
 zplug load
 
-# Default PATH
-export PATH="/usr/local/sbin:$PATH"
-
-# You may need to manually set your language environment
-export LANG=en_US.UTF-8
-
 # Lazydocker
 alias lzd='lazydocker'
 
@@ -42,12 +63,76 @@ export PATH="/usr/local/opt/libpq/bin:$PATH"
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
+# Functions
+# Easy npm publish
+publish() {
+  npm version "$1" && git push origin master --tags && npm publish
+}
+
+# Local IP
+localip() {
+  ifconfig | grep "inet " | grep -Fv 127.0.0.1 | awk '{print $2}'
+}
+
+# Better tree lists
+tt() {
+    tree -I '.git|.node_modules|.DS_Store' --dirsfirst --filelimit 15 -L ${1:-3} -aC $2
+}
+
+# fkill - kill process
+fkill() {
+  local pid
+  pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
+
+  if [ "x$pid" != "x" ]
+  then
+    echo $pid | xargs kill -${1:-9}
+  fi
+}
+
 # Aliases
+# Safety first
+alias cp='cp -i'
+alias mv='mv -i'
+alias rm='rm -i'
+alias del="mv -t ~/.Trash/"alias vim='nvim'
+
+# cd
+alias .2='cd ../..'
+alias .3='cd ../../..'
+alias .4='cd ../../../..'
+alias .5='cd ../../../../..'
+alias .6='cd ../../../../../..'
+
+# zsh
+alias reload='source ~/.zshrc'
+
+# fs
+alias ls='ls -GpF'
+alias ll='ls -alGpF'
+
+# vim
 alias vim='nvim'
+
+# NPM
+alias nb='npm run build'
+alias ns='npm run start'
+alias nt='npm run test'
+alias np='npm version patch && npm publish && git push origin master --tags'
+
+# Print each PATH entry on a separate line
+alias path='echo -e ${PATH//:/\\n}'
+
+# Recursively delete `.DS_Store` files
+alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
+
+# IP addresses
+alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+
+# My alias
 alias me="cd ~/Projects"
 alias work="cd ~/Noggin"
 alias zshconfig="vim $HOME/.zshrc"
-alias reload="source $HOME/.zshrc"
 alias vimconfig="vim $HOME/.vimrc"
 alias afl="alias-finder -l $1"
 alias help="man"

@@ -6,13 +6,13 @@
 - clean: ['~', '~/.config']
 
 - link:
+    ~/.config/alacritty:
     ~/.zshrc:
     ~/.gitconfig:
     ~/.gitignore_global:
     ~/.ssh/config:
         path: ssh/config
         create: true
-    ~/com.googlecode.iterm2.plist:
     ~/.vim:
     ~/.vimrc:
 
