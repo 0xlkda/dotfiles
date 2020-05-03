@@ -1,4 +1,8 @@
-export PATH="/usr/local/sbin:$PATH"
+# Prevent duplicate entries
+typeset -U path
+typeset -U fpath
+
+# ZPLUG setup
 export ZPLUG_HOME=/usr/local/opt/zplug
 source $ZPLUG_HOME/init.zsh
 
@@ -18,18 +22,11 @@ if ! zplug check --verbose; then
 fi
 zplug load
 
-# Prevent duplicate entries
-typeset -U path
-typeset -U fpath
+# Default PATH
+export PATH="/usr/local/sbin:$PATH"
 
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
-
-# iTerm shell integration
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh" || true
-
-# FZF bootstrap
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Lazydocker
 alias lzd='lazydocker'
@@ -40,18 +37,13 @@ eval "$(nodenv init -)"
 # Postgres setup
 export PATH="/usr/local/opt/libpq/bin:$PATH"
 
-# FZF and ripgrep config
-# --files: List files that would be searched but do not search
-# --no-ignore: Do not respect .gitignore, etc...
-# --hidden: Search hidden files and folders
-# --follow: Follow symlinks
-# --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
+# FZF bootstrap
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
-
-# To apply the command to CTRL-T as well
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 # Aliases
+alias vim='nvim'
 alias me="cd ~/Projects"
 alias work="cd ~/Noggin"
 alias zshconfig="vim $HOME/.zshrc"

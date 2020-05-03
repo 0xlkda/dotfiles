@@ -1,39 +1,3 @@
 [submodule "dotbot"]
 	path = dotbot
 	url = https://github.com/anishathalye/dotbot
-[submodule "vim/pack/vendor/start/ale"]
-	path = vim/pack/vendor/start/ale
-	url = https://github.com/dense-analysis/ale
-[submodule "vim/pack/vendor/start/coc.nvim"]
-	path = vim/pack/vendor/start/coc.nvim
-	url = https://github.com/neoclide/coc.nvim
-[submodule "vim/pack/vendor/start/dracula"]
-	path = vim/pack/vendor/start/dracula
-	url = https://github.com/dracula/vim
-[submodule "vim/pack/vendor/start/fzf.vim"]
-	path = vim/pack/vendor/start/fzf.vim
-	url = https://github.com/junegunn/fzf.vim
-[submodule "vim/pack/vendor/start/indentLine"]
-	path = vim/pack/vendor/start/indentLine
-	url = https://github.com/Yggdroot/indentLine
-[submodule "vim/pack/vendor/start/lightline.vim"]
-	path = vim/pack/vendor/start/lightline.vim
-	url = https://github.com/itchyny/lightline.vim
-[submodule "vim/pack/vendor/start/lightline-ale"]
-	path = vim/pack/vendor/start/lightline-ale
-	url = https://github.com/maximbaz/lightline-ale
-[submodule "vim/pack/vendor/start/nerdtree"]
-	path = vim/pack/vendor/start/nerdtree
-	url = https://github.com/preservim/nerdtree
-[submodule "vim/pack/vendor/start/vim-gitbranch"]
-	path = vim/pack/vendor/start/vim-gitbranch
-	url = https://github.com/itchyny/vim-gitbranch
-[submodule "vim/pack/vendor/start/vim-commentary"]
-	path = vim/pack/vendor/start/vim-commentary
-	url = https://github.com/tpope/vim-commentary
-[submodule "vim/pack/vendor/start/vim-polyglot"]
-	path = vim/pack/vendor/start/vim-polyglot
-	url = https://github.com/sheerun/vim-polyglot
-[submodule "vim/pack/vendor/start/vim-floaterm"]
-	path = vim/pack/vendor/start/vim-floaterm
-	url = https://github.com/voldikss/vim-floaterm
