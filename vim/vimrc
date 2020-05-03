@@ -21,6 +21,7 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'sheerun/vim-polyglot'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'christoomey/vim-tmux-navigator'
 
 call plug#end()
 
@@ -76,16 +77,6 @@ set textwidth=80
 " Enable mouse
 set mouse=nv
 set mousefocus
-
-" Start of default statusline
-set statusline=%f\ %h%w%m%r\ 
-
-" Set statusline+=%#warningmsg#
-set statusline+=%{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}
-set statusline+=%*
-
-" End of default statusline (with ruler)
-set statusline+=%=%(%l,%c%V\ %=\ %P%)
 
 " Yank to clipboard
 if has("clipboard")

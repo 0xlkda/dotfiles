@@ -19,11 +19,10 @@ end
 hs.window.animationDuration = 0
 
 -- Open app faster
-hs.hotkey.bind({"cmd"}, "`", mountApp("alacritty"))
+hs.hotkey.bind({"cmd"}, "`", mountApp("Alacritty"))
 
 -- Notify if config is built
-hs.notify.new(
-    {
+hs.notify.new({
         title = "Hammerspoon",
         informativeText = "Hammerspoon is ready",
         autoWithdraw = true,
