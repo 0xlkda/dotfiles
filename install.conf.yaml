@@ -1,23 +1,59 @@
 - defaults:
     link:
       create: true
+      force: true
       relink: true
 
-- clean: ['~', '~/.config']
+- clean:
+    - "~"
+    - "~/.aws"
+    - "~/.cache/babel/"
+    - "~/.config"
+    - "~/.config/alacritty"
+    - "~/.config/aws"
+    - "~/.config/brew"
+    - "~/.config/git"
+    - "~/.config/npm"
+    - "~/.config/tmux"
+    - "~/.gnupg"
+    - "~/.local/share/history"
+    - "~/.ssh"
 
 - link:
-    ~/.config/alacritty:
-    ~/.zshrc:
-    ~/.gitconfig:
-    ~/.gitignore_global:
-    ~/.ssh/config:
-        path: ssh/config
-        create: true
-    ~/.vim:
-    ~/.vimrc:
-    ~/.hammerspoon/init.lua:
-        path: hammerspoon/init.lua
-        create: true
+    ~/.editorconfig: editorconfig
+    ~/.config/brew/Brewfile: brew/Brewfile
+    ~/.config/npm/.npmrc: npm/npmrc
+    ~/.aws/config: aws/config
+
+    # Alacritty
+    ~/.config/alacritty: alacritty
+
+    # Vim config files
+    ~/.config/nvim: nvim
+    ~/.vim: vim
+    ~/.vimrc: vim/vimrc
+
+    # Hammerspoon config files
+    ~/.hammerspoon/init.lua: hammerspoon/init.lua
+
+    # Git config files
+    ~/.config/git/attributes: git/attributes
+    ~/.config/git/config: git/config
+    ~/.config/git/ignore: git/ignore
+
+    # Tmux config files
+    ~/.tmux.conf: tmux/tmux.conf
+
+    # GPG files
+    ~/.gnupg/gpg.conf: gnupg/gpg.conf
+    ~/.gnupg/gpg-agent.conf: gnupg/gpg-agent.conf
+
+    # SSH files
+    ~/.ssh/config: ssh/config
+
+    # ZSH files
+    ~/.zshrc: zsh/zshrc
 
 - shell:
-  - git submodule sync --recursive
+    - command: ./scripts/post_install.sh
+      stderr: true

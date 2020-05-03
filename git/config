@@ -1,5 +1,5 @@
 [core]
-	excludesfile = /Users/alex/.gitignore_global
+	excludesfile = /Users/alex/.config/git/ignore
 [user]
 	signingkey = 28A9D9288CC9C93C
 	email = hello@thealemazing.com

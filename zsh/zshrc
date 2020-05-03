@@ -132,6 +132,7 @@ alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 # My alias
 alias me="cd ~/Projects"
 alias work="cd ~/Noggin"
+alias dotfiles="cd ~/Projects/dotfiles"
 alias zshconfig="vim $HOME/.zshrc"
 alias vimconfig="vim $HOME/.vimrc"
 alias afl="alias-finder -l $1"
