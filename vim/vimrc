@@ -4,7 +4,7 @@ set nocompatible
 " VimPlug setup
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-		\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
@@ -21,6 +21,7 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'sheerun/vim-polyglot'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'vim-airline/vim-airline'
 Plug 'christoomey/vim-tmux-navigator'
 
 call plug#end()
@@ -83,7 +84,7 @@ if has("clipboard")
   set clipboard=unnamed " copy to the system clipboard
 
   if has("unnamedplus") " X11 support
-	set clipboard+=unnamedplus
+    set clipboard+=unnamedplus
   endif
 endif
 
@@ -114,7 +115,7 @@ function! s:home()
   let start_col = col('.')
   normal! ^
   if col('.') == start_col
-	normal! 0
+    normal! 0
   endif
   return ''
 endfunction
@@ -122,9 +123,9 @@ endfunction
 function! s:kill_line()
   let [text_before_cursor, text_after_cursor] = s:split_line_text_at_cursor()
   if len(text_after_cursor) == 0
-	normal! J
+    normal! J
   else
-	call setline(line('.'), text_before_cursor)
+    call setline(line('.'), text_before_cursor)
   endif
   return ''
 endfunction
@@ -158,9 +159,9 @@ augroup lf_autocmds
 
   " On opening a file, jump to the last known cursor position (see :h line())
   autocmd BufReadPost *
-		\ if line("'\"") > 1 && line("'\"") <= line("$") && &ft !~# 'commit' |
-		\   exe "normal! g`\"" |
-		\ endif
+        \ if line("'\"") > 1 && line("'\"") <= line("$") && &ft !~# 'commit' |
+        \   exe "normal! g`\"" |
+        \ endif
 
   " Don't auto insert a comment when using O/o for a newline
   autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
@@ -169,7 +170,7 @@ augroup lf_autocmds
   autocmd BufWritePost .vimrc source %
 
   " Automatically reload files when changed
-  autocmd FocusGained, BufEnter * :checktime 
+  autocmd FocusGained, BufEnter * :checktime
   autocmd CursorHold,CursorHoldI * checktime
 augroup END
 
@@ -207,12 +208,12 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 
 " Coc config
 let g:coc_global_extensions = [
-	  \ 'coc-tsserver',
-	  \ 'coc-css',
-	  \ 'coc-json',
-	  \ 'coc-html',
-	  \ 'coc-pairs'
-	  \ ]
+      \  'coc-tsserver',
+      \  'coc-css',
+      \  'coc-json',
+      \  'coc-html',
+      \  'coc-pairs'
+      \  ]
 
 " Show completion
 inoremap <silent><expr> <C-space> coc#refresh()

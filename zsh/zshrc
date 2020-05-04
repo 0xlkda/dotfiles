@@ -90,6 +90,12 @@ fkill() {
   fi
 }
 
+# Tmux
+if [ -z "$TMUX" ]
+then
+    tmux attach -t TMUX || tmux new -s TMUX
+fi
+
 # Aliases
 # Safety first
 alias cp='cp -i'

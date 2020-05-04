@@ -51,15 +51,12 @@ shell:
   program: /usr/local/bin/zsh
   args:
     - --login
-    - -c
-    - 'tmux attach -t TMUX || tmux new -s TMUX'
-
-mouse:
-  hide_when_typing: true
 
 selection:
   semantic_escape_chars: ",│`|:\"' ()[]{}<>"
   save_to_clipboard: true
+
+hide_cursor_when_typing: false
 
 key_bindings:
 - { key: H,         mods: Command,        action: None                    }

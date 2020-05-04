@@ -42,7 +42,7 @@
     ~/.config/git/ignore: git/ignore
 
     # Tmux config files
-    ~/.tmux.conf: tmux/tmux.conf
+    ~/.config/tmux/tmux.conf: tmux/tmux.conf
 
     # GPG files
     ~/.gnupg/gpg.conf: gnupg/gpg.conf
