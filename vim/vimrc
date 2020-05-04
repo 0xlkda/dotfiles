@@ -45,7 +45,8 @@ set relativenumber
 set laststatus=2
 set notitle
 set cmdheight=2
-set shortmess+=Im
+set shortmess=astTIOF
+set noshowmode
 set diffopt+=vertical
 set encoding=utf-8
 set hidden
