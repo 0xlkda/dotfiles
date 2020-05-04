@@ -40,6 +40,7 @@
     ~/.config/git/attributes: git/attributes
     ~/.config/git/config: git/config
     ~/.config/git/ignore: git/ignore
+    ~/.config/hub: git/hubconfig
 
     # Tmux config files
     ~/.config/tmux/tmux.conf: tmux/tmux.conf
