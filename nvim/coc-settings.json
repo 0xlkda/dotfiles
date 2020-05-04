@@ -1,4 +1,8 @@
 {
+  "diagnostic.infoSign": "i",
+  "diagnostic.hintSign": "➤",
+  "diagnostic.warningSign": "⚠",
+  "diagnostic.errorSign": "✖",
   "suggest.echodocSupport": true,
   "suggest.maxCompleteItemCount": 20,
   "python.jediEnabled": false,
