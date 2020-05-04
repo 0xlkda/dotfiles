@@ -41,6 +41,7 @@ if has('termguicolors') && $COLORTERM ==# 'truecolor'
 endif
 
 set number
+set numberwidth=4
 set relativenumber
 set laststatus=2
 set notitle
