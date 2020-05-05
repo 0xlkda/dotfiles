@@ -29,6 +29,7 @@ call plug#end()
 
 " Environments
 syntax enable
+syntax sync minlines=256
 color dracula
 filetype on
 filetype plugin on
@@ -55,6 +56,8 @@ set hidden
 set updatetime=500
 set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣
 set scrolloff=3
+set lazyredraw
+set synmaxcol=128
 
 " Tab / spaces setting
 set tabstop=4
