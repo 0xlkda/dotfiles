@@ -114,8 +114,8 @@ alias .6='cd ../../../../../..'
 alias reload='source ~/.zshrc'
 
 # fs
-alias ls='ls -GpF'
-alias la='ls -laGpF'
+alias ls='ls'
+alias la='ls'
 
 # vim
 alias vim='nvim'

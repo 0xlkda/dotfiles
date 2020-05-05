@@ -23,6 +23,7 @@ Plug 'sheerun/vim-polyglot'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'vim-airline/vim-airline'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'Glench/Vim-Jinja2-Syntax'
 
 call plug#end()
 
@@ -155,6 +156,9 @@ map Q gq
 " Auto command to save time
 augroup lf_autocmds
   autocmd!
+
+  " Auto remove all trailing spaces
+  autocmd BufWritePre * %s/\s\+$//e
 
   " Resize windows when the terminal window size changes (from http://vimrcfu.com/snippet/186)
   autocmd VimResized * wincmd =
