@@ -1,5 +1,5 @@
 # vim: ft=zsh
-setopt    correct    # Correct spelling for commands
+unsetopt  correct    # Correct spelling for commands
 unsetopt  correctall # turn off the infernal correctall for filenames
 
 # Changing directories

@@ -10,20 +10,40 @@ endif
 
 call plug#begin('~/.vim/plugged')
 
+" Scheme
 Plug 'dracula/vim'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
+Plug 'vim-airline/vim-airline'
+
+" Helpers
 Plug 'lifepillar/vim-cheat40'
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'roman/golden-ratio'
+Plug 'skywind3000/asyncrun.vim'
+
+" Syntax
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'sheerun/vim-polyglot'
+Plug 'Glench/Vim-Jinja2-Syntax'
+
+" Git
 Plug 'tpope/vim-fugitive'
+Plug 'christoomey/vim-conflicted'
+
+" Editing
+Plug 'editorconfig/editorconfig-vim'
+Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
-Plug 'editorconfig/editorconfig-vim'
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-Plug 'sheerun/vim-polyglot'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'vim-airline/vim-airline'
+Plug 'jiangmiao/auto-pairs'
+Plug 'godlygeek/tabular'
+
+" Tmux
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'Glench/Vim-Jinja2-Syntax'
+
+" Searching
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'haya14busa/incsearch.vim'
 
 call plug#end()
 
@@ -31,9 +51,13 @@ call plug#end()
 syntax enable
 syntax sync minlines=256
 color dracula
+
 filetype on
 filetype plugin on
 filetype indent on
+
+set noswapfile
+set nobackup
 
 if has('termguicolors') && $COLORTERM ==# 'truecolor'
   let &t_8f = "\<esc>[38;2;%lu;%lu;%lum" " Needed in tmux
@@ -42,6 +66,7 @@ if has('termguicolors') && $COLORTERM ==# 'truecolor'
   set background=dark
 endif
 
+set hidden
 set number
 set numberwidth=4
 set relativenumber
@@ -52,12 +77,13 @@ set shortmess=astTIOF
 set noshowmode
 set diffopt+=vertical
 set encoding=utf-8
-set hidden
-set updatetime=500
+set updatetime=300
+set signcolumn=yes
 set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣
 set scrolloff=3
 set lazyredraw
 set synmaxcol=128
+set undofile
 
 " Tab / spaces setting
 set tabstop=4
@@ -85,6 +111,9 @@ set textwidth=80
 set mouse=nv
 set mousefocus
 
+" Disable quote concealing in JSON files
+let g:vim_json_conceal=0
+
 " Yank to clipboard
 if has("clipboard")
   set clipboard=unnamed " copy to the system clipboard
@@ -97,16 +126,56 @@ endif
 " Better Ctrl-g
 nnoremap <C-g> 2<C-g>
 
+" Yank
+nnoremap Y y$
+
+" Bye Ex Mode
+nnoremap Q @q
+
+" Use space as alternative leader
+map <space> <leader>
+
+" Move to last edit location and put it in the center of the screen
+nnoremap <C-o> <C-o>zz
+
+" Reselect visual block after indent/outdent
+vnoremap < <gv
+vnoremap > >gv
+
+" Repeat cmds in visual mode
+vnoremap . :normal .<CR>
+
 " Quick resize
 nnoremap <silent> <Right> :vertical resize +5<cr>
 nnoremap <silent> <Left> :vertical resize -5<cr>
 nnoremap <silent> <Up> :resize +5<cr>
 nnoremap <silent> <Down> :resize -5<cr>
 
-" Search and Replace
-nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
+" Selection
+nnoremap vv V
+nnoremap V v$
+nnoremap \| v$"py:read !<C-r>p<CR>
 
-" Insert mode useful keymap
+" Search and Replace
+nnoremap <Leader>ls :set hlsearch!<CR>
+nnoremap <Leader>ll :set list!<CR>
+nmap # #nzz
+nmap * *nzz
+nmap n nzz
+nmap N Nzz
+nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
+
+" Emacs navigation style
+noremap <C-a> ^
+noremap <C-e> $
+cnoremap <C-A> <Home>
+cnoremap <C-E> <End>
+cnoremap <C-K> <C-U>
+cnoremap <C-N> <Down>
+cnoremap <C-P> <Up>
 inoremap <C-p> <Up>
 inoremap <C-n> <Down>
 inoremap <C-b> <Left>
@@ -143,18 +212,11 @@ function! s:split_line_text_at_cursor()
   return [text_before_cursor, text_after_cursor]
 endfunction
 
-" Disable quote concealing in JSON files
-let g:vim_json_conceal=0
-
-" Auto turn off highlight after search
-augroup vimrc-incsearch-highlight
-  autocmd!
-  autocmd CmdlineEnter /,\? :set hlsearch
-  autocmd CmdlineLeave /,\? :set nohlsearch
-augroup END
-
-" Bye Ex Mode
-map Q gq
+" Quick fix panel
+noremap <Leader>qo :copen<CR>
+noremap <Leader>qc :cclose<CR>
+noremap <Leader>qn :cnext<CR>
+noremap <Leader>qp :cprev<CR>
 
 " Auto command to save time
 augroup lf_autocmds
@@ -183,23 +245,22 @@ augroup lf_autocmds
   autocmd CursorHold,CursorHoldI * checktime
 augroup END
 
-" Use space as alternative leader
-map <space> <leader>
-
-" Move to last edit location and put it in the center of the screen
-nnoremap <C-o> <C-o>zz
-
-" Reselect visual block after indent/outdent
-vnoremap < <gv
-vnoremap > >gv
-
 " FZF config
-map <C-P> :Files<CR>
-map <C-F> :GFiles --cached --others --exclude-standard<CR>
-map <C-B> :Buffers<CR>
-map <C-H> :History<CR>
+noremap <Leader>fb :Buffers<CR>
+noremap <Leader>fc :Commits<CR>
+noremap <Leader>ff :Files<CR>
+noremap <Leader>fg :GFiles --cached --others --exclude-standard<CR>
+noremap <Leader>fh :History<CR>
+noremap <Leader>fl :Lines<CR>
+noremap <Leader>ft :Tags<CR>
+noremap <Leader>fs :Filetypes<CR>
 
-" Window management
+noremap <Leader>sc :BCommits<CR>
+noremap <Leader>sl :BLines<CR>
+noremap <Leader>st :BTags<CR>
+
+" Windows management
+nnoremap <leader>wc <C-w>q
 nnoremap <leader>1 1<c-w>w
 nnoremap <leader>2 2<c-w>w
 nnoremap <leader>3 3<c-w>w
@@ -210,10 +271,91 @@ nnoremap <leader>7 7<c-w>w
 nnoremap <leader>8 8<c-w>w
 nnoremap <leader>9 9<c-w>w
 nnoremap <leader>0 10<c-w>w
+nnoremap <M-d> :vsplit<cr>
+nnoremap <M-D> :split<cr>
+
+" Tabs management
+noremap <M-1> 1gt
+noremap <M-2> 2gt
+noremap <M-3> 3gt
+noremap <M-4> 4gt
+noremap <M-5> 5gt
+noremap <M-6> 6gt
+noremap <M-7> 7gt
+noremap <M-8> 8gt
+noremap <M-9> 9gt
+noremap <M-0> :tablast<cr>
+
+map <Leader>tt :tabnew<c>
+map <M-t>      :tabnew<cr>
+map <Leader>tc :tabclose<cr>
+map <M-w>      :tabclose<cr>
+map <Leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
+map <Leader>tm :tabmove<space>
+map <Leader>to :tabonly<cr>
+map <Leader>tn gt
+map <Leader>tp gT
+map <Leader>ts :tab split<cr>
+
+" Align with Tabular
+nmap <silent> <Leader>a= :Tabularize /=<CR>
+vmap <silent> <Leader>a= :Tabularize /=<CR>
+nmap <silent> <Leader>a\| :Tabularize /\|<CR>
+vmap <silent> <Leader>a\| :Tabularize /\|<CR>
+nmap <silent> <Leader>a: :Tabularize /:\zs<CR>
+vmap <silent> <Leader>a: :Tabularize /:\zs<CR>
+
+" Golden ratio config
+let g:golden_ratio_exclude_nonmodifiable = 1
+let g:golden_ratio_autocommand = 0
+let g:golden_ratio_filetypes_blacklist = ["nerdtree", "unite"]
+
+noremap <silent> <leader>ww :GoldenRatioResize<CR>
+
+" Pairs config
+let g:AutoPairsFlyMode = 1
+let g:AutoPairsShortcutBackInsert = '<M-b>'
 
 " NERDTree config
 nnoremap <silent> <C-n> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+" Git | vim-fugitive
+nnoremap <Leader>ga :Git add %:p<CR><CR>
+nnoremap <Leader>gb :Gblame<CR>
+nnoremap <Leader>gd :Gdiff<CR>
+nnoremap <Leader>ge :Gedit<CR>
+nnoremap <Leader>gg :Ggrep<Space>
+nnoremap <Leader>gl :Dispatch! git pull<CR>
+nnoremap <Leader>gm :Gmove<Space>
+nnoremap <Leader>go :Git checkout<Space>
+nnoremap <Leader>gp :Dispatch! git push<CR>
+nnoremap <Leader>gr :Gread<CR>
+nnoremap <Leader>gs :Gstatus<CR>
+nnoremap <Leader>gt :Gcommit -v -q %:p<CR>
+nnoremap <Leader>gw :Gwrite<CR><CR>
+
+" Git | Conflicted
+function ConflictedVersionWrapper()
+  if exists('ConflictedVersion')
+    return ConflictedVersion()
+  endif
+endfunction
+set stl+=%{ConflictedVersionWrapper()}
+
+let g:diffget_local_map = 'gl'
+let g:diffget_upstream_map = 'gu'
+
+nnoremap gn :GitNextConflict<CR>
+
+" Async run plugin
+let g:asyncrun_status = ''
+
+augroup QuickfixStatus
+  au! BufWinEnter quickfix setlocal
+        \ statusline=%t\ [%{g:asyncrun_status}]\ %{exists('w:quickfix_title')?\
+        \ '\ '.w:quickfix_title\ :\ ''}\ %=%-15(%l,%c%V%)\ %P
+augroup END
 
 " Coc config
 let g:coc_global_extensions = [
@@ -239,9 +381,6 @@ nmap <silent> gr :<C-u>call CocActionAsync('jumpReferences')<CR>
 " Use `[c` and `]c` for navigate diagnostics
 nmap <silent>[c <Plug>(coc-diagnostic-prev)
 nmap <silent>]c <Plug>(coc-diagnostic-next)
-
-" Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Prettier shortcut
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
