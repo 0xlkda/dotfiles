@@ -16,7 +16,7 @@ Plug 'vim-airline/vim-airline'
 
 " Helpers
 Plug 'lifepillar/vim-cheat40'
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
 Plug 'roman/golden-ratio'
 Plug 'skywind3000/asyncrun.vim'
 
@@ -31,7 +31,7 @@ Plug 'christoomey/vim-conflicted'
 
 " Editing
 Plug 'editorconfig/editorconfig-vim'
-Plug 'terryma/vim-multiple-cursors'
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'jiangmiao/auto-pairs'
@@ -317,7 +317,7 @@ let g:AutoPairsFlyMode = 1
 let g:AutoPairsShortcutBackInsert = '<M-b>'
 
 " NERDTree config
-nnoremap <silent> <C-n> :NERDTreeToggle<CR>
+nnoremap <silent> <C-p> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " Git | vim-fugitive
