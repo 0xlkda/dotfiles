@@ -71,18 +71,18 @@ publish() {
 
 # Local IP
 localip() {
-  ifconfig | grep "inet " | grep -Fv 127.0.0.1 | awk '{print $2}'
+  ifconfig | grep "inet " | grep -Fv 127.0.0.1 | awk "{print $2}"
 }
 
 # Better tree lists
 tt() {
-    tree -I '.git|.node_modules|.DS_Store' --dirsfirst --filelimit 15 -L ${1:-3} -aC $2
+    tree -I ".git|.node_modules|.DS_Store" --dirsfirst --filelimit 15 -L ${1:-3} -aC $2
 }
 
 # fkill - kill process
 fkill() {
   local pid
-  pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
+  pid=$(ps -ef | sed 1d | fzf -m | awk "{print $2}")
 
   if [ "x$pid" != "x" ]
   then
@@ -98,36 +98,38 @@ fi
 
 # Aliases
 # Safety first
-alias cp='cp -i'
-alias mv='mv -i'
-alias rm='rm -i'
-alias del="mv -t ~/.Trash/"alias vim='nvim'
+alias cp="cp -i"
+alias mv="mv -i"
+alias rm="rm -i"
+alias del="mv -t ~/.Trash/"
+alias vim="nvim"
 
 # cd
-alias .2='cd ../..'
-alias .3='cd ../../..'
-alias .4='cd ../../../..'
-alias .5='cd ../../../../..'
-alias .6='cd ../../../../../..'
+alias .2="cd ../.."
+alias .3="cd ../../.."
+alias .4="cd ../../../.."
+alias .5="cd ../../../../.."
+alias .6="cd ../../../../../.."
 
 # zsh
-alias reload='source ~/.zshrc'
+alias reload="source ~/.zshrc"
 
 # fs
-alias ls='ls'
-alias la='ls'
+export EXA_COLORS="da=38;5;245:sn=38;5;245:sb=38;5;245:uu=38;5;245"
+alias ls="exa -am --group-directories-first --sort=name"
+alias la="ls -l"
 
 # vim
-alias vim='nvim'
+alias vim="nvim"
 
 # NPM
-alias nb='npm run build'
-alias ns='npm run start'
-alias nt='npm run test'
-alias np='npm version patch && npm publish && git push origin master --tags'
+alias nb="npm run build"
+alias ns="npm run start"
+alias nt="npm run test"
+alias np="npm version patch && npm publish && git push origin master --tags"
 
 # Print each PATH entry on a separate line
-alias path='echo -e ${PATH//:/\\n}'
+alias path="echo -e ${PATH//:/\\n}"
 
 # Recursively delete `.DS_Store` files
 alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
