@@ -4,10 +4,11 @@
 " If using NeoVim, type this ":help vim_diff.txt"
 " Read
 " Then NeoVim!
+" vim:tw=78:ts=8:sw=2:noet:ft=help:norl:
 "-------------------------------------------------------------------------------
 
 " Plugins
-"
+"-------------------------------------------------------------------------------
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
         \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -16,31 +17,166 @@ endif
 
 call plug#begin('~/.vim/plugged')
 
+" Theme
 Plug 'TheAlemazing/focus-vim'
+
+" Helpers
+Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
+
+" Git
+Plug 'tpope/vim-fugitive'
+
+" Editing
+Plug 'editorconfig/editorconfig-vim'
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+Plug 'jiangmiao/auto-pairs'
+Plug 'godlygeek/tabular'
+
+" Tmux
+Plug 'christoomey/vim-tmux-navigator'
+
+" Searching
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
 call plug#end()
 
 " Basic
-"
+"-------------------------------------------------------------------------------
 set ignorecase
 set smartcase
 set termguicolors
+set tabstop=4
+set softtabstop=2
+set shiftwidth=2
 
 colorscheme focus
 
+" Yank to clipboard
+if has("clipboard")
+  set clipboard=unnamed " copy to the system clipboard
+
+  if has("unnamedplus") " X11 support
+    set clipboard+=unnamedplus
+  endif
+endif
+
 " Auto Commands
-"
+"-------------------------------------------------------------------------------
 augroup auto_format_group
-	autocmd!
-	au BufWrite * :%s/^(\s*\r\n){2,}/\r\n/ge " join multi lines to 1
-	au BufWrite * :%s/\s\+$//e     " remove trailing whitespaces
-	au BufWrite .vimrc :so %       " auto reload vim config
+  autocmd!
+  au BufWritePre * :%s/\(\n\n\)\n\+/\1/ge " join multi lines to 1
+  au BufWritePre * :%s/\s\+$//e           " auto remove all trailing spaces
+  au BufWritePost .vimrc source %         " auto reload vim config
+
+  " Don't auto insert a comment when using O/o for a newline
+  autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+
+  " On opening a file, jump to the last known cursor position (see :h line())
+  autocmd BufReadPost *
+        \ if line("'\"") > 1 && line("'\"") <= line("$") && &ft !~# 'commit' |
+        \   exe "normal! g`\"" |
+        \ endif
 augroup END
 
-" My Bindings
-"
-nnoremap <C-_> :set hlsearch!<CR>
-
 " My Commands
-"
+" -------------------------------------------------------------------------------
 command! Preview :!open /Applications/Safari.app %
+
+" My Bindings
+"-------------------------------------------------------------------------------
+nnoremap <Leader>ls :set hlsearch!<CR>
+nnoremap <Leader>ll :set list!<CR>
+
+" Quick resize
+nnoremap <silent> <Right> :vertical resize +5<cr>
+nnoremap <silent> <Left> :vertical resize -5<cr>
+nnoremap <silent> <Up> :resize +5<cr>
+nnoremap <silent> <Down> :resize -5<cr>
+
+" Reselect visual block after indenting
+vnoremap < <gv
+vnoremap > >gv
+
+" NERDTree config
+nnoremap <silent> <C-p> :NERDTreeToggle<CR>
+autocmd! BufEnter *
+      \ if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) |
+      \   q |
+      \ endif
+
+" FZF config
+nnoremap <Leader>fb :Buffers<CR>
+nnoremap <Leader>fc :Commits<CR>
+nnoremap <Leader>ff :Files<CR>
+nnoremap <Leader>fg :GFiles --cached --others --exclude-standard<CR>
+nnoremap <Leader>fh :History<CR>
+nnoremap <Leader>fl :Lines<CR>
+nnoremap <Leader>ft :Tags<CR>
+nnoremap <Leader>fs :Filetypes<CR>
+
+nnoremap <Leader>sc :BCommits<CR>
+nnoremap <Leader>sl :BLines<CR>
+nnoremap <Leader>st :BTags<CR>
+
+" Windows management
+nnoremap <leader>wc <C-w>q
+nnoremap <leader>1 1<c-w>w
+nnoremap <leader>2 2<c-w>w
+nnoremap <leader>3 3<c-w>w
+nnoremap <leader>4 4<c-w>w
+nnoremap <leader>5 5<c-w>w
+nnoremap <leader>6 6<c-w>w
+nnoremap <leader>7 7<c-w>w
+nnoremap <leader>8 8<c-w>w
+nnoremap <leader>9 9<c-w>w
+nnoremap <leader>0 10<c-w>w
+nnoremap <M-d> :vsplit<cr>
+nnoremap <M-D> :split<cr>
+
+" Tabs management
+nnoremap <M-1> 1gt
+nnoremap <M-2> 2gt
+nnoremap <M-3> 3gt
+nnoremap <M-4> 4gt
+nnoremap <M-5> 5gt
+nnoremap <M-6> 6gt
+nnoremap <M-7> 7gt
+nnoremap <M-8> 8gt
+nnoremap <M-9> 9gt
+nnoremap <M-0> :tablast<cr>
+
+nnoremap <Leader>tt :tabnew<c>
+nnoremap <M-t>      :tabnew<cr>
+nnoremap <Leader>tc :tabclose<cr>
+nnoremap <M-w>      :tabclose<cr>
+nnoremap <Leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
+nnoremap <Leader>tm :tabmove<space>
+nnoremap <Leader>to :tabonly<cr>
+nnoremap <Leader>tn gt
+nnoremap <Leader>tp gT
+nnoremap <Leader>ts :tab split<cr>
+
+" Quick fix panel
+noremap <Leader>qo :copen<CR>
+noremap <Leader>qc :cclose<CR>
+noremap <Leader>qn :cnext<CR>
+noremap <Leader>qp :cprev<CR>
+
+" Git | vim-fugitive
+nnoremap <Leader>ga :Git add %:p<CR><CR>
+nnoremap <Leader>gb :Gblame<CR>
+nnoremap <Leader>gd :Gdiff<CR>
+nnoremap <Leader>ge :Gedit<CR>
+nnoremap <Leader>gg :Ggrep<Space>
+nnoremap <Leader>gl :Dispatch! git pull<CR>
+nnoremap <Leader>gm :Gmove<Space>
+nnoremap <Leader>go :Git checkout<Space>
+nnoremap <Leader>gp :Dispatch! git push<CR>
+nnoremap <Leader>gr :Gread<CR>
+nnoremap <Leader>gs :Gstatus<CR>
+nnoremap <Leader>gt :Gcommit -v -q %:p<CR>
+nnoremap <Leader>gw :Gwrite<CR><CR>
+
