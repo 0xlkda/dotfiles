@@ -24,6 +24,7 @@ export EDITOR='nvim'
 
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
+export XDG_CONFIG_HOME="$HOME/.config"
 
 # Prevent duplicate entries
 typeset -U path

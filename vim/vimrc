@@ -1,5 +1,13 @@
 " Read this: http://karolis.koncevicius.lt/posts/porn_zen_and_vimrc/
 " And this: https://vim.fandom.com/wiki/Best_Vim_Tips
 " Then Vim!
+" If using NeoVim, type this ":help vim_diff.txt"
+" Read
+" Then NeoVim!
 "-------------------------------------------------------------------------------
+
+" Basic
+"
+set ignorecase
+set smartcase
 
