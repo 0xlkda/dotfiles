@@ -1,6 +1,9 @@
 ### dotenv ###
 .env
 
+### Super secret scripts ###
+/sss/
+
 ### Emacs ###
 # -*- mode: gitignore; -*-
 *~
@@ -50,7 +53,6 @@ flycheck_*.el
 
 # network security
 /network-security.data
-
 
 ### Git ###
 # Created by git for backups. To disable backups in Git:
