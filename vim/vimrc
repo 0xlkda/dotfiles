@@ -6,8 +6,41 @@
 " Then NeoVim!
 "-------------------------------------------------------------------------------
 
+" Plugins
+"
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin('~/.vim/plugged')
+
+Plug 'TheAlemazing/focus-vim'
+
+call plug#end()
+
 " Basic
 "
 set ignorecase
 set smartcase
+set termguicolors
 
+colorscheme focus
+
+" Auto Commands
+"
+augroup auto_format_group
+	autocmd!
+	au BufWrite * :%s/^(\s*\r\n){2,}/\r\n/ge " join multi lines to 1
+	au BufWrite * :%s/\s\+$//e     " remove trailing whitespaces
+	au BufWrite .vimrc :so %       " auto reload vim config
+augroup END
+
+" My Bindings
+"
+nnoremap <C-_> :set hlsearch!<CR>
+
+" My Commands
+"
+command! Preview :!open /Applications/Safari.app %
