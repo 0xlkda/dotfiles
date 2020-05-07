@@ -5,6 +5,8 @@ window:
     y: 0
   startup_mode: SimpleFullscreen
 
+draw_bold_text_with_bright_colors: true
+
 # Colors (Dracula)
 colors:
   primary:
