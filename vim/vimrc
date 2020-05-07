@@ -20,7 +20,7 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'TheAlemazing/focus-vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
+Plug 'preservim/nerdtree'
 Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
@@ -34,7 +34,7 @@ let g:typescript_indent_disable = 1
 let g:haskell_indent_disable=1
 
 " NERDTree config
-nnoremap <silent><Leader>d :NERDTreeToggle<CR>
+noremap <silent><Leader>d :NERDTreeToggle<CR>
 autocmd! BufEnter *
       \ if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) |
       \   q |
@@ -92,6 +92,13 @@ augroup auto_format_group
 
   " Always update
   au CursorHold,CursorHoldI <buffer> :update
+
+  " Auto open NERDTree with empty Vim
+  au StdinReadPre * let s:std_in=1
+  au VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+  " Close Vim if the last window is NERDTree
+  au bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 augroup END
 
 " My Bindings
