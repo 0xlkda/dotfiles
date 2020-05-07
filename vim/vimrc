@@ -16,35 +16,43 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.vim/plugged')
-
-" Theme
-Plug 'TheAlemazing/focus-vim'
-
-" Helpers
-Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
-
-" Git
-Plug 'tpope/vim-fugitive'
-
-" Editing
-Plug 'editorconfig/editorconfig-vim'
-Plug 'mg979/vim-visual-multi', {'branch': 'master'}
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-repeat'
-Plug 'jiangmiao/auto-pairs'
-Plug 'godlygeek/tabular'
-
-" Tmux
 Plug 'christoomey/vim-tmux-navigator'
-
-" Searching
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'TheAlemazing/focus-vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-
+Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
+Plug 'easymotion/vim-easymotion'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+Plug 'neovimhaskell/haskell-vim'
+Plug 'leafgarland/typescript-vim'
 call plug#end()
+
+" Indenting
+let g:typescript_indent_disable = 1
+let g:haskell_indent_disable=1
+
+" NERDTree config
+nnoremap <silent><Leader>d :NERDTreeToggle<CR>
+autocmd! BufEnter *
+      \ if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) |
+      \   q |
+      \ endif
+
+" FZF config
+nnoremap <C-Space> :Buffers<CR>
+nnoremap <C-e> :GFiles<CR>
+nnoremap <C-s> :Files %:p:h<CR>
+nnoremap <C-g>b :BCommits<CR>
+nnoremap <C-g>g :Commits<CR>
+nnoremap <silent> <C-N> :cn<CR>zv
+nnoremap <silent> <C-P> :cp<CR>zv
 
 " Basic
 "---------------
+let mapleader=" "
+set updatetime=250
 set ignorecase
 set smartcase
 set termguicolors
@@ -74,23 +82,33 @@ augroup auto_format_group
   au BufWritePost .vimrc source %         " auto reload vim config
 
   " Don't auto insert a comment when using O/o for a newline
-  autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+  au FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
   " On opening a file, jump to the last known cursor position (see :h line())
-  autocmd BufReadPost *
+  au BufReadPost *
         \ if line("'\"") > 1 && line("'\"") <= line("$") && &ft !~# 'commit' |
         \   exe "normal! g`\"" |
         \ endif
-augroup END
 
-" My Commands
-"---------------
-command! Preview :!open /Applications/Safari.app %
+  " Always update
+  au CursorHold,CursorHoldI <buffer> :update
+augroup END
 
 " My Bindings
 "---------------
 nnoremap <Leader>ls :set hlsearch!<CR>
 nnoremap <Leader>ll :set list!<CR>
+
+nnoremap <C-w>n :vnew<CR>
+nnoremap <C-l> <C-w>l
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+
+nmap <silent> <C-g>n :tabn<CR>
+nmap <silent> <C-g>p :tabN<CR>
+nmap <silent> <C-g><C-n> :tabm +1<CR>
+nmap <silent> <C-g><C-p> :tabm -1<CR>
 
 " Quick resize
 nnoremap <silent> <Right> :vertical resize +5<cr>
@@ -102,83 +120,14 @@ nnoremap <silent> <Down> :resize -5<cr>
 vnoremap < <gv
 vnoremap > >gv
 
-" NERDTree config
-nnoremap <silent> <C-p> :NERDTreeToggle<CR>
-autocmd! BufEnter *
-      \ if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) |
-      \   q |
-      \ endif
-
-" FZF config
-nnoremap <Leader>fb :Buffers<CR>
-nnoremap <Leader>fc :Commits<CR>
-nnoremap <Leader>ff :Files<CR>
-nnoremap <Leader>fg :GFiles --cached --others --exclude-standard<CR>
-nnoremap <Leader>fh :History<CR>
-nnoremap <Leader>fl :Lines<CR>
-nnoremap <Leader>ft :Tags<CR>
-nnoremap <Leader>fs :Filetypes<CR>
-
-nnoremap <Leader>sc :BCommits<CR>
-nnoremap <Leader>sl :BLines<CR>
-nnoremap <Leader>st :BTags<CR>
-
-" Windows management
-nnoremap <leader>wc <C-w>q
-nnoremap <leader>1 1<c-w>w
-nnoremap <leader>2 2<c-w>w
-nnoremap <leader>3 3<c-w>w
-nnoremap <leader>4 4<c-w>w
-nnoremap <leader>5 5<c-w>w
-nnoremap <leader>6 6<c-w>w
-nnoremap <leader>7 7<c-w>w
-nnoremap <leader>8 8<c-w>w
-nnoremap <leader>9 9<c-w>w
-nnoremap <leader>0 10<c-w>w
-nnoremap <M-d> :vsplit<cr>
-nnoremap <M-D> :split<cr>
-
-" Tabs management
-nnoremap <M-1> 1gt
-nnoremap <M-2> 2gt
-nnoremap <M-3> 3gt
-nnoremap <M-4> 4gt
-nnoremap <M-5> 5gt
-nnoremap <M-6> 6gt
-nnoremap <M-7> 7gt
-nnoremap <M-8> 8gt
-nnoremap <M-9> 9gt
-nnoremap <M-0> :tablast<cr>
-
-nnoremap <Leader>tt :tabnew<c>
-nnoremap <M-t>      :tabnew<cr>
-nnoremap <Leader>tc :tabclose<cr>
-nnoremap <M-w>      :tabclose<cr>
-nnoremap <Leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
-nnoremap <Leader>tm :tabmove<space>
-nnoremap <Leader>to :tabonly<cr>
-nnoremap <Leader>tn gt
-nnoremap <Leader>tp gT
-nnoremap <Leader>ts :tab split<cr>
-
 " Quick fix panel
 noremap <Leader>qo :copen<CR>
 noremap <Leader>qc :cclose<CR>
 noremap <Leader>qn :cnext<CR>
 noremap <Leader>qp :cprev<CR>
 
-" Git | vim-fugitive
-nnoremap <Leader>ga :Git add %:p<CR><CR>
-nnoremap <Leader>gb :Gblame<CR>
-nnoremap <Leader>gd :Gdiff<CR>
-nnoremap <Leader>ge :Gedit<CR>
-nnoremap <Leader>gg :Ggrep<Space>
-nnoremap <Leader>gl :Dispatch! git pull<CR>
-nnoremap <Leader>gm :Gmove<Space>
-nnoremap <Leader>go :Git checkout<Space>
-nnoremap <Leader>gp :Dispatch! git push<CR>
-nnoremap <Leader>gr :Gread<CR>
-nnoremap <Leader>gs :Gstatus<CR>
-nnoremap <Leader>gt :Gcommit -v -q %:p<CR>
-nnoremap <Leader>gw :Gwrite<CR><CR>
-
+" Tab management
+nnoremap <silent><Leader>tn :tabnew<cr>
+nnoremap <silent><Leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
+nnoremap <silent><Leader>tm :tabmove<space>
+nnoremap <silent><Leader>ts :tab split<cr>
