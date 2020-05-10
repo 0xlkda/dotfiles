@@ -119,6 +119,7 @@ alias reload="source ~/.zshrc"
 export EXA_COLORS="da=38;5;245:sn=38;5;245:sb=38;5;245:uu=38;5;245"
 alias ls="exa -am --group-directories-first --sort=name"
 alias la="ls -l"
+alias ll="ls -1"
 
 # vim
 alias vim="nvim"
