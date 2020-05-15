@@ -143,9 +143,11 @@ alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias me="cd ~/Projects"
 alias work="cd ~/Noggin"
 alias dotfiles="cd ~/Projects/dotfiles"
-alias zshconfig="vim $HOME/.zshrc"
-alias vimconfig="vim $HOME/.vimrc"
+alias zshconf="vim $HOME/.zshrc"
+alias vimconf="vim $HOME/.vimrc"
 alias afl="alias-finder -l $1"
 alias woman="tldr $1"
 alias git="hub"
 alias gist="hub gist"
+alias today='vim $(date +%d-%m-%Y).md'
+
