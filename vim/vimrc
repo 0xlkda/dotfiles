@@ -39,9 +39,11 @@ call plug#end()
 "---------------
 let mapleader=" "
 set updatetime=250
+set hidden
 set ignorecase
 set smartcase
 set termguicolors
+set cmdheight=2
 set tabstop=4
 set softtabstop=2
 set shiftwidth=2
@@ -107,10 +109,10 @@ nmap <silent> <C-g><C-n> :tabm +1<CR>
 nmap <silent> <C-g><C-p> :tabm -1<CR>
 
 " Quick resize
-nnoremap <silent> <Right> :vertical resize +5<cr>
-nnoremap <silent> <Left> :vertical resize -5<cr>
-nnoremap <silent> <Up> :resize +5<cr>
-nnoremap <silent> <Down> :resize -5<cr>
+nnoremap <silent> <M-Right> :vertical resize +5<cr>
+nnoremap <silent> <M-Left> :vertical resize -5<cr>
+nnoremap <silent> <M-Up> :resize +5<cr>
+nnoremap <silent> <M-Down> :resize -5<cr>
 
 " Reselect visual block after indenting
 vnoremap <Tab> >gv
@@ -150,12 +152,6 @@ nmap <silent> gr <Plug>(coc-references)
 
 " Add `:Format` command to format current buffer.
 command! -nargs=0 Format :call CocAction('format')
-
-" Add `:Fold` command to fold current buffer.
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
-
-" Add `:OR` command for organize imports of the current buffer.
-command! -nargs=0 OR   :call    CocAction('runCommand', 'editor.action.organizeImport')
 
 " Easymotion
 "---------------
@@ -200,12 +196,6 @@ nnoremap <C-g>g :Commits<CR>
 
 " Auto close tag
 "---------------
-let g:closetag_filenames = '*.html,*.js,*.jsx,*.vue'
+let g:closetag_filenames = '*.html,*.js,*.jsx,*.ts,*.tsx,*.vue'
 let g:closetag_emptyTags_caseSensitive = 1
 let g:jsx_ext_required = 0
-
-" Multiple cursors
-"---------------
-let g:multi_cursor_next_key = '<C-n>'
-let g:multi_cursor_prev_key = '<C-p>'
-let g:multi_cursor_skip_key = '<C-x>'
