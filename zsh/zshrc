@@ -103,7 +103,6 @@ alias cp="cp -i"
 alias mv="mv -i"
 alias rm="rm -i"
 alias del="mv -t ~/.Trash/"
-alias vim="nvim"
 
 # cd
 alias .2="cd ../.."

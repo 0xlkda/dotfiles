@@ -1,0 +1,201 @@
+" Read this: http://karolis.koncevicius.lt/posts/porn_zen_and_vimrc/
+" And this: https://vim.fandom.com/wiki/Best_Vim_Tips
+" Then Vim!
+" If using NeoVim, type this ":help vim_diff.txt"
+" Read
+" Then NeoVim!
+" vim:tw=78:ts=8:sw=2:noet:ft=help:norl:
+"-------------------------------------------------------------------------------
+
+" Plugins
+"---------------
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin('~/.vim/plugged')
+Plug 'TheAlemazing/focus-vim'
+Plug 'itchyny/lightline.vim'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+Plug 'preservim/nerdtree'
+Plug 'xuyuanp/nerdtree-git-plugin'
+Plug 'scrooloose/nerdcommenter'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'easymotion/vim-easymotion'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'sheerun/vim-polyglot'
+Plug 'ervandew/supertab'
+Plug 'alvan/vim-closetag'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+call plug#end()
+
+" Basic
+"---------------
+let mapleader=" "
+set updatetime=250
+set hidden
+set ignorecase
+set smartcase
+set termguicolors
+set cmdheight=2
+set tabstop=4
+set softtabstop=2
+set shiftwidth=2
+set splitbelow
+set splitright
+set signcolumn=yes
+set nobackup
+set nowritebackup
+set ruler
+set number
+set relativenumber
+
+colorscheme focus
+
+" Yank to clipboard
+if has("clipboard")
+  set clipboard=unnamed " copy to the system clipboard
+
+  if has("unnamedplus") " X11 support
+    set clipboard+=unnamedplus
+  endif
+endif
+
+" Auto Commands
+"---------------
+augroup auto_format_group
+  autocmd!
+  au BufWritePre * :%s/\(\n\n\)\n\+/\1/ge " join multi lines to 1
+  au BufWritePre * :%s/\s\+$//e           " auto remove all trailing spaces
+  au BufWritePost .vimrc source %         " auto reload vim config
+
+  " Don't auto insert a comment when using O/o for a newline
+  au FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+
+  " On opening a file, jump to the last known cursor position (see :h line())
+  au BufReadPost *
+        \ if line("'\"") > 1 && line("'\"") <= line("$") && &ft !~# 'commit' |
+        \   exe "normal! g`\"" |
+        \ endif
+
+  " Auto open NERDTree with empty Vim
+  au StdinReadPre * let s:std_in=1
+  au VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+  " Close Vim if the last window is NERDTree
+  au bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+augroup END
+
+" My Bindings
+"---------------
+nnoremap <Leader>ls :set hlsearch!<CR>
+nnoremap <Leader>ll :set list!<CR>
+
+nnoremap <C-w>n :vnew<CR>
+nnoremap <C-l> <C-w>l
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+
+nmap <silent> <C-g>n :tabn<CR>
+nmap <silent> <C-g>p :tabN<CR>
+nmap <silent> <C-g><C-n> :tabm +1<CR>
+nmap <silent> <C-g><C-p> :tabm -1<CR>
+
+" Quick resize
+nnoremap <silent> <M-Right> :vertical resize +5<cr>
+nnoremap <silent> <M-Left> :vertical resize -5<cr>
+nnoremap <silent> <M-Up> :resize +5<cr>
+nnoremap <silent> <M-Down> :resize -5<cr>
+
+" Reselect visual block after indenting
+vnoremap <Tab> >gv
+vnoremap <S-Tab> <gv
+vnoremap > >gv
+vnoremap < <gv
+
+" Quick fix panel
+noremap <Leader>qo :copen<CR>
+noremap <Leader>qc :cclose<CR>
+noremap <Leader>qn :cnext<CR>
+noremap <Leader>qp :cprev<CR>
+
+" Tab management
+nnoremap <silent><Leader>tn :tabnew<cr>
+nnoremap <silent><Leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
+nnoremap <silent><Leader>tm :tabmove<space>
+nnoremap <silent><Leader>ts :tab split<cr>
+
+" Plugin Config
+"---------------
+
+" Coc.nvim
+"---------------
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" Use `[g` and `]g` to navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocAction('format')
+
+" Easymotion
+"---------------
+nmap <Leader>f <Plug>(easymotion-overwin-f)
+nmap <Leader>L <Plug>(easymotion-overwin-line)
+map / <Plug>(easymotion-sn)
+
+" Lightline
+"---------------
+let g:lightline = {
+      \ 'colorscheme': 'one',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'cocstatus', 'readonly', 'filename', 'modified' ] ],
+      \   'right': [ [ 'lineinfo', 'percent' ],
+      \              [ 'fileformat', 'fileencoding', 'filetype' ] ]
+      \ },
+      \ 'separator': { 'left': '', 'right': '' },
+      \ 'subseparator': { 'left': '', 'right': '' },
+      \ 'component_function': {
+      \   'gitbranch': 'fugitive#head',
+      \   'cocstatus': 'coc#status'
+      \ },
+      \ }
+
+" NERDTree config
+"---------------
+nnoremap <silent><C-f> :NERDTreeToggle<CR>
+nnoremap <silent>F     :NERDTreeFind<CR>
+autocmd! BufEnter *
+      \ if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) |
+      \   q |
+      \ endif
+
+" FZF config
+"---------------
+nnoremap <C-Space> :Buffers<CR>
+nnoremap <C-e> :GFiles<CR>
+nnoremap <C-s> :Files %:p:h<CR>
+nnoremap <C-g>b :BCommits<CR>
+nnoremap <C-g>g :Commits<CR>
+
+" Auto close tag
+"---------------
+let g:closetag_filenames = '*.html,*.js,*.jsx,*.ts,*.tsx,*.vue'
+let g:closetag_emptyTags_caseSensitive = 1
+let g:jsx_ext_required = 0

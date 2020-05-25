@@ -3,17 +3,6 @@
   "diagnostic.hintSign": "➤",
   "diagnostic.warningSign": "⚠",
   "diagnostic.errorSign": "✖",
-  "suggest.echodocSupport": true,
-  "suggest.maxCompleteItemCount": 20,
-  "python.jediEnabled": false,
-  "coc.preferences.formatOnTypeFiletypes": [
-    "json",
-    "markdown",
-    "javascript",
-    "typescript",
-    "javascriptreact",
-    "typescriptreact"
-  ],
   "eslint.filetypes": [
     "javascript",
     "typescript",
