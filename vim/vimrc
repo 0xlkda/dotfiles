@@ -1,0 +1,122 @@
+syntax on
+
+set guicursor=
+set relativenumber
+set nohlsearch
+set hidden
+set noerrorbells
+set tabstop=2 softtabstop=2
+set shiftwidth=2
+set expandtab
+set smartindent
+set nowrap
+set smartcase
+set noswapfile
+set nobackup
+set undodir=~/.vim/undodir
+set undofile
+set incsearch
+set scrolloff=4
+set noshowmode
+set completeopt=menuone,noinsert,noselect
+set cmdheight=2
+set shortmess+=c
+set clipboard=unnamed
+highlight ColorColumn ctermbg=0 guibg=lightgrey
+
+call plug#begin('~/.vim/plugged')
+
+Plug 'gruvbox-community/gruvbox'
+
+" lsp
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/completion-nvim'
+
+" telescope requirements
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-lua/telescope.nvim'
+
+Plug 'tpope/vim-fugitive'
+Plug 'mbbill/undotree'
+Plug 'sheerun/vim-polyglot'
+
+call plug#end()
+
+if executable('rg')
+    let g:rg_derive_root='true'
+endif
+
+let g:gruvbox_contrast_dark = 'hard'
+let g:gruvbox_invert_selection = 0
+colorscheme gruvbox
+set background=dark
+
+let loaded_matchparen = 1
+let mapleader = ' '
+
+" fzf
+let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.8  } }
+let $FZF_DEFAULT_OPTS = '--reverse'
+
+" file browsing
+let g:netrw_browse_split = 2
+let g:netrw_banner = 0
+let g:netrw_winsize = 25
+let g:netrw_localrmdir = 'rm -r'
+
+" telescope
+let g:telescope_cache_result = 1
+let g:telescope_prime_fuzzy_find = 1
+
+" completion
+let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
+let g:completion_trigger_keyword_length = 3
+lua require'nvim_lsp'.tsserver.setup{ on_attach=require'completion'.on_attach }
+inoremap <expr> <Tab>   pumvisible() ? '\<C-n>' : '\<Tab>'
+inoremap <expr> <S-Tab> pumvisible() ? '\<C-p>' : '\<S-Tab>'
+
+" diagnostic
+let g:diagnostic_insert_delay = 1
+let g:diagnostic_show_sign = 1
+let g:diagnostic_enable_virtual_text = 1
+
+" key mapping
+inoremap <C-c> <Esc>
+nnoremap <leader>u    :UndotreeShow<CR>
+nnoremap <leader>pv   :wincmd v<bar> :Ex <bar> :vertical resize 30<CR>
+nnoremap <leader>rs   :resize 100<CR>
+nnoremap <leader><CR> :source ~/.dotfiles/vim/vimrc<CR>
+
+nnoremap <C-p>        :lua require('telescope.builtin').git_files()<CR>
+nnoremap <leader>ps   :lua require('telescope.builtin').grep_string({ search = vim.fn.input('Grep For: ')})<CR>
+nnoremap <leader>pw   :lua require('telescope.builtin').grep_string({ search = vim.fn.expand('<cword>') })<CR>
+
+nnoremap <leader>vd   :lua vim.lsp.buf.definition()<CR>
+nnoremap <leader>vi   :lua vim.lsp.buf.implementation()<CR>
+nnoremap <leader>vsh  :lua vim.lsp.buf.signature_help()<CR>
+nnoremap <leader>vrr  :lua vim.lsp.buf.references()<CR>
+nnoremap <leader>vrn  :lua vim.lsp.buf.rename()<CR>
+nnoremap <leader>vh   :lua vim.lsp.buf.hover()<CR>
+nnoremap <leader>vca  :lua vim.lsp.buf.code_action()<CR>
+
+vnoremap J :move '>+1<CR>gv=gv
+vnoremap K :move '<-2<CR>gv=gv
+vnoremap X "_d
+vnoremap <leader>p "_dP
+
+fun! TrimWhitespace()
+    let l:save = winsaveview()
+    keeppatterns %s/\s\+$//e
+    call winrestview(l:save)
+endfun
+
+augroup highlight_yank
+    autocmd!
+    autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank({timeout = 40})
+augroup END
+
+augroup THEALEMAZING
+    autocmd!
+    autocmd BufWritePre * :call TrimWhitespace()
+augroup END
