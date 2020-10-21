@@ -73,8 +73,8 @@ let g:telescope_prime_fuzzy_find = 1
 let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
 let g:completion_trigger_keyword_length = 3
 lua require'nvim_lsp'.tsserver.setup{ on_attach=require'completion'.on_attach }
-inoremap <expr> <Tab>   pumvisible() ? '\<C-n>' : '\<Tab>'
-inoremap <expr> <S-Tab> pumvisible() ? '\<C-p>' : '\<S-Tab>'
+inoremap <expr> <Tab>   pumvisible() ? '<C-n>' : '<Tab>'
+inoremap <expr> <S-Tab> pumvisible() ? '<C-p>' : '<S-Tab>'
 
 " diagnostic
 let g:diagnostic_insert_delay = 1
@@ -91,6 +91,7 @@ nnoremap <leader><CR> :source ~/.dotfiles/vim/vimrc<CR>
 nnoremap <C-p>        :lua require('telescope.builtin').git_files()<CR>
 nnoremap <leader>ps   :lua require('telescope.builtin').grep_string({ search = vim.fn.input('Grep For: ')})<CR>
 nnoremap <leader>pw   :lua require('telescope.builtin').grep_string({ search = vim.fn.expand('<cword>') })<CR>
+nnoremap <leader>pb   :lua require('telescope.builtin').buffers()<CR>
 
 nnoremap <leader>vd   :lua vim.lsp.buf.definition()<CR>
 nnoremap <leader>vi   :lua vim.lsp.buf.implementation()<CR>

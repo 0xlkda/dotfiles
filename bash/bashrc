@@ -93,7 +93,11 @@ alias la='ls -A'
 alias l='ls -CF'
 alias vim='nvim'
 alias vimconf='vim ~/.dotfiles/vim/vimrc'
+alias bashconf='vim ~/.dotfiles/bash/bashrc'
+alias tmuxconf='vim ~/.dotfiles/tmux/tmux.conf'
 alias reload='source ~/.dotfiles/bash/bashrc'
+alias dotfiles='cd ~/.dotfiles'
+alias me='cd ~/projects'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -122,3 +126,23 @@ fi
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# tmux attach setup
+alias mux='tmux new-session -ADs main'
+
+# tmux detach setup
+exit() {
+  if [[ -z $TMUX ]]; then
+    builtin exit
+    return
+  fi
+
+  panes=$(tmux list-panes | wc -l)
+  wins=$(tmux list-windows | wc -l)
+  count=$(($panes + $wins - 1))
+  if [ $count -eq 1 ]; then
+    tmux detach
+  else
+    builtin exit
+  fi
+}
