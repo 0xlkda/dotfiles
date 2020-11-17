@@ -3,6 +3,7 @@
 - link:
     ~/.profile: bash/profile
     ~/.bashrc: bash/bashrc
+    ~/.zshrc: zsh/zshrc
     ~/.vimrc: vim/vimrc
     ~/.config/nvim/init.vim: nvim/init.vim
     ~/.tmux.conf: tmux/tmux.conf
