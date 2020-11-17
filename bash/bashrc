@@ -146,3 +146,9 @@ exit() {
     builtin exit
   fi
 }
+
+# csv viewer
+csview() {
+  local file="$1"
+  cat "$file" | sed 's/,/ ,/g' | column -t -s, | less -S
+}

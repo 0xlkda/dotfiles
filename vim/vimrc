@@ -1,5 +1,5 @@
 syntax on
-
+set mouse=a
 set guicursor=
 set relativenumber
 set nohlsearch
