@@ -8,6 +8,10 @@ plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
+# You may need to manually set your language environment
+export LANG=en_US.UTF-8
+export XDG_CONFIG_HOME="$HOME/.config"
+
 alias vim='nvim'
 alias vimconf='vim ~/.dotfiles/vim/vimrc'
 alias zshconf="vim ~/.zshrc"
@@ -16,6 +20,29 @@ alias tmuxconf='vim ~/.dotfiles/tmux/tmux.conf'
 alias reload='source ~/.dotfiles/zsh/zshrc'
 alias dotfiles='cd ~/.dotfiles'
 alias me='cd ~/projects'
+
+# Prevent duplicate entries
+typeset -U path
+typeset -U fpath
+
+# ZPLUG setup
+export ZPLUG_HOME=/usr/local/opt/zplug
+source $ZPLUG_HOME/init.zsh
+
+zplug "plugins/git", from:oh-my-zsh
+zplug "zsh-users/zsh-history-substring-search"
+zplug "zsh-users/zsh-syntax-highlighting"
+zplug "zsh-users/zsh-autosuggestions"
+zplug "zsh-users/zsh-completions"
+zplug mafredri/zsh-async, from:github
+zplug sindresorhus/pure, use:pure.zsh, from:github, as:theme
+
+# NPM
+alias nr="npm run"
+alias nb="npm run build"
+alias ns="npm run start"
+alias nt="npm run test"
+alias np="npm version patch && npm publish && git push origin master --tags"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
