@@ -1,41 +1,33 @@
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-export ZSH="/root/.oh-my-zsh"
+export ZSH=$HOME/.oh-my-zsh
 
-ZSH_THEME="robbyrussell"
+export ZSH_THEME=""
 
-plugins=(git)
+plugins=(git zsh-autosuggestions zsh-completions)
 
 source $ZSH/oh-my-zsh.sh
 
+fpath+=('/home/alex/.nvm/versions/node/v14.15.1/lib/node_modules/pure-prompt/functions')
+autoload -U promptinit; promptinit
+prompt pure
+
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
-export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CONFIG_HOME=$HOME/.config
 
-alias vim='nvim'
-alias vimconf='vim ~/.dotfiles/vim/vimrc'
-alias zshconf="vim ~/.zshrc"
-alias bashconf='vim ~/.dotfiles/bash/bashrc'
-alias tmuxconf='vim ~/.dotfiles/tmux/tmux.conf'
-alias reload='source ~/.dotfiles/zsh/zshrc'
-alias dotfiles='cd ~/.dotfiles'
+alias vim=nvim
+alias vimconf='vim ~/projects/dotfiles/vim/vimrc'
+alias zshconf='vim ~/projects/dotfiles/zsh/zshrc'
+alias bashconf='vim ~/projects/dotfiles/bash/bashrc'
+alias tmuxconf='vim ~/projects/dotfiles/tmux/tmux.conf'
+alias reload='source ~/projects/dotfiles/zsh/zshrc'
+alias dotfiles='cd ~/projects/dotfiles'
 alias me='cd ~/projects'
 
 # Prevent duplicate entries
 typeset -U path
 typeset -U fpath
-
-# ZPLUG setup
-export ZPLUG_HOME=/usr/local/opt/zplug
-source $ZPLUG_HOME/init.zsh
-
-zplug "plugins/git", from:oh-my-zsh
-zplug "zsh-users/zsh-history-substring-search"
-zplug "zsh-users/zsh-syntax-highlighting"
-zplug "zsh-users/zsh-autosuggestions"
-zplug "zsh-users/zsh-completions"
-zplug mafredri/zsh-async, from:github
-zplug sindresorhus/pure, use:pure.zsh, from:github, as:theme
 
 # NPM
 alias nr="npm run"
