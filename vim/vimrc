@@ -72,7 +72,7 @@ let g:telescope_prime_fuzzy_find = 1
 " completion
 let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
 let g:completion_trigger_keyword_length = 3
-lua require'lspconfig'.tsserver.setup{ on_attach=require'completion'.on_attach }
+lua require("lspconfig").tsserver.setup{ on_attach=require("completion").on_attach }
 inoremap <expr> <Tab>   pumvisible() ? '<C-n>' : '<Tab>'
 inoremap <expr> <S-Tab> pumvisible() ? '<C-p>' : '<S-Tab>'
 
