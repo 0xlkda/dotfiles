@@ -1,14 +1,21 @@
+set nocompatible
+"filetype plugin indent on
 syntax on
+
+set expandtab
+set softtabstop=2
+set shiftwidth=2
+set autoindent
+set smartindent
+
 set mouse=a
 set guicursor=
+set splitbelow
+set splitright
 set relativenumber
 set nohlsearch
 set hidden
 set noerrorbells
-set tabstop=2 softtabstop=2
-set shiftwidth=2
-set expandtab
-set smartindent
 set nowrap
 set smartcase
 set noswapfile
@@ -22,6 +29,7 @@ set completeopt=menuone,noinsert,noselect
 set cmdheight=2
 set shortmess+=c
 set clipboard=unnamed
+set signcolumn=yes
 highlight ColorColumn ctermbg=0 guibg=lightgrey
 
 call plug#begin('~/.vim/plugged')
@@ -31,21 +39,24 @@ Plug 'gruvbox-community/gruvbox'
 " lsp
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " telescope requirements
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-lua/telescope.nvim'
+Plug 'nvim-telescope/telescope.nvim'
 
 Plug 'tpope/vim-fugitive'
 Plug 'mbbill/undotree'
-Plug 'sheerun/vim-polyglot'
 
 call plug#end()
 
 if executable('rg')
-    let g:rg_derive_root='true'
+  let g:rg_derive_root='true'
 endif
+
+" tree-sitter highlighting
+lua require'nvim-treesitter.configs'.setup { highlight = { enable = true }, indent = { enable = true } }
 
 let g:gruvbox_contrast_dark = 'hard'
 let g:gruvbox_invert_selection = 0
@@ -83,10 +94,11 @@ let g:diagnostic_enable_virtual_text = 1
 
 " key mapping
 inoremap <C-c> <Esc>
+nnoremap === gg=G`.zz
 nnoremap <leader>u    :UndotreeShow<CR>
 nnoremap <leader>pv   :wincmd v<bar> :Ex <bar> :vertical resize 30<CR>
 nnoremap <leader>rs   :resize 100<CR>
-nnoremap <leader><CR> :source ~/.dotfiles/vim/vimrc<CR>
+nnoremap <leader><CR> :source ~/projects/dotfiles/vim/vimrc<CR>
 
 nnoremap <C-p>        :lua require('telescope.builtin').git_files()<CR>
 nnoremap <leader>ps   :lua require('telescope.builtin').grep_string({ search = vim.fn.input('Grep For: ')})<CR>
@@ -107,17 +119,17 @@ vnoremap X "_d
 vnoremap <leader>p "_dP
 
 fun! TrimWhitespace()
-    let l:save = winsaveview()
-    keeppatterns %s/\s\+$//e
-    call winrestview(l:save)
+  let l:save = winsaveview()
+  keeppatterns %s/\s\+$//e
+  call winrestview(l:save)
 endfun
 
 augroup highlight_yank
-    autocmd!
-    autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank({timeout = 40})
+  autocmd!
+  autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank({timeout = 40})
 augroup END
 
 augroup THEALEMAZING
-    autocmd!
-    autocmd BufWritePre * :call TrimWhitespace()
+  autocmd!
+  autocmd BufWritePre * :call TrimWhitespace()
 augroup END
