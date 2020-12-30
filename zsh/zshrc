@@ -24,6 +24,7 @@ alias tmuxconf='vim ~/projects/dotfiles/tmux/tmux.conf'
 alias reload='source ~/projects/dotfiles/zsh/zshrc'
 alias dotfiles='cd ~/projects/dotfiles'
 alias me='cd ~/projects'
+alias cleanup='find . -name ".DS_Store" -print -delete'
 
 # Prevent duplicate entries
 typeset -U path
