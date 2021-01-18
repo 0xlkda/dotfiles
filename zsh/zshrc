@@ -16,6 +16,10 @@ prompt pure
 export LANG=en_US.UTF-8
 export XDG_CONFIG_HOME=$HOME/.config
 
+# Use vim
+export VISUAL=nvim
+export EDITOR="$VISUAL"
+
 alias vim='nvim'
 alias vimconf='vim ~/projects/dotfiles/vim/vimrc'
 alias zshconf='vim ~/projects/dotfiles/zsh/zshrc'
