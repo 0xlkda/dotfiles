@@ -52,9 +52,6 @@ Plug 'nvim-telescope/telescope.nvim'
 
 Plug 'mbbill/undotree'
 Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-liquid'
-Plug 'maxmellon/vim-jsx-pretty'
-Plug 'jxnblk/vim-mdx-js'
 Plug 'dbeniamine/cheat.sh-vim'
 
 call plug#end()
@@ -71,8 +68,13 @@ set background=dark
 let loaded_matchparen = 1
 let mapleader = ' '
 
-" tree-sitter highlighting
-lua require("nvim-treesitter.configs").setup{ highlight = { enable = true } }
+" treesitter highlighting
+lua <<EOF
+require("nvim-treesitter.configs").setup{
+highlight = { enable = true },
+indent = { enable =  true}
+}
+EOF
 
 " fzf
 let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.8  } }
@@ -143,21 +145,20 @@ vnoremap <leader>p "_dP
 
 " debugger remap
 fun! GotoWindow(id)
-    call win_gotoid(a:id)
-    MaximizerToggle
+  call win_gotoid(a:id)
+  MaximizerToggle
 endfun
 
 " Debugger remaps
-nnoremap <leader>m :MaximizerToggle!<CR>
-nnoremap <leader>dd :call vimspector#Launch()<CR>
-nnoremap <leader>dc :call GotoWindow(g:vimspector_session_windows.code)<CR>
-nnoremap <leader>dt :call GotoWindow(g:vimspector_session_windows.tagpage)<CR>
-nnoremap <leader>dv :call GotoWindow(g:vimspector_session_windows.variables)<CR>
-nnoremap <leader>dw :call GotoWindow(g:vimspector_session_windows.watches)<CR>
-nnoremap <leader>ds :call GotoWindow(g:vimspector_session_windows.stack_trace)<CR>
-nnoremap <leader>do :call GotoWindow(g:vimspector_session_windows.output)<CR>
-nnoremap <leader>de :call vimspector#Reset()<CR>
-
+nnoremap <leader>m    :MaximizerToggle!<CR>
+nnoremap <leader>dd   :call vimspector#Launch()<CR>
+nnoremap <leader>dc   :call GotoWindow(g:vimspector_session_windows.code)<CR>
+nnoremap <leader>dt   :call GotoWindow(g:vimspector_session_windows.tagpage)<CR>
+nnoremap <leader>dv   :call GotoWindow(g:vimspector_session_windows.variables)<CR>
+nnoremap <leader>dw   :call GotoWindow(g:vimspector_session_windows.watches)<CR>
+nnoremap <leader>ds   :call GotoWindow(g:vimspector_session_windows.stack_trace)<CR>
+nnoremap <leader>do   :call GotoWindow(g:vimspector_session_windows.output)<CR>
+nnoremap <leader>de   :call vimspector#Reset()<CR>
 nnoremap <leader>dtcb :call vimspector#CleanLineBreakpoint()<CR>
 
 nmap <leader>dl <Plug>VimspectorStepInto
