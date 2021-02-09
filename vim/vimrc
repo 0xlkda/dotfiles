@@ -22,7 +22,7 @@ set undofile
 set incsearch
 set scrolloff=4
 set noshowmode
-set completeopt=menuone,noinsert,noselect
+set completeopt=menu,menuone,noselect
 set cmdheight=2
 set shortmess+=c
 set clipboard=unnamed
@@ -37,9 +37,7 @@ Plug 'gruvbox-community/gruvbox'
 
 " lsp
 Plug 'neovim/nvim-lspconfig'
-Plug 'nvim-lua/completion-nvim'
-"Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-"Plug 'nvim-treesitter/playground'
+Plug 'hrsh7th/nvim-compe'
 
 " debugger Plugins
 Plug 'puremourning/vimspector'
@@ -50,6 +48,7 @@ Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 
+" common
 Plug 'mbbill/undotree'
 Plug 'tpope/vim-fugitive'
 Plug 'dbeniamine/cheat.sh-vim'
@@ -74,13 +73,6 @@ set background=dark
 let loaded_matchparen = 1
 let mapleader = ' '
 
-" treesitter highlighting
-"lua <<EOF
-"require("nvim-treesitter.configs").setup{
-"  highlight = { enable = true },
-"}
-"EOF
-
 " fzf
 let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.8  } }
 let $FZF_DEFAULT_OPTS = '--reverse'
@@ -92,27 +84,123 @@ let g:netrw_winsize = 25
 let g:netrw_localrmdir='rm -r'
 
 " telescope
-lua require('telescope').setup({defaults = {file_sorter = require('telescope.sorters').get_fzy_sorter}})
+lua << EOF
+local actions = require('telescope.actions')
+require('telescope').setup {
+  defaults = {
+    file_sorter = require('telescope.sorters').get_fzy_sorter,
+    prompt_prefix = ' >',
+    color_devicons = true,
+
+    mappings = {
+      i = {
+        ["<C-x>"] = false,
+        ["<C-o>"] = actions.goto_file_selection_split,
+        ["<C-q>"] = actions.send_to_qflist,
+      },
+    }
+  }
+}
+EOF
 let g:telescope_cache_result = 1
 let g:telescope_prime_fuzzy_find = 1
 
+" lsp setup
+lua << EOF
+local lspconfig = require"lspconfig"
+local eslint = {
+  lintCommand = "eslint_d -f unix --stdin --stdin-filename ${INPUT}",
+  lintIgnoreExitCode = true,
+  lintStdin = true,
+  lintFormats = {"%f:%l:%c: %m"}
+}
+
+local prettier = {
+  formatCommand = "./node_modules/.bin/prettier --stdin-filepath ${INPUT}",
+  formatStdin = true
+}
+
+lspconfig.tsserver.setup {
+  on_attach = function(client)
+    if client.config.flags then
+      client.config.flags.allow_incremental_sync = true
+    end
+    client.resolved_capabilities.document_formatting = false
+  end
+}
+
+lspconfig.efm.setup {
+  init_options = {
+    documentFormatting = true,
+    codeAction = true
+  },
+  on_attach = function(client)
+    client.resolved_capabilities.document_formatting = true
+    client.resolved_capabilities.goto_definition = false
+  end,
+  filetypes = {
+    "javascript",
+    "javascriptreact",
+    "javascript.jsx",
+    "typescript",
+    "typescript.tsx",
+    "typescriptreact"
+  },
+  settings = {
+    rootMarkers = {".git/"},
+    languages = {
+      typescript = {prettier, eslint},
+      javascript = {prettier, eslint},
+      typescriptreact = {prettier, eslint},
+      javascriptreact = {prettier, eslint},
+      yaml = {prettier},
+      json = {prettier},
+      html = {prettier},
+      scss = {prettier},
+      css = {prettier},
+      markdown = {prettier},
+    }
+  }
+}
+EOF
+
 " completion
-let g:completion_chain_complete_list = {
-      \'default' : [
-      \    {'complete_items': ['lsp', 'snippet']},
-      \    {'mode': '<c-p>'},
-      \    {'mode': '<c-n>'}
-      \]
-      \}
+lua << EOF
+require'compe'.setup {
+  enabled = true;
+  autocomplete = true;
+  debug = false;
+  min_length = 2;
+  preselect = 'enable';
+  throttle_time = 80;
+  source_timeout = 200;
+  incomplete_delay = 400;
+  max_abbr_width = 100;
+  max_kind_width = 100;
+  max_menu_width = 100;
+  documentation = true;
 
-imap  <c-j> <Plug>(completion_next_source)
-imap  <c-k> <Plug>(completion_prev_source)
+  source = {
+    path = true;
+    buffer = true;
+    calc = true;
+    vsnip = true;
+    nvim_lsp = true;
+    nvim_lua = true;
+    spell = true;
+    tags = true;
+    snippets_nvim = true;
+    treesitter = true;
+  };
+}
+EOF
 
-let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
-let g:completion_trigger_keyword_length = 2
-lua require("lspconfig").tsserver.setup{ on_attach=require("completion").on_attach }
-imap <Tab> <Plug>(completion_smart_tab)
-imap <S-tab> <Plug>(completion_smart_s_tab)
+" completion mappings
+inoremap <silent><expr> <C-Space> compe#complete()
+inoremap <silent><expr> <CR>      compe#confirm('<CR>')
+inoremap <silent><expr> <C-e>     compe#close('<C-e>')
+inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
+inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
 
 " diagnostic
 let g:diagnostic_insert_delay = 1
