@@ -5,16 +5,25 @@ Plug 'gruvbox-community/gruvbox'
 " misc
 Plug 'mbbill/undotree'
 
+" lsp
+Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/nvim-compe'
+
 " telescope
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzy-native.nvim'
 
-" formatter
+" code formatter
 Plug 'sbdchd/neoformat'
 
 call plug#end()
+
+" load my lua config
+lua << EOF
+require("thealemazing")
+EOF
 
 let loaded_matchparen = 1
 let mapleader = " "
