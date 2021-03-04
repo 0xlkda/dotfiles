@@ -5,6 +5,9 @@ Plug 'gruvbox-community/gruvbox'
 " misc
 Plug 'mbbill/undotree'
 
+" code hi-lighting
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
 " lsp
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/nvim-compe'
