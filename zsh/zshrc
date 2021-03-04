@@ -21,7 +21,7 @@ export VISUAL=nvim
 export EDITOR="$VISUAL"
 
 alias vim='nvim'
-alias vimconf='vim ~/projects/dotfiles/vim/vimrc'
+alias vimconf='vim ~/projects/dotfiles/nvim/init.vim'
 alias zshconf='vim ~/projects/dotfiles/zsh/zshrc'
 alias bashconf='vim ~/projects/dotfiles/bash/bashrc'
 alias tmuxconf='vim ~/projects/dotfiles/tmux/tmux.conf'
