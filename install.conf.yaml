@@ -4,6 +4,5 @@
     ~/.profile: bash/profile
     ~/.bashrc: bash/bashrc
     ~/.zshrc: zsh/zshrc
-    ~/.vimrc: vim/vimrc
-    ~/.config/nvim/init.vim: nvim/init.vim
+    ~/.config/nvim: nvim
     ~/.tmux.conf: tmux/tmux.conf
