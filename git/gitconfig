@@ -7,3 +7,5 @@
 	editor = nvim
 [credential]
 	helper = cache
+[init]
+  templateDir = ~/.git-template
