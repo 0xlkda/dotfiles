@@ -27,12 +27,23 @@ alias bashconf='vim ~/projects/dotfiles/bash/bashrc'
 alias tmuxconf='vim ~/projects/dotfiles/tmux/tmux.conf'
 alias reload='source ~/projects/dotfiles/zsh/zshrc'
 alias dotfiles='cd ~/projects/dotfiles'
-alias me='cd ~/projects'
 alias cleanup='find . -name ".DS_Store" -print -delete'
 
 # Prevent duplicate entries
 typeset -U path
 typeset -U fpath
+
+# Tree
+alias tree='tree -I "node_modules|.cache"'
+
+# fzy
+wd() {
+  cd $(find ~/projects -maxdepth 1 -type d | fzy)
+}
+
+d() {
+  cd $(find . -maxdepth 1 -type d | fzy)
+}
 
 # NPM
 alias nr="npm run"

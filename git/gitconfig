@@ -1,0 +1,9 @@
+[user]
+	email = hello@thealemazing.com
+  name = TheAlemazing
+[pull]
+  rebase = true
+[core]
+	editor = nvim
+[credential]
+	helper = cache

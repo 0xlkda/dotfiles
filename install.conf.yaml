@@ -6,3 +6,5 @@
     ~/.zshrc: zsh/zshrc
     ~/.config/nvim: nvim
     ~/.tmux.conf: tmux/tmux.conf
+    ~/.gitconfig: git/gitconfig
+    ~/.git-template: git/git-template
