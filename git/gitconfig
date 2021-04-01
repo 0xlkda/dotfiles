@@ -5,6 +5,7 @@
   rebase = true
 [core]
 	editor = nvim
+  excludesfile = ~/.gitignore_global
 [credential]
 	helper = cache
 [init]
