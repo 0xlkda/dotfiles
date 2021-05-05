@@ -5,7 +5,7 @@
 	<key>AllowClipboardAccess</key>
 	<true/>
 	<key>Command</key>
-	<string>/usr/local/bin/zsh</string>
+	<string></string>
 	<key>Custom Color Presets</key>
 	<dict>
 		<key>gruvbox</key>
@@ -354,6 +354,8 @@
 	<string>1599F292-D278-4088-AF9B-D3321BB040D7</string>
 	<key>DisableFullscreenTransparency</key>
 	<false/>
+	<key>HTMLTabTitles</key>
+	<true/>
 	<key>HapticFeedbackForEsc</key>
 	<false/>
 	<key>HideScrollbar</key>
@@ -1154,10 +1156,14 @@
 	<true/>
 	<key>SoundForEsc</key>
 	<false/>
+	<key>TabStyleWithAutomaticOption</key>
+	<integer>5</integer>
 	<key>TerminalMargin</key>
 	<integer>4</integer>
 	<key>TerminalVMargin</key>
 	<integer>0</integer>
+	<key>UseVirtualKeyCodesForDetectingDigits</key>
+	<true/>
 	<key>VisualIndicatorForEsc</key>
 	<false/>
 	<key>findMode_iTerm</key>

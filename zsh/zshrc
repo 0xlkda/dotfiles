@@ -34,15 +34,11 @@ typeset -U path
 typeset -U fpath
 
 # Tree
-alias tree='tree -I "node_modules|.cache"'
+alias tree='tree -Ia "node_modules|.git|.cache|.*"'
 
 # fzy
 wd() {
-  cd $(find ~/projects -maxdepth 1 -type d | fzy)
-}
-
-d() {
-  cd $(find . -maxdepth 1 -type d | fzy)
+  cd $(find ~/projects -maxdepth 2 -type d | fzy)
 }
 
 # NPM
