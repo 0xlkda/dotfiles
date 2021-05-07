@@ -6,8 +6,6 @@ shell:
   args:
     - --login
 
-background_opacity: 0.8
-
 font:
   size: 24
 
