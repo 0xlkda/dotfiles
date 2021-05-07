@@ -7,6 +7,7 @@ export ZSH_THEME=""
 plugins=(git zsh-autosuggestions zsh-completions)
 
 source $ZSH/oh-my-zsh.sh
+source $HOME/.cargo/env
 
 fpath+=('/home/alex/.nvm/versions/node/v14.15.1/lib/node_modules/pure-prompt/functions')
 autoload -U promptinit; promptinit
