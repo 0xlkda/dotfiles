@@ -10,5 +10,6 @@
 	helper = cache
 [init]
   templateDir = ~/.git-template
+	defaultBranch = main
 [diff]
 	tool = vimdiff

@@ -36,17 +36,17 @@ let mapleader = " "
 " useful keymaps
 inoremap <C-c> <Esc>
 nnoremap <C-p> :Telescope find_files<CR>
-nnoremap <leader>ps :Telescope live_grep<CR>
+nnoremap <leader>ls :Telescope live_grep<CR>
 nnoremap <leader>u :UndotreeShow<CR>
 nnoremap <leader><CR> :so ~/projects/dotfiles/nvim/init.vim<CR>
+vnoremap < <gv
+vnoremap > >gv
 
 " quick paste from register +
 nnoremap <leader>p "+p
-nnoremap <leader>P "+P
 
 " quick copy to register +
 vnoremap <leader>y "+y
-nnoremap <leader>y "+y
 nnoremap <leader>Y gg"+yG
 
 " quick moving line around
