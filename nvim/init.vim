@@ -7,8 +7,6 @@ Plug 'mbbill/undotree'
 
 " code hi-lighting
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'maxmellon/vim-jsx-pretty'
-Plug 'tpope/vim-liquid'
 
 " lsp
 Plug 'neovim/nvim-lspconfig'
