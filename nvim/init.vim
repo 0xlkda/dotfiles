@@ -40,6 +40,10 @@ nnoremap <leader><CR> :so ~/projects/dotfiles/nvim/init.vim<CR>
 vnoremap < <gv
 vnoremap > >gv
 
+" Use <Tab> and <S-Tab> to navigate through popup menu
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
 " quick paste from register +
 nnoremap <leader>p "+p
 
