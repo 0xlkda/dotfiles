@@ -39,7 +39,7 @@ alias tree='tree -Ia "node_modules|.git|.cache|.*"'
 
 # fzy
 wd() {
-  cd $(find ~/projects -maxdepth 2 -type d | fzy)
+  cd $(find ~/projects -maxdepth 3 -type d | fzy)
 }
 
 # NPM
