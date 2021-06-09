@@ -1,7 +1,7 @@
 local lspconfig = require('lspconfig')
 
 local map = function(type, key, value)
-  vim.api.nvim_buf_set_keymap(0, type, key, value, {noremap = true, silent = true});
+  vim.api.nvim_set_keymap(type, key, value, {noremap = true, silent = true});
 end
 
 -- common
