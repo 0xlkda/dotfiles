@@ -4,6 +4,7 @@ Plug 'gruvbox-community/gruvbox'
 
 " misc
 Plug 'mbbill/undotree'
+Plug 'sheerun/vim-polyglot'
 
 " code hi-lighting
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}

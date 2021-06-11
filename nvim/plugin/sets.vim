@@ -19,3 +19,5 @@ set signcolumn=yes
 set cmdheight=1
 set updatetime=100
 set shortmess+=c
+set autoindent
+set nosmartindent
