@@ -1,23 +1,29 @@
 set guicursor=
-set relativenumber
+set termguicolors
 set number
-set nohlsearch
-set hidden
-set noerrorbells
-set tabstop=2 softtabstop=2
-set shiftwidth=2
-set expandtab
+set relativenumber
 set nowrap
+set noerrorbells
+
+set hidden
 set noswapfile
 set nobackup
-set undodir=~/.local/share/nvim/undodir
 set undofile
-set incsearch
-set termguicolors
+set undodir=~/.local/share/nvim/undodir
+
 set scrolloff=8
-set signcolumn=yes
-set cmdheight=1
 set updatetime=100
+set cmdheight=1
 set shortmess+=c
+set signcolumn=yes
+
+set incsearch
+set nohlsearch
+
+set tabstop=4       " number of visual spaces per TAB
+set softtabstop=4   " number of spaces in tab when editing
+set shiftwidth=4    " number of spaces to use for autoindent
+set expandtab       " tabs are space behind the scene
+
 set autoindent
 set nosmartindent
