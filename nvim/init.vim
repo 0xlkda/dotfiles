@@ -36,6 +36,9 @@ let mapleader = " "
 inoremap <C-c> <Esc>
 nnoremap <C-p> :Telescope find_files<CR>
 nnoremap <leader>ls :Telescope live_grep<CR>
+nnoremap <leader>lb :Telescope buffers<CR>
+nnoremap <leader>lf :Telescope file_browser<CR>
+nnoremap <leader>ld :Telescope lsp_document_diagnostics<CR>
 nnoremap <leader>u :UndotreeShow<CR>
 nnoremap <leader><CR> :so ~/projects/dotfiles/nvim/init.vim<CR>
 vnoremap < <gv
