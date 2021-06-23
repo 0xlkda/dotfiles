@@ -37,6 +37,10 @@ typeset -U fpath
 # Tree
 alias tree='tree -Ia "node_modules|.git|.cache|.*"'
 
+# ls
+alias ls="gls -l --group-directories-first --color=auto"
+alias la="gls -lA --group-directories-first --color=auto"
+
 # fzy
 wd() {
   cd $(find ~/projects -maxdepth 3 -type d | fzy)
