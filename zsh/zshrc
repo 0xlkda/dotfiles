@@ -35,7 +35,7 @@ typeset -U path
 typeset -U fpath
 
 # Tree
-alias tree='tree -Ia "node_modules|.git|.cache|.*"'
+alias tree='tree -CIa "node_modules|.git|.cache|.*" --dirsfirst'
 
 # ls
 alias ls="gls -l --group-directories-first --color=auto"

@@ -7,6 +7,7 @@ require('compe').setup {
   source_timeout = 200;
   incomplete_delay = 400;
   documentation = true;
+  sort = false;
 
   source = {
     path = true;

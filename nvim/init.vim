@@ -5,6 +5,7 @@ Plug 'gruvbox-community/gruvbox'
 " misc
 Plug 'mbbill/undotree'
 Plug 'sheerun/vim-polyglot'
+Plug 'AndrewRadev/tagalong.vim'
 
 " code hi-lighting
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -59,6 +60,9 @@ nnoremap <leader>Y gg"+yG
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 
+" change tag in pairs
+let g:tagalong_additional_filetypes = ['javascript']
+
 " helper functions
 fun! EmptyRegisters()
     let regs=split('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/-"', '\zs')
@@ -75,5 +79,5 @@ endfun
 
 augroup THE_ALEMAZING
     autocmd!
-    autocmd BufWritePre * :call TrimWhitespace()
+    autocmd BufWritePre * :call TrimWhitespace() | Neoformat
 augroup END
