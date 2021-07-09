@@ -6,6 +6,9 @@ Plug 'gruvbox-community/gruvbox'
 Plug 'mbbill/undotree'
 Plug 'sheerun/vim-polyglot'
 Plug 'AndrewRadev/tagalong.vim'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
+Plug 'mattn/emmet-vim'
 
 " code hi-lighting
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -60,6 +63,9 @@ nnoremap <leader>Y gg"+yG
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 
+" emmet
+let g:user_emmet_leader_key = ','
+
 " change tag in pairs
 let g:tagalong_additional_filetypes = ['javascript']
 
@@ -80,4 +86,5 @@ endfun
 augroup THE_ALEMAZING
     autocmd!
     autocmd BufWritePre * :call TrimWhitespace() | Neoformat
+    autocmd FileType javascript,javascriptreact,typescript,typescriptreact setlocal commentstring={/*\ %s\ */}
 augroup END
