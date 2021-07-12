@@ -38,7 +38,9 @@ let mapleader = " "
 
 " useful keymaps
 inoremap <C-c> <Esc>
-nnoremap <C-p> :Telescope find_files<CR>
+nnoremap <C-p> :lua require('thealemazing.telescope').project_files()<CR>
+nnoremap <leader>df :lua require('thealemazing.telescope').dotfiles()<CR>
+nnoremap <leader>no :lua require('thealemazing.telescope').notes()<CR>
 nnoremap <leader>ls :Telescope live_grep<CR>
 nnoremap <leader>lb :Telescope buffers<CR>
 nnoremap <leader>lf :Telescope file_browser<CR>

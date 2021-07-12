@@ -1,15 +1,15 @@
 [user]
-	email = hello@thealemazing.com
-  name = TheAlemazing
+    email = hello@thealemazing.com
+    name = TheAlemazing
 [pull]
-  rebase = true
+    rebase = true
 [core]
-	editor = nvim
-  excludesfile = ~/.gitignore_global
+    editor = nvim
+    excludesfile = ~/.gitignore_global
 [credential]
-	helper = cache
+    helper = cache
 [init]
-  templateDir = ~/.git-template
-	defaultBranch = main
+    templateDir = ~/.git-template
+    defaultBranch = main
 [diff]
-	tool = vimdiff
+    tool = vimdiff
