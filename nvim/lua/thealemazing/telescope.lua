@@ -10,6 +10,10 @@ require('telescope').setup {
         grep_previewer   = require('telescope.previewers').vim_buffer_vimgrep.new,
         qflist_previewer = require('telescope.previewers').vim_buffer_qflist.new,
 
+        layout_config = {
+            preview_width = 80
+        },
+
         mappings = {
             i = {
                 ['<ESC>']   = actions.close,
@@ -37,10 +41,6 @@ M.dotfiles = function()
     require('telescope.builtin').find_files({
             prompt_title = '< Dotfiles >',
             cwd = '$HOME/projects/dotfiles/',
-            width = .25,
-            layout_config = {
-                preview_width = 80
-            }
         })
 end
 
@@ -48,10 +48,6 @@ M.notes = function()
     require('telescope.builtin').file_browser({
             prompt_title = '< Notes >',
             cwd = '$HOME/projects/notes/',
-            width = .25,
-            layout_config = {
-                preview_width = 80
-            }
         })
 end
 
