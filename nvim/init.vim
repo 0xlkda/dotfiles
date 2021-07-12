@@ -65,6 +65,10 @@ nnoremap <leader>Y gg"+yG
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 
+" sync with tmux splitting
+nnoremap <C-w>" :split<CR>
+nnoremap <C-w>% :vsplit<CR>
+
 " emmet
 let g:user_emmet_leader_key = ','
 
@@ -84,6 +88,15 @@ fun! TrimWhitespace()
     keeppatterns %s/\s\+$//e
     call winrestview(l:save)
 endfun
+
+" debug highlight syntax group
+nmap <leader>sp :call <SID>SynStack()<CR>
+function! <SID>SynStack()
+    if !exists("*synstack")
+        return
+    endif
+    echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
 
 augroup THE_ALEMAZING
     autocmd!

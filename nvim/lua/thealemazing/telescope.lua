@@ -3,17 +3,8 @@ local actions = require('telescope.actions')
 require('telescope').setup {
     defaults = {
         color_devicons = true,
-        set_env = { ['COLORTERM'] = 'truecolor' },
-
         file_sorter = require('telescope.sorters').get_fzy_sorter,
-        file_previewer   = require('telescope.previewers').vim_buffer_cat.new,
-        grep_previewer   = require('telescope.previewers').vim_buffer_vimgrep.new,
-        qflist_previewer = require('telescope.previewers').vim_buffer_qflist.new,
-
-        layout_config = {
-            preview_width = 80
-        },
-
+        layout_config = { preview_width = .5 },
         mappings = {
             i = {
                 ['<ESC>']   = actions.close,
@@ -48,6 +39,9 @@ M.notes = function()
     require('telescope.builtin').file_browser({
             prompt_title = '< Notes >',
             cwd = '$HOME/projects/notes/',
+            layout_config = {
+                preview_width = 80
+            }
         })
 end
 

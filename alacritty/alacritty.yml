@@ -7,7 +7,7 @@ shell:
     - --login
 
 font:
-  size: 14
+  size: 16
 
 colors:
   primary:
