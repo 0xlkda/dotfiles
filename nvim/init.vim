@@ -9,6 +9,7 @@ Plug 'AndrewRadev/tagalong.vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'mattn/emmet-vim'
+Plug 'tpope/vim-fugitive'
 
 " code hi-lighting
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -69,6 +70,9 @@ vnoremap K :m '<-2<CR>gv=gv
 nnoremap <C-w>" :split<CR>
 nnoremap <C-w>% :vsplit<CR>
 
+" quick format
+nnoremap <Leader>ff :Neoformat<CR>
+
 " emmet
 let g:user_emmet_leader_key = ','
 
@@ -100,6 +104,6 @@ endfunc
 
 augroup THE_ALEMAZING
     autocmd!
-    autocmd BufWritePre * :call TrimWhitespace() | Neoformat
+    autocmd BufWritePre * :call TrimWhitespace()
     autocmd FileType javascript,javascriptreact,typescript,typescriptreact setlocal commentstring={/*\ %s\ */}
 augroup END

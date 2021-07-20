@@ -22,13 +22,13 @@ export VISUAL=nvim
 export EDITOR="$VISUAL"
 
 alias vim='nvim'
+alias reload='source ~/projects/dotfiles/zsh/zshrc'
+alias cleanup='find . -name ".DS_Store" -print -delete'
+alias dotfiles='cd ~/projects/dotfiles'
 alias vimconf='vim ~/projects/dotfiles/nvim/init.vim'
 alias zshconf='vim ~/projects/dotfiles/zsh/zshrc'
 alias bashconf='vim ~/projects/dotfiles/bash/bashrc'
 alias tmuxconf='vim ~/projects/dotfiles/tmux/tmux.conf'
-alias reload='source ~/projects/dotfiles/zsh/zshrc'
-alias dotfiles='cd ~/projects/dotfiles'
-alias cleanup='find . -name ".DS_Store" -print -delete'
 
 # Prevent duplicate entries
 typeset -U path
@@ -43,7 +43,14 @@ alias la="gls -lA --group-directories-first --color=auto"
 
 # fzy
 wd() {
-  cd $(find ~/projects -maxdepth 3 -type d | fzy)
+    cd $(find ~/projects -not -path "*node_modules*" -not -path "*.git*" -not -path "*.next*" -type d -maxdepth 2 | fzy)
+}
+
+v() {
+    local file=$(find . -type f -not -path "*node_modules*" -not -path "*.git*" -not -path "*.next*" | fzy )
+    if [[ $file ]]; then
+        vim $file
+    fi
 }
 
 # NPM
@@ -62,23 +69,23 @@ alias mux='tmux new-session -ADs main'
 
 # tmux detach setup
 exit() {
-  if [[ -z $TMUX ]]; then
-    builtin exit
-    return
-  fi
+    if [[ -z $TMUX ]]; then
+        builtin exit
+        return
+    fi
 
-  panes=$(tmux list-panes | wc -l)
-  wins=$(tmux list-windows | wc -l)
-  count=$(($panes + $wins - 1))
-  if [ $count -eq 1 ]; then
-    tmux detach
-  else
-    builtin exit
-  fi
+    panes=$(tmux list-panes | wc -l)
+    wins=$(tmux list-windows | wc -l)
+    count=$(($panes + $wins - 1))
+    if [ $count -eq 1 ]; then
+        tmux detach
+    else
+        builtin exit
+    fi
 }
 
 # csv viewer
 csview() {
-  local file="$1"
-  cat "$file" | sed 's/,/ ,/g' | column -t -s, | less -S
+    local file="$1"
+    cat "$file" | sed 's/,/ ,/g' | column -t -s, | less -S
 }

@@ -4,6 +4,9 @@ set number
 set relativenumber
 set nowrap
 set noerrorbells
+set lazyredraw
+set synmaxcol=160
+syntax sync minlines=256
 
 set hidden
 set noswapfile
