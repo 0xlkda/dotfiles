@@ -10,6 +10,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'mattn/emmet-vim'
 Plug 'tpope/vim-fugitive'
+Plug 'andymass/vim-matchup'
 
 " code hi-lighting
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -34,7 +35,6 @@ lua << EOF
 require("thealemazing")
 EOF
 
-let loaded_matchparen = 1
 let mapleader = " "
 
 " useful keymaps
@@ -50,6 +50,17 @@ nnoremap <leader>u :UndotreeShow<CR>
 nnoremap <leader><CR> :so ~/projects/dotfiles/nvim/init.vim<CR>
 vnoremap < <gv
 vnoremap > >gv
+
+" close other buffers
+command Bd :up | %bd | e#
+nnoremap <leader>bd :<c-u>up <bar> %bd <bar> e#<cr>
+
+" compe mapping
+inoremap <silent><expr> <C-Space> compe#complete()
+inoremap <silent><expr> <CR>      compe#confirm('<CR>')
+inoremap <silent><expr> <C-e>     compe#close('<C-e>')
+inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
+inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
 
 " Use <Tab> and <S-Tab> to navigate through popup menu
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -106,4 +117,15 @@ augroup THE_ALEMAZING
     autocmd!
     autocmd BufWritePre * :call TrimWhitespace()
     autocmd FileType javascript,javascriptreact,typescript,typescriptreact setlocal commentstring={/*\ %s\ */}
+
+    " Return to last edit position when opening files
+    autocmd BufReadPost *
+                \ if line("'\"") > 0 && line("'\"") <= line("$") |
+                \   exe "normal! g`\"" |
+                \ endif
+
+    " Use local package
+    if isdirectory($PWD .'/node_modules')
+        let $PATH .= ':' . $PWD . '/node_modules/.bin'
+    endif
 augroup END

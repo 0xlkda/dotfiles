@@ -1,11 +1,10 @@
-set guicursor=
 set termguicolors
 set number
 set relativenumber
 set nowrap
 set noerrorbells
 set lazyredraw
-set synmaxcol=160
+set synmaxcol=256
 syntax sync minlines=256
 
 set hidden
@@ -15,7 +14,7 @@ set undofile
 set undodir=~/.local/share/nvim/undodir
 
 set scrolloff=8
-set updatetime=100
+set updatetime=1000
 set cmdheight=1
 set shortmess+=c
 set signcolumn=yes
