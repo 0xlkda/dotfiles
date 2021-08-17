@@ -13,7 +13,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'andymass/vim-matchup'
 
 " code hi-lighting
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+" Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " lsp
 Plug 'neovim/nvim-lspconfig'
@@ -116,7 +116,6 @@ endfunc
 augroup THE_ALEMAZING
     autocmd!
     autocmd BufWritePre * :call TrimWhitespace()
-    autocmd FileType javascript,javascriptreact,typescript,typescriptreact setlocal commentstring={/*\ %s\ */}
 
     " Return to last edit position when opening files
     autocmd BufReadPost *

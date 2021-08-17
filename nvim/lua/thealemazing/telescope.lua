@@ -7,7 +7,7 @@ require('telescope').setup {
         layout_config = { preview_width = .5 },
         mappings = {
             i = {
-                ['<ESC>']   = actions.close,
+                ['<ESC>'] = actions.close,
                 ['<C-x>'] = false,
                 ['<C-q>'] = actions.send_to_qflist,
             },
@@ -22,7 +22,10 @@ require('telescope').setup {
     }
 }
 
-require('telescope').load_extension('fzy_native') local M = {} M.project_files = function()
+require('telescope').load_extension('fzy_native')
+local M = {}
+
+M.project_files = function()
     local opts = {}
     local ok = pcall(require('telescope.builtin').git_files, opts)
     if not ok then require('telescope.builtin').find_files(opts) end
