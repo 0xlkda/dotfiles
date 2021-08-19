@@ -12,7 +12,8 @@ Plug 'mattn/emmet-vim'
 Plug 'tpope/vim-fugitive'
 Plug 'andymass/vim-matchup'
 
-" code hi-lighting
+" UI
+" Plug 'glepnir/lspsaga.nvim'
 " Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " lsp
@@ -88,7 +89,7 @@ nnoremap <Leader>ff :Neoformat<CR>
 let g:user_emmet_leader_key = ','
 
 " change tag in pairs
-let g:tagalong_additional_filetypes = ['javascript']
+let g:tagalong_additional_filetypes = ['javascript', 'typescript']
 
 " helper functions
 fun! EmptyRegisters()
