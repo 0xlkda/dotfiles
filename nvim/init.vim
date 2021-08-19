@@ -40,14 +40,14 @@ let mapleader = " "
 
 " useful keymaps
 inoremap <C-c> <Esc>
-nnoremap <C-p> :lua require('thealemazing.telescope').project_files()<CR>
-nnoremap <leader>df :lua require('thealemazing.telescope').dotfiles()<CR>
-nnoremap <leader>no :lua require('thealemazing.telescope').notes()<CR>
-nnoremap <leader>ls :Telescope live_grep<CR>
-nnoremap <leader>lb :Telescope buffers<CR>
-nnoremap <leader>lf :Telescope file_browser<CR>
-nnoremap <leader>ld :Telescope lsp_document_diagnostics<CR>
-nnoremap <leader>u :UndotreeShow<CR>
+nnoremap <silent><C-p> :lua require('thealemazing.telescope').project_files()<CR>
+nnoremap <silent><leader>df :lua require('thealemazing.telescope').dotfiles()<CR>
+nnoremap <silent><leader>no :lua require('thealemazing.telescope').notes()<CR>
+nnoremap <silent><leader>ls :Telescope live_grep<CR>
+nnoremap <silent><leader>lb :Telescope buffers<CR>
+nnoremap <silent><leader>lf :Telescope file_browser<CR>
+nnoremap <silent><leader>ld :Telescope lsp_document_diagnostics<CR>
+nnoremap <silent><leader>u :UndotreeShow<CR>
 nnoremap <leader><CR> :so ~/projects/dotfiles/nvim/init.vim<CR>
 vnoremap < <gv
 vnoremap > >gv

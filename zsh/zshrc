@@ -22,6 +22,8 @@ export VISUAL=nvim
 export EDITOR="$VISUAL"
 
 alias vim='nvim'
+alias tmo='tmuxinator o'
+alias tms='tmuxinator s'
 alias reload='source ~/projects/dotfiles/zsh/zshrc'
 alias cleanup='find . -name ".DS_Store" -print -delete'
 alias dotfiles='cd ~/projects/dotfiles'
