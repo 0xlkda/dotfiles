@@ -1,0 +1,13 @@
+# /Users/alex/.config/tmuxinator/news.yml
+
+name: crypto-news
+root: ~/projects/crypto-news
+
+windows:
+  - editor:
+      layout: main-vertical
+      panes:
+        -
+        -
+  - server:
+  - logs: tail -f log/development.log

@@ -7,13 +7,13 @@ windows:
       layout: ae96,123x37,0,0[123x30,0,0,0,123x6,0,31,1]
       root: ~/projects/ecommonster/kustom/app-new
       panes:
-        - vim
+        -
         - npm run dev
   - s_new:
       layout: ae96,123x37,0,0[123x30,0,0,0,123x6,0,31,1]
-      root: ~/projects/ecommonster/kustom/app-new
+      root: ~/projects/ecommonster/kustom-server
       panes:
-        - vim
+        -
         - npm run dev -- --port 4000
   - c_old:
       layout: ae96,123x37,0,0[123x30,0,0,0,123x6,0,31,1]
