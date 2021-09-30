@@ -41,6 +41,12 @@ function M.load()
     -- Treesitter
     use 'nvim-treesitter/nvim-treesitter'
 
+    -- Autocomplete
+    use {
+      'ms-jpq/coq_nvim',
+      requires = 'ms-jpq/coq.artifacts',
+    }
+
   end) 
 end
 

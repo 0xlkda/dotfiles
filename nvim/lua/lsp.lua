@@ -72,6 +72,7 @@ function M.setup(lang)
 
   if lsp.provider ~= nil and lsp.provider ~= "" then
     local lspconfig = require "lspconfig"
+    local coq = require "coq"
 
     if not lsp.setup.on_attach then
       lsp.setup.on_attach = M.common_on_attach
@@ -81,7 +82,10 @@ function M.setup(lang)
       lsp.setup.capabilities = M.common_capabilities()
     end
 
-    lspconfig[lsp.provider].setup(lsp.setup)
+    lspconfig[lsp.provider].setup(coq.lsp_ensure_capabilities(lsp.setup))
+
+    -- Start COQ completion
+    vim.cmd "COQnow -s"
   end
 end
 
