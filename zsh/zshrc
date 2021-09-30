@@ -92,3 +92,4 @@ csview() {
     local file="$1"
     cat "$file" | sed 's/,/ ,/g' | column -t -s, | less -S
 }
+export PATH="/usr/local/opt/openjdk/bin:$PATH"

@@ -38,13 +38,19 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     }
 )
 
+-- nvim-cmp supports additional completion capabilities
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+
 -- JavaScript & TypeScript
 nvim_lsp.tsserver.setup {
     on_attach = on_attach,
+    capabilities = capabilities
 }
 
 nvim_lsp.rust_analyzer.setup {
     on_attach = on_attach,
+    capabilities = capabilities,
     settings = {
         ["rust-analyzer"] = {
             assist = {

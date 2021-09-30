@@ -14,7 +14,9 @@ Plug 'andymass/vim-matchup'
 
 " lsp
 Plug 'neovim/nvim-lspconfig'
-Plug 'hrsh7th/nvim-compe'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/nvim-cmp'
 
 " telescope
 Plug 'nvim-lua/popup.nvim'
@@ -51,13 +53,6 @@ vnoremap > >gv
 " close other buffers
 command Bd :up | %bd | e#
 nnoremap <leader>bd :<c-u>up <bar> %bd <bar> e#<cr>
-
-" compe mapping
-inoremap <silent><expr> <C-Space> compe#complete()
-inoremap <silent><expr> <CR>      compe#confirm('<CR>')
-inoremap <silent><expr> <C-e>     compe#close('<C-e>')
-inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
-inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
 
 " Use <Tab> and <S-Tab> to navigate through popup menu
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"

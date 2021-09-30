@@ -1,0 +1,11 @@
+# /Users/alex/.config/tmuxinator/veteran.yml
+
+name: veteran
+root: ~/projects/ecommonster-v2/veterannations/
+
+windows:
+  - theme:
+      layout: main-vertical
+      panes:
+        -
+        -

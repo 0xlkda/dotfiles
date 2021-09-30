@@ -5,16 +5,16 @@ name: kustom
 windows:
   - c_new:
       layout: ae96,123x37,0,0[123x30,0,0,0,123x6,0,31,1]
-      root: ~/projects/ecommonster/kustom/app-new
+      root: ~/projects/ecommonster-v2/staging/kustom-app
       panes:
         -
         - npm run dev
   - s_new:
       layout: ae96,123x37,0,0[123x30,0,0,0,123x6,0,31,1]
-      root: ~/projects/ecommonster/kustom-server
+      root: ~/projects/ecommonster-v2/staging/kustom-server
       panes:
         -
-        - npm run dev -- --port 4000
+        - npm run dev
   - c_old:
       layout: ae96,123x37,0,0[123x30,0,0,0,123x6,0,31,1]
       root: ~/projects/ecommonster/kustom/app

@@ -1,4 +1,4 @@
-require('thealemazing.compe')
+require('thealemazing.cmp')
 require('thealemazing.lspconfig')
 require('thealemazing.telescope')
---require('thealemazing.lspsaga')
+--require('thealemazing.lspsaga'
