@@ -68,7 +68,6 @@ function M.common_capabilities()
 end
 
 function M.setup(lang)
-  local lspconfig = require "lspconfig"
   local lsp = lsp_langs[lang]
 
   if lsp.provider ~= nil and lsp.provider ~= "" then

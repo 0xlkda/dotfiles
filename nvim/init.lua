@@ -1,13 +1,17 @@
 local plugins = require('plugins')
 local settings = require('settings')
 local mappings = require('keymappings')
-local treesitter = require('treesitter')
+local telescope = require('core.telescope')
+local treesitter = require('core.treesitter')
+local which_key = require('core.which-key')
 
 -- Bootstrap!
 plugins.load()
 settings.load()
 mappings.load()
 treesitter.load()
+telescope.load()
+which_key.load()
 
 -- Theme
 vim.cmd('colorscheme gruvbox')
