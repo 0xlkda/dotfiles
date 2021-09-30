@@ -1,11 +1,17 @@
 local M = {}
 local utils = require "utils"
 
-M.load_settings = function ()
+function M.load()
   local default_options = {
     mouse = "a", -- allow the mouse to be used in neovim
     updatetime = 300, -- faster completion
-    timeoutlen = 100, -- time to wait for a mapped sequence to complete (in milliseconds)
+    timeoutlen = 300, -- time to wait for a mapped sequence to complete (in milliseconds)
+
+    cursorline = false, -- highlight the current line
+    number = false, -- set numbered lines
+    relativenumber = false, -- set relative numbered lines
+    numberwidth = 4, -- set number column width to 2 {default 4}
+    signcolumn = "yes", -- always show the sign column, otherwise it would shift the text each time
 
     backup = false, -- no backup files
     writebackup = false, -- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited

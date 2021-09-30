@@ -13,8 +13,7 @@ local generic_opts = {
 
 local mode_adapters = {
   insert_mode = "i",
-  normal_mode = "n",
-  term_mode = "t",
+  normal_mode = "n", term_mode = "t",
   visual_mode = "v",
   visual_block_mode = "x",
   command_mode = "c",
@@ -28,8 +27,17 @@ local keys = {
   },
 
   normal_mode = {
+    -- Better window movement
+    ["<C-h>"] = "<C-w>h",
+    ["<C-j>"] = "<C-w>j",
+    ["<C-k>"] = "<C-w>k",
+    ["<C-l>"] = "<C-w>l",
+
     -- Toggle file explorer
-    ["<Leader>e"] = ':NvimTreeToggle<CR>'
+    ["<Leader>e"] = ':NvimTreeToggle<CR>',
+
+    -- Toggle undotree
+    ["<Leader>u"] = ':UndotreeToggle<CR>',
   },
 
   term_mode = {
@@ -68,18 +76,10 @@ function M.load_mode(mode, keymaps)
   end
 end
 
-function M.load(keymaps)
+function M.load_keys(keymaps)
   for mode, mapping in pairs(keymaps) do
     M.load_mode(mode, mapping)
   end
-end
-
-function M.load_mappings()
-  -- leader key
-  vim.g.mapleader = ' '
-
-  -- init!
-  M.load(keys)
 end
 
 function M.print(mode)
@@ -89,6 +89,14 @@ function M.print(mode)
   else
     print(vim.inspect(keys))
   end
+end
+
+function M.load()
+  -- leader key
+  vim.g.mapleader = ' '
+
+  -- init!
+  M.load_keys(keys)
 end
 
 return M

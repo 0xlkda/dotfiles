@@ -7,7 +7,7 @@ if fn.empty(fn.glob(install_path)) > 0 then
   vim.cmd 'packadd packer.nvim'
 end
 
-M.load_plugins = function()
+function M.load()
   require('packer').startup(function()
 
     -- File explorer
@@ -17,8 +17,26 @@ M.load_plugins = function()
       config = function() require'nvim-tree'.setup {} end
     }
 
+    -- Which key?
+    use 'folke/which-key.nvim'
+
     -- Gruvbox
     use 'gruvbox-community/gruvbox'
+
+    -- Undo history
+    use 'mbbill/undotree'
+
+    -- LSP
+    use 'neovim/nvim-lspconfig'
+    use 'kabouzeid/nvim-lspinstall'
+    use 'nvim-lua/popup.nvim'
+    use 'nvim-lua/plenary.nvim'
+
+    -- Telescope
+    use 'nvim-telescope/telescope.nvim'
+
+    -- Treesitter
+    use 'nvim-treesitter/nvim-treesitter'
 
   end) 
 end
