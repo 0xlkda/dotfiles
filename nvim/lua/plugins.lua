@@ -1,3 +1,4 @@
+local M = {}
 local fn = vim.fn
 local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
 
@@ -6,6 +7,20 @@ if fn.empty(fn.glob(install_path)) > 0 then
   vim.cmd 'packadd packer.nvim'
 end
 
-return require('packer').startup(function()
-  use { 'wbthomason/packer.nvim', opt = true }	
-end) 
+M.load_plugins = function()
+  require('packer').startup(function()
+
+    -- File explorer
+    use {
+      'kyazdani42/nvim-tree.lua',
+      requires = 'kyazdani42/nvim-web-devicons',
+      config = function() require'nvim-tree'.setup {} end
+    }
+
+    -- Gruvbox
+    use 'gruvbox-community/gruvbox'
+
+  end) 
+end
+
+return M
