@@ -17,6 +17,9 @@ function M.load()
       config = function() require'nvim-tree'.setup {} end
     }
 
+    -- Comments
+    use 'terrortylor/nvim-comment'
+
     -- Which key?
     use 'folke/which-key.nvim'
 
