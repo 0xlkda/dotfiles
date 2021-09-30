@@ -14,9 +14,7 @@ Plug 'andymass/vim-matchup'
 
 " lsp
 Plug 'neovim/nvim-lspconfig'
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/nvim-cmp'
+Plug 'ms-jpq/coq_nvim'
 
 " telescope
 Plug 'nvim-lua/popup.nvim'
@@ -29,7 +27,6 @@ Plug 'sbdchd/neoformat'
 
 call plug#end()
 
-" load my lua config
 lua << EOF
 require("thealemazing")
 EOF

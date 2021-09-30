@@ -1,4 +1,4 @@
-local nvim_lsp = require('lspconfig')
+local nvim_lsp = require "lspconfig"
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -36,19 +36,26 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
         underline = true,
         signs = true
     }
-)
+    )
 
--- nvim-cmp supports additional completion capabilities
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
-
--- JavaScript & TypeScript
-nvim_lsp.tsserver.setup {
-    on_attach = on_attach,
-    capabilities = capabilities
+-- setup Cog completion
+vim.g.coq_settings = {
+    auto_start = true,
+    display = {
+        ['icons.mode'] = "none"
+    },
+    clients = {
+        ['tmux.enabled'] = false,
+    },
 }
 
-nvim_lsp.rust_analyzer.setup {
+local coq = require "coq"
+
+-- JavaScript & TypeScript
+nvim_lsp.tsserver.setup(coq.lsp_ensure_capabilities { on_attach = on_attach })
+
+-- Rust
+nvim_lsp.rust_analyzer.setup(coq.lsp_ensure_capabilities {
     on_attach = on_attach,
     capabilities = capabilities,
     settings = {
@@ -65,4 +72,4 @@ nvim_lsp.rust_analyzer.setup {
             },
         }
     }
-}
+})
