@@ -17,12 +17,6 @@ function M.load()
       config = function() require'nvim-tree'.setup {} end
     }
 
-    -- Comments
-    use 'terrortylor/nvim-comment'
-
-    -- Which key?
-    use 'folke/which-key.nvim'
-
     -- Gruvbox
     use 'gruvbox-community/gruvbox'
 
@@ -40,12 +34,6 @@ function M.load()
 
     -- Treesitter
     use 'nvim-treesitter/nvim-treesitter'
-
-    -- Autocomplete
-    use {
-      'ms-jpq/coq_nvim',
-      requires = 'ms-jpq/coq.artifacts',
-    }
 
   end) 
 end

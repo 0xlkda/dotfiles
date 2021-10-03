@@ -1,0 +1,10 @@
+# /Users/alex/.config/tmuxinator/config.yml
+
+name: config
+root: ~/projects/dotfiles
+
+windows:
+  - editor:
+      layout: main-vertical
+      panes:
+        -
