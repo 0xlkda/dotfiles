@@ -38,6 +38,9 @@ local keys = {
 
     -- Toggle undotree
     ["<Leader>u"] = ':UndotreeToggle<CR>',
+
+    -- Telescope
+    ["<Leader>f"] = ':Telescope find_files<CR>'
   },
 
   term_mode = {

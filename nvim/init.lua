@@ -1,4 +1,6 @@
 -- Config modules
+require "globals"
+
 local settings = require "settings"
 local keymappings = require "keymappings"
 local plugins = require "plugins"
