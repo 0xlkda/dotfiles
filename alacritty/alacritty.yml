@@ -2,6 +2,7 @@ window:
   startup_mode: Maximized
   dynamic_padding: true
   decorations: none
+  opacity: 0.9
 
 shell:
   program: /usr/local/bin/zsh
@@ -12,21 +13,20 @@ font:
   size: 17
 
   normal:
-    family: Hack Nerd Font Mono
-    style: Regular
+    family: Recursive
+    style: Mono Casual
 
   bold:
-    family: Hack Nerd Font Mono
-    style: Bold
+    family: Recursive
+    style: Mono Casual Bold
 
   italic:
-    family: Hack Nerd Font Mono
-    style: Italic
+    family: Recursive
+    style: Mono Casual Italic
 
   bold_italic:
-    family: Hack Nerd Font Mono
-    style: Bold Italic
-
+    family: Recursive
+    style: Mono Casual SemiBold Italic
 
 colors:
   primary:

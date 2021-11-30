@@ -40,6 +40,7 @@ local keys = {
     ["<Leader>u"] = ':UndotreeToggle<CR>',
 
     -- Telescope
+    ["<C-p>"] = ':Telescope find_files<CR>',
     ["<Leader>f"] = ':Telescope find_files<CR>'
   },
 
