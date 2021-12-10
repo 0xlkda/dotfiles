@@ -21,6 +21,9 @@ local mode_adapters = {
 
 local keys = {
   insert_mode = {
+    -- C-c as esc
+    ["<C-c>"] = "<ESC>",
+
     -- Moving up/down when pumvisible
     ["<C-j>"] = { 'pumvisible() ? "\\<down>" : "\\<C-j>"', { expr = true, noremap = true } },
     ["<C-k>"] = { 'pumvisible() ? "\\<up>" : "\\<C-k>"', { expr = true, noremap = true } },
