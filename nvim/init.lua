@@ -13,4 +13,4 @@ plugins.load()
 -- Theme
 vim.g.gruvbox_invert_selection = false
 vim.cmd('colorscheme gruvbox')
-vim.cmd('autocmd VimEnter * hi Normal guibg=None')
+vim.cmd('au VimEnter * hi Normal guibg=None')

@@ -36,6 +36,9 @@ local keys = {
     ["<C-k>"] = "<C-w>k",
     ["<C-l>"] = "<C-w>l",
 
+    -- Toggle search highlight
+    ["<Leader>h"] = ':nohl<CR>',
+
     -- Toggle file explorer
     ["<Leader>e"] = ':NvimTreeToggle<CR>',
 
