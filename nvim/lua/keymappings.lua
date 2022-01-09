@@ -30,6 +30,9 @@ local keys = {
   },
 
   normal_mode = {
+		-- Keep cursor pos when indenting buffer
+		["<Leader>i"] = "gg=G``zz",
+
     -- Better window movement
     ["<C-h>"] = "<C-w>h",
     ["<C-j>"] = "<C-w>j",

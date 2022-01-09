@@ -5,25 +5,25 @@ name: kustom
 windows:
   - app:
       layout: ae96,123x37,0,0[123x30,0,0,0,123x6,0,31,1]
-      root: ~/projects/ecommonster-v2/staging/kustom-app
+      root: ~/projects/ecommonster-v2/kustom-app
       panes:
         -
         - npm run dev
   - server:
       layout: ae96,123x37,0,0[123x30,0,0,0,123x6,0,31,1]
-      root: ~/projects/ecommonster-v2/staging/kustom-server
+      root: ~/projects/ecommonster-v2/kustom-server
       panes:
         -
         - npm run dev
   - theme:
       layout: ae96,123x37,0,0[123x30,0,0,0,123x6,0,31,1]
-      root: ~/projects/ecommonster-v2/famiprints/theme
+      root: ~/projects/ecommonster-v2/_famiprints/theme
       panes:
         -
         -
   - renderer:
       layout: ae96,123x37,0,0[123x30,0,0,0,123x6,0,31,1]
-      root: ~/projects/ecommonster-v2/staging/gcloud
+      root: ~/projects/ecommonster-v2/gcloud
       panes:
         -
         -

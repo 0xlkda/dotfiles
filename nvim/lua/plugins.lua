@@ -35,6 +35,9 @@ function M.load()
     -- Treesitter
     use 'nvim-treesitter/nvim-treesitter'
 
+    -- JSX
+    use 'MaxMEllon/vim-jsx-pretty'
+
   end) 
 end
 

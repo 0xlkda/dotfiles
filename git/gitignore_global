@@ -1,4 +1,5 @@
+# Folder view configuration files
+.DS_Store
+
+# Application specific files
 node_modules
-build
-cache
-dist
