@@ -10,13 +10,6 @@ end
 function M.load()
   require('packer').startup(function()
 
-    -- File explorer
-    use {
-      'kyazdani42/nvim-tree.lua',
-      requires = 'kyazdani42/nvim-web-devicons',
-      config = function() require'nvim-tree'.setup {} end
-    }
-
     -- Gruvbox
     use 'gruvbox-community/gruvbox'
 
@@ -31,6 +24,7 @@ function M.load()
 
     -- Telescope
     use 'nvim-telescope/telescope.nvim'
+		use 'nvim-telescope/telescope-fzy-native.nvim'
 
     -- Treesitter
     use 'nvim-treesitter/nvim-treesitter'

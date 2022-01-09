@@ -8,3 +8,11 @@ windows:
       layout: main-vertical
       panes:
         -
+  - nvim:
+      layout: main-vertical
+      panes:
+        - cd nvim
+  - tmux:
+      layout: main-vertical
+      panes:
+        - cd tmux
