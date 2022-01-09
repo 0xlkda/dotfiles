@@ -18,7 +18,7 @@ function M.load()
 
     -- LSP
     use 'neovim/nvim-lspconfig'
-    use 'kabouzeid/nvim-lspinstall'
+		use 'williamboman/nvim-lsp-installer'
     use 'nvim-lua/popup.nvim'
     use 'nvim-lua/plenary.nvim'
 

@@ -6,12 +6,28 @@ local keymappings = require "keymappings"
 local plugins = require "plugins"
 
 -- Bootstrap
-settings.load() keymappings.load() plugins.load()
+settings.load()
+keymappings.load()
+plugins.load()
 
 -- Theme
 vim.g.gruvbox_invert_selection = false
 vim.cmd('colorscheme gruvbox')
 vim.cmd('au VimEnter * hi Normal guibg=None')
+
+-- LSP
+require "nvim-lsp-installer".on_server_ready(function(server)
+    local opts = {}
+
+    -- (optional) Customize the options passed to the server
+    -- if server.name == "tsserver" then
+    --     opts.root_dir = function() ... end
+    -- end
+
+    -- This setup() function is exactly the same as lspconfig's setup function.
+    -- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+    server:setup(opts)
+end)
 
 -- Treesitter
 require "nvim-treesitter.configs".setup {
@@ -22,6 +38,7 @@ require "nvim-treesitter.configs".setup {
 	},
 }
 
+-- Telescope
 local actions = require "telescope.actions"
 require "telescope".load_extension("fzy_native")
 require "telescope".setup {

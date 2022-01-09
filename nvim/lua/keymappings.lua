@@ -50,7 +50,23 @@ local keys = {
 		-- Telescope
 		["<C-p>"] = ':Telescope find_files<CR>',
 		["<Leader>f"] = ':Telescope find_files<CR>',
-		["<Leader>s"] = ':Telescope live_grep<CR>'
+		["<Leader>s"] = ':Telescope live_grep<CR>',
+
+		-- LSP
+		['gD'] = ':lua vim.lsp.buf.declaration()<CR>',
+		['gd'] = ':lua vim.lsp.buf.definition()<CR>',
+		['K'] = ':lua vim.lsp.buf.hover()<CR>',
+		['gi'] = ':lua vim.lsp.buf.implementation()<CR>',
+		['<C-k>'] = ':lua vim.lsp.buf.signature_help()<CR>',
+		['<space>D'] = ':lua vim.lsp.buf.type_definition()<CR>',
+		['<space>rn'] = ':lua vim.lsp.buf.rename()<CR>',
+		['<space>ca'] = ':lua vim.lsp.buf.code_action()<CR>',
+		['gr'] = ':lua vim.lsp.buf.references()<CR>',
+		['<space>e'] = ':lua vim.diagnostic.open_float()<CR>',
+		['[d'] = ':lua vim.diagnostic.goto_prev()<CR>',
+		[']d'] = ':lua vim.diagnostic.goto_next()<CR>',
+		['<space>q'] = ':lua vim.diagnostic.setloclist()<CR>',
+		['<space>f'] = ':lua vim.lsp.buf.formatting()<CR>',
 	},
 
 	term_mode = {
