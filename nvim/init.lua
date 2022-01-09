@@ -15,27 +15,35 @@ vim.cmd('au VimEnter * hi Normal guibg=None')
 
 -- Treesitter
 require "nvim-treesitter.configs".setup {
-  indent = { enable = false },
-  highlight = {
+	indent = { enable = false },
+	highlight = {
 		enable = true,
 		additional_vim_regex_highlighting = true
 	},
 }
 
 local actions = require "telescope.actions"
+require "telescope".load_extension("fzy_native")
 require "telescope".setup {
 	defaults = {
 		file_sorter = require("telescope.sorters").get_fzy_sorter,
-    mappings = {
-      i = {
+		mappings = {
+			i = {
 				["<C-Q>"] = actions.send_selected_to_qflist + actions.open_qflist
-      },
+			},
 
 			n = {
 				["<C-Q>"] = actions.send_selected_to_qflist + actions.open_qflist
 			}
-    }
-  },
+		}
+	},
+
+	extensions = {
+		fzy_native = {
+			override_generic_sorter = false,
+			override_file_sorter = true,
+		},
+	},
 }
 
 -- JSX
