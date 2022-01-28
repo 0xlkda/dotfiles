@@ -22,12 +22,7 @@ local mode_adapters = {
 
 local keys = {
 	insert_mode = {
-		-- C-c as esc
 		["<C-c>"] = "<ESC>",
-
-		-- Moving up/down when pumvisible
-		["<C-j>"] = { 'pumvisible() ? "\\<down>" : "\\<C-j>"', { expr = true, noremap = true } },
-		["<C-k>"] = { 'pumvisible() ? "\\<up>" : "\\<C-k>"', { expr = true, noremap = true } },
 	},
 
 	normal_mode = {
@@ -42,31 +37,31 @@ local keys = {
 		["<C-k>"] = "cnext<CR>zz",
 
 		-- Toggle search highlight
-		["<Leader>h"] = ':nohl<CR>',
+		["<Leader>h"] = ":nohl<CR>",
 
 		-- Toggle undotree
-		["<Leader>u"] = ':UndotreeToggle<CR>',
+		["<Leader>u"] = ":UndotreeToggle<CR>",
 
 		-- Telescope
-		["<C-p>"] = ':Telescope find_files<CR>',
-		["<Leader>f"] = ':Telescope find_files<CR>',
-		["<Leader>s"] = ':Telescope live_grep<CR>',
+		["<Leader>s"] = ":Telescope live_grep<CR>",
+		["<Leader>l"] = ":Telescope buffer_lines<CR>",
+		["<C-s>"] = ":Telescope current_buffer_fuzzy_find theme=cursor<CR>",
 
 		-- LSP
-		['gD'] = ':lua vim.lsp.buf.declaration()<CR>',
-		['gd'] = ':lua vim.lsp.buf.definition()<CR>',
-		['K'] = ':lua vim.lsp.buf.hover()<CR>',
-		['gi'] = ':lua vim.lsp.buf.implementation()<CR>',
-		['<C-k>'] = ':lua vim.lsp.buf.signature_help()<CR>',
-		['<space>D'] = ':lua vim.lsp.buf.type_definition()<CR>',
-		['<space>rn'] = ':lua vim.lsp.buf.rename()<CR>',
-		['<space>ca'] = ':lua vim.lsp.buf.code_action()<CR>',
-		['gr'] = ':lua vim.lsp.buf.references()<CR>',
-		['<space>e'] = ':lua vim.diagnostic.open_float()<CR>',
-		['[d'] = ':lua vim.diagnostic.goto_prev()<CR>',
-		[']d'] = ':lua vim.diagnostic.goto_next()<CR>',
-		['<space>q'] = ':lua vim.diagnostic.setloclist()<CR>',
-		['<space>f'] = ':lua vim.lsp.buf.formatting()<CR>',
+		["gD"] = ":lua vim.lsp.buf.declaration()<CR>",
+		["gd"] = ":lua vim.lsp.buf.definition()<CR>",
+		["K"] = ":lua vim.lsp.buf.hover()<CR>",
+		["gi"] = ":lua vim.lsp.buf.implementation()<CR>",
+		["<C-k>"] = ":lua vim.lsp.buf.signature_help()<CR>",
+		["<space>D"] = ":lua vim.lsp.buf.type_definition()<CR>",
+		["<space>rn"] = ":lua vim.lsp.buf.rename()<CR>",
+		["<space>ca"] = ":lua vim.lsp.buf.code_action()<CR>",
+		["gr"] = ":lua vim.lsp.buf.references()<CR>",
+		["<space>e"] = ":lua vim.diagnostic.open_float()<CR>",
+		["[d"] = ":lua vim.diagnostic.goto_prev()<CR>",
+		["]d"] = ":lua vim.diagnostic.goto_next()<CR>",
+		["<space>q"] = ":lua vim.diagnostic.setloclist()<CR>",
+		["<space>f"] = ":lua vim.lsp.buf.formatting()<CR>",
 	},
 
 	term_mode = {
@@ -78,7 +73,7 @@ local keys = {
 		[">"] = ">gv",
 
 		-- Moving lines up/down
-		["J"] = ":move '>+1<CR>gv-gv",
+		["J"] = ":move '>+1<CR>gv=gv",
 		["K"] = ":move '<-2<CR>gv-gv"
 	},
 
@@ -122,7 +117,7 @@ end
 
 function M.load()
 	-- leader key
-	vim.g.mapleader = ' '
+	vim.g.mapleader = " "
 
 	-- init!
 	M.load_keys(keys)

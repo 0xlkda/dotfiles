@@ -69,10 +69,45 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
+  ["cmp-buffer"] = {
+    loaded = true,
+    path = "/Users/alex/.local/share/nvim/site/pack/packer/start/cmp-buffer",
+    url = "https://github.com/hrsh7th/cmp-buffer"
+  },
+  ["cmp-cmdline"] = {
+    loaded = true,
+    path = "/Users/alex/.local/share/nvim/site/pack/packer/start/cmp-cmdline",
+    url = "https://github.com/hrsh7th/cmp-cmdline"
+  },
+  ["cmp-nvim-lsp"] = {
+    loaded = true,
+    path = "/Users/alex/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp",
+    url = "https://github.com/hrsh7th/cmp-nvim-lsp"
+  },
+  ["cmp-path"] = {
+    loaded = true,
+    path = "/Users/alex/.local/share/nvim/site/pack/packer/start/cmp-path",
+    url = "https://github.com/hrsh7th/cmp-path"
+  },
+  ["cmp-vsnip"] = {
+    loaded = true,
+    path = "/Users/alex/.local/share/nvim/site/pack/packer/start/cmp-vsnip",
+    url = "https://github.com/hrsh7th/cmp-vsnip"
+  },
+  ["friendly-snippets"] = {
+    loaded = true,
+    path = "/Users/alex/.local/share/nvim/site/pack/packer/start/friendly-snippets",
+    url = "https://github.com/rafamadriz/friendly-snippets"
+  },
   gruvbox = {
     loaded = true,
     path = "/Users/alex/.local/share/nvim/site/pack/packer/start/gruvbox",
     url = "https://github.com/gruvbox-community/gruvbox"
+  },
+  ["nvim-cmp"] = {
+    loaded = true,
+    path = "/Users/alex/.local/share/nvim/site/pack/packer/start/nvim-cmp",
+    url = "https://github.com/hrsh7th/nvim-cmp"
   },
   ["nvim-lsp-installer"] = {
     loaded = true,
@@ -99,10 +134,20 @@ _G.packer_plugins = {
     path = "/Users/alex/.local/share/nvim/site/pack/packer/start/popup.nvim",
     url = "https://github.com/nvim-lua/popup.nvim"
   },
+  ["telescope-buffer-lines.nvim"] = {
+    loaded = true,
+    path = "/Users/alex/.local/share/nvim/site/pack/packer/start/telescope-buffer-lines.nvim",
+    url = "https://github.com/jeetsukumaran/telescope-buffer-lines.nvim"
+  },
   ["telescope-fzy-native.nvim"] = {
     loaded = true,
     path = "/Users/alex/.local/share/nvim/site/pack/packer/start/telescope-fzy-native.nvim",
     url = "https://github.com/nvim-telescope/telescope-fzy-native.nvim"
+  },
+  ["telescope-tmuxinator.nvim"] = {
+    loaded = true,
+    path = "/Users/alex/.local/share/nvim/site/pack/packer/start/telescope-tmuxinator.nvim",
+    url = "https://github.com/danielpieper/telescope-tmuxinator.nvim"
   },
   ["telescope.nvim"] = {
     loaded = true,
@@ -118,10 +163,89 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/alex/.local/share/nvim/site/pack/packer/start/vim-jsx-pretty",
     url = "https://github.com/MaxMEllon/vim-jsx-pretty"
+  },
+  ["vim-prettier"] = {
+    loaded = false,
+    needs_bufread = true,
+    only_cond = false,
+    path = "/Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier",
+    url = "https://github.com/prettier/vim-prettier"
+  },
+  ["vim-styled-components"] = {
+    loaded = true,
+    path = "/Users/alex/.local/share/nvim/site/pack/packer/start/vim-styled-components",
+    url = "https://github.com/styled-components/vim-styled-components"
+  },
+  ["vim-vsnip"] = {
+    loaded = true,
+    path = "/Users/alex/.local/share/nvim/site/pack/packer/start/vim-vsnip",
+    url = "https://github.com/hrsh7th/vim-vsnip"
   }
 }
 
 time([[Defining packer_plugins]], false)
+vim.cmd [[augroup packer_load_aucmds]]
+vim.cmd [[au!]]
+  -- Filetype lazy-loads
+time([[Defining lazy-load filetype autocommands]], true)
+vim.cmd [[au FileType css ++once lua require("packer.load")({'vim-prettier'}, { ft = "css" }, _G.packer_plugins)]]
+vim.cmd [[au FileType graphql ++once lua require("packer.load")({'vim-prettier'}, { ft = "graphql" }, _G.packer_plugins)]]
+vim.cmd [[au FileType markdown ++once lua require("packer.load")({'vim-prettier'}, { ft = "markdown" }, _G.packer_plugins)]]
+vim.cmd [[au FileType html ++once lua require("packer.load")({'vim-prettier'}, { ft = "html" }, _G.packer_plugins)]]
+vim.cmd [[au FileType javascript ++once lua require("packer.load")({'vim-prettier'}, { ft = "javascript" }, _G.packer_plugins)]]
+vim.cmd [[au FileType typescript ++once lua require("packer.load")({'vim-prettier'}, { ft = "typescript" }, _G.packer_plugins)]]
+time([[Defining lazy-load filetype autocommands]], false)
+vim.cmd("augroup END")
+vim.cmd [[augroup filetypedetect]]
+time([[Sourcing ftdetect script at: /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/css.vim]], true)
+vim.cmd [[source /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/css.vim]]
+time([[Sourcing ftdetect script at: /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/css.vim]], false)
+time([[Sourcing ftdetect script at: /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/graphql.vim]], true)
+vim.cmd [[source /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/graphql.vim]]
+time([[Sourcing ftdetect script at: /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/graphql.vim]], false)
+time([[Sourcing ftdetect script at: /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/html.vim]], true)
+vim.cmd [[source /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/html.vim]]
+time([[Sourcing ftdetect script at: /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/html.vim]], false)
+time([[Sourcing ftdetect script at: /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/javascript.vim]], true)
+vim.cmd [[source /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/javascript.vim]]
+time([[Sourcing ftdetect script at: /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/javascript.vim]], false)
+time([[Sourcing ftdetect script at: /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/json.vim]], true)
+vim.cmd [[source /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/json.vim]]
+time([[Sourcing ftdetect script at: /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/json.vim]], false)
+time([[Sourcing ftdetect script at: /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/less.vim]], true)
+vim.cmd [[source /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/less.vim]]
+time([[Sourcing ftdetect script at: /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/less.vim]], false)
+time([[Sourcing ftdetect script at: /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/lua.vim]], true)
+vim.cmd [[source /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/lua.vim]]
+time([[Sourcing ftdetect script at: /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/lua.vim]], false)
+time([[Sourcing ftdetect script at: /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/markdown.vim]], true)
+vim.cmd [[source /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/markdown.vim]]
+time([[Sourcing ftdetect script at: /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/markdown.vim]], false)
+time([[Sourcing ftdetect script at: /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/php.vim]], true)
+vim.cmd [[source /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/php.vim]]
+time([[Sourcing ftdetect script at: /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/php.vim]], false)
+time([[Sourcing ftdetect script at: /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/ruby.vim]], true)
+vim.cmd [[source /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/ruby.vim]]
+time([[Sourcing ftdetect script at: /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/ruby.vim]], false)
+time([[Sourcing ftdetect script at: /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/scss.vim]], true)
+vim.cmd [[source /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/scss.vim]]
+time([[Sourcing ftdetect script at: /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/scss.vim]], false)
+time([[Sourcing ftdetect script at: /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/svelte.vim]], true)
+vim.cmd [[source /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/svelte.vim]]
+time([[Sourcing ftdetect script at: /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/svelte.vim]], false)
+time([[Sourcing ftdetect script at: /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/typescript.vim]], true)
+vim.cmd [[source /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/typescript.vim]]
+time([[Sourcing ftdetect script at: /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/typescript.vim]], false)
+time([[Sourcing ftdetect script at: /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/vue.vim]], true)
+vim.cmd [[source /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/vue.vim]]
+time([[Sourcing ftdetect script at: /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/vue.vim]], false)
+time([[Sourcing ftdetect script at: /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/xml.vim]], true)
+vim.cmd [[source /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/xml.vim]]
+time([[Sourcing ftdetect script at: /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/xml.vim]], false)
+time([[Sourcing ftdetect script at: /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/yaml.vim]], true)
+vim.cmd [[source /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/yaml.vim]]
+time([[Sourcing ftdetect script at: /Users/alex/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/yaml.vim]], false)
+vim.cmd("augroup END")
 if should_profile then save_profiles() end
 
 end)

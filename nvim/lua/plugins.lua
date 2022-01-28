@@ -22,15 +22,38 @@ function M.load()
     use 'nvim-lua/popup.nvim'
     use 'nvim-lua/plenary.nvim'
 
+		-- snippet
+		use 'hrsh7th/cmp-vsnip'
+		use 'hrsh7th/vim-vsnip'
+		use 'rafamadriz/friendly-snippets'
+		
+		-- Autocomplete
+		use 'hrsh7th/cmp-nvim-lsp'
+		use 'hrsh7th/cmp-buffer'
+		use 'hrsh7th/cmp-path'
+		use 'hrsh7th/cmp-cmdline'
+		use 'hrsh7th/nvim-cmp'
+
+		-- Code formatting
+		use {
+			'prettier/vim-prettier',
+			run = 'npm install',
+			ft = { 'javascript', 'typescript', 'css', 'graphql', 'markdown', 'html' }
+		}
+
     -- Telescope
     use 'nvim-telescope/telescope.nvim'
 		use 'nvim-telescope/telescope-fzy-native.nvim'
+		use 'jeetsukumaran/telescope-buffer-lines.nvim'
+		use 'danielpieper/telescope-tmuxinator.nvim'
 
     -- Treesitter
     use 'nvim-treesitter/nvim-treesitter'
 
     -- JSX
     use 'MaxMEllon/vim-jsx-pretty'
+		use 'styled-components/vim-styled-components'
+		
 
   end) 
 end
