@@ -45,7 +45,7 @@ local keys = {
 		-- Telescope
 		["<Leader>s"] = ":Telescope live_grep<CR>",
 		["<Leader>l"] = ":Telescope buffer_lines<CR>",
-		["<C-s>"] = ":Telescope current_buffer_fuzzy_find theme=cursor<CR>",
+		["<C-s>"] = ":Telescope current_buffer_fuzzy_find<CR>",
 
 		-- LSP
 		["gD"] = ":lua vim.lsp.buf.declaration()<CR>",

@@ -17,6 +17,16 @@ end
 
 require "telescope".setup {
 	defaults = {
+		layout_strategy = "vertical",
+		layout_config = {
+			vertical = {
+				width = 0.9,
+				height = 0.9,
+				prompt_position = 'bottom',
+				preview_cutoff = 30,
+			}
+		},
+
 		buffer_previewer_maker = previewSmallFileOnly,
 		file_sorter = require("telescope.sorters").get_fzy_sorter,
 		mappings = {
@@ -31,13 +41,6 @@ require "telescope".setup {
 	},
 
 	pickers = {
-		git_files = {
-			theme = "dropdown"
-		},
-
-		find_files = {
-			theme = "dropdown"
-		},
 	},
 
 	
