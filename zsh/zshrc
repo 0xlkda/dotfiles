@@ -21,6 +21,7 @@ export XDG_CONFIG_HOME=$HOME/.config
 export VISUAL=nvim
 export EDITOR="$VISUAL"
 
+alias npm='pnpm'
 alias vim='nvim'
 alias tn='tmuxinator n'
 alias to='tmuxinator o'

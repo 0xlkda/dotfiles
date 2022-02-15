@@ -22,46 +22,46 @@ local mode_adapters = {
 
 local keys = {
 	insert_mode = {
-		["<C-c>"] = "<ESC>",
+		["<C-c>"] = "<ESC>"
 	},
 
 	normal_mode = {
 		-- Quick chmod +x
-		["<Leader>x"] = ":!chmod +x %<CR>",
+		["<space>x"] = ":!chmod +x %<CR>",
 
 		-- Keep cursor pos when indenting buffer
-		["<Leader>i"] = "gg=G``zz",
+		["<space>i"] = "gg=G``zz",
 
 		-- Quickfix navigation
 		["<C-j>"] = "cprev<CR>zz",
 		["<C-k>"] = "cnext<CR>zz",
 
 		-- Toggle search highlight
-		["<Leader>h"] = ":nohl<CR>",
+		["<C-l>"] = ":nohl<CR>",
 
 		-- Toggle undotree
-		["<Leader>u"] = ":UndotreeToggle<CR>",
+		["<space>u"] = ":UndotreeToggle<CR>",
 
 		-- Telescope
-		["<Leader>s"] = ":Telescope live_grep<CR>",
-		["<Leader>l"] = ":Telescope buffer_lines<CR>",
-		["<C-s>"] = ":Telescope current_buffer_fuzzy_find<CR>",
+		["<space>s"] = ":Telescope live_grep<CR>",
+		["<space>il"] = ":Telescope buffer_lines<CR>",
+		["<space>ca"] = ":Telescope lsp_code_actions<CR>",
+		["<C-s>"] = ":Telescope lsp_document_symbols<CR>",
+		["<C-f>"] = ":Telescope current_buffer_fuzzy_find<CR>",
 
 		-- LSP
-		["gD"] = ":lua vim.lsp.buf.declaration()<CR>",
-		["gd"] = ":lua vim.lsp.buf.definition()<CR>",
-		["K"] = ":lua vim.lsp.buf.hover()<CR>",
-		["gi"] = ":lua vim.lsp.buf.implementation()<CR>",
-		["<C-k>"] = ":lua vim.lsp.buf.signature_help()<CR>",
-		["<space>D"] = ":lua vim.lsp.buf.type_definition()<CR>",
+		["gd"] = ":Telescope lsp_definitions<CR>",
+		["gD"] = ":Telescope lsp_type_definitions<CR>",
+		["gr"] = ":Telescope lsp_references<CR>",
+		["gi"] = ":Telescope lsp_implementations<CR>",
+		["<C-k>"] = ":lua vim.lsp.buf.hover()<CR>",
+		["<K>"] = ":lua vim.lsp.buf.signature_help()<CR>",
 		["<space>rn"] = ":lua vim.lsp.buf.rename()<CR>",
-		["<space>ca"] = ":lua vim.lsp.buf.code_action()<CR>",
-		["gr"] = ":lua vim.lsp.buf.references()<CR>",
-		["<space>e"] = ":lua vim.diagnostic.open_float()<CR>",
-		["[d"] = ":lua vim.diagnostic.goto_prev()<CR>",
-		["]d"] = ":lua vim.diagnostic.goto_next()<CR>",
-		["<space>q"] = ":lua vim.diagnostic.setloclist()<CR>",
 		["<space>f"] = ":lua vim.lsp.buf.formatting()<CR>",
+		["<space>q"] = ":lua vim.diagnostic.setloclist()<CR>",
+		["<C-j>"] = ":lua vim.diagnostic.open_float()<CR>",
+		["<C-[>"] = ":lua vim.diagnostic.goto_prev()<CR>",
+		["<C-]>"] = ":lua vim.diagnostic.goto_next()<CR>",
 	},
 
 	term_mode = {

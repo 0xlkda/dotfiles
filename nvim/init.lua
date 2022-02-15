@@ -15,7 +15,11 @@ vim.g.gruvbox_invert_selection = false
 vim.cmd("colorscheme gruvbox")
 vim.cmd("au VimEnter * hi Normal guibg=None")
 
--- LSP
+-- Diagnostic
+vim.diagnostic.config({
+	virtual_text = false
+})
+
 require "nvim-lsp-installer".on_server_ready(function(server)
 	local opts = {}
 	-- This setup() function is exactly the same as lspconfig"s setup function.
@@ -31,7 +35,6 @@ vim.g["prettier#autoformat_require_pragma"] = 0
 local cmp = require "cmp"
 cmp.setup {
 	snippet = {
-		-- REQUIRED - you must specify a snippet engine
 		expand = function(args)
 			vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
 		end,
@@ -56,7 +59,7 @@ cmp.setup {
 
 -- LSP
 local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
-require("lspconfig")["tsserver"].setup {
+require "lspconfig" ["tsserver"].setup {
 	capabilities = capabilities
 }
 
