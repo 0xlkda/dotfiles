@@ -37,8 +37,8 @@ function M.load()
 		-- Code formatting
 		use {
 			'prettier/vim-prettier',
-			run = 'npm install',
-			ft = { 'javascript', 'typescript', 'css', 'graphql', 'markdown', 'html' }
+			run = 'pnpm install',
+			ft = { 'javascript', 'typescript', 'javascriptreact', 'typescriptreact', 'css', 'graphql', 'markdown', 'html', 'json' }
 		}
 
     -- Telescope
@@ -55,7 +55,7 @@ function M.load()
 		use 'styled-components/vim-styled-components'
 		
 
-  end) 
+  end)
 end
 
 return M

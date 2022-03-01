@@ -22,8 +22,20 @@ vim.diagnostic.config({
 
 require "nvim-lsp-installer".on_server_ready(function(server)
 	local opts = {}
-	-- This setup() function is exactly the same as lspconfig"s setup function.
-	-- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+	local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+
+	if server.name == "sumneko_lua" then
+		opts.settings = {
+			Lua = {
+				diagnostics = {
+					globals = { 'vim' }
+				}
+			}
+		}
+	end
+
+	opts.capabilities = capabilities
+
 	server:setup(opts)
 end)
 
@@ -55,12 +67,6 @@ cmp.setup {
 		{ name = "vsnip" },
 		{ name = "buffer" },
 	})
-}
-
--- LSP
-local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
-require "lspconfig" ["tsserver"].setup {
-	capabilities = capabilities
 }
 
 -- Treesitter

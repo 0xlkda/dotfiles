@@ -1,0 +1,16 @@
+# /Users/alex/.config/tmuxinator/ecm.yml
+
+name: ecm
+root: ~/projects/ecommonster-latest
+
+
+windows:
+  - editor:
+      layout: ae96,123x37,0,0[123x30,0,0,0,123x6,0,31,1]
+      panes:
+        - 
+        - 
+  - logs:
+      layout: main-vertical
+      panes:
+        - 

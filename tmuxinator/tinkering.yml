@@ -1,0 +1,24 @@
+# /Users/alex/.config/tmuxinator/tinkering.yml
+name: tinkering
+root: ~/projects/tinkering
+
+windows:
+  - base:
+      layout: main-vertical
+      panes:
+        - 
+  - web:
+      root: ~/projects/tinkering/apps/web
+      layout: main-vertical
+      panes:
+        - 
+  - api:
+      root: ~/projects/tinkering/apps/api
+      layout: main-vertical
+      panes:
+        - 
+  - packages:
+      root: ~/projects/tinkering/packages
+      layout: main-vertical
+      panes:
+        - 

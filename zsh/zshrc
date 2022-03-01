@@ -21,7 +21,7 @@ export XDG_CONFIG_HOME=$HOME/.config
 export VISUAL=nvim
 export EDITOR="$VISUAL"
 
-alias npm='pnpm'
+alias pm='pnpm'
 alias vim='nvim'
 alias tn='tmuxinator n'
 alias to='tmuxinator o'
@@ -39,7 +39,7 @@ typeset -U path
 typeset -U fpath
 
 # Tree
-alias tree='tree -CIa "node_modules|.git|.cache|.*" --dirsfirst'
+alias tree='tree -CIa "node_modules|.git|.cache|.next|.turbo" --dirsfirst'
 
 # ls
 alias ls="gls -l --group-directories-first --color=auto"
