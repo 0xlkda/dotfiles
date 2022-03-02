@@ -24,6 +24,10 @@ require "nvim-lsp-installer".on_server_ready(function(server)
 	local opts = {}
 	local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
+	if server.name == "tsserver" then
+		opts.capabilities = capabilities
+	end
+
 	if server.name == "sumneko_lua" then
 		opts.settings = {
 			Lua = {
@@ -34,7 +38,15 @@ require "nvim-lsp-installer".on_server_ready(function(server)
 		}
 	end
 
-	opts.capabilities = capabilities
+	if server.name == "eslint" then
+		opts.on_attach = function (client)
+			client.resolved_capabilities.document_formatting = false
+		end
+
+		opts.settings = {
+			format = { enable = false },
+		}
+	end
 
 	server:setup(opts)
 end)
