@@ -23,7 +23,7 @@ require "telescope".setup {
 				width = 0.9,
 				height = 0.9,
 				prompt_position = 'bottom',
-				preview_cutoff = 30,
+				preview_cutoff = 28,
 			}
 		},
 
@@ -43,7 +43,6 @@ require "telescope".setup {
 	pickers = {
 	},
 
-	
 	extensions = {
 		fzy_native = {
 			override_generic_sorter = false,
@@ -63,11 +62,11 @@ require "telescope".load_extension("fzy_native")
 require "telescope".load_extension("buffer_lines")
 require "telescope".load_extension("tmuxinator")
 
-_telescope_project_files = function()
+Telescope_project_files = function()
   local opts = { } -- define here if you want to define something
   local ok = pcall(require "telescope.builtin".git_files, opts)
   if not ok then require "telescope.builtin".find_files(opts) end
 end
 
 vim.api.nvim_set_keymap("n", "<C-\\>", "<CMD>lua require('telescope').extensions.tmuxinator.projects(require('telescope.themes').get_dropdown({}))<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<C-p>", "<CMD>lua _telescope_project_files()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<C-p>", "<CMD>lua Telescope_project_files()<CR>", { noremap = true, silent = true })

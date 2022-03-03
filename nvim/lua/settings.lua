@@ -19,6 +19,7 @@ local default_options = {
 	numberwidth = 4, -- set number column width to 2 {default 4}
 	signcolumn = "yes", -- always show the sign column, otherwise it would shift the text each time
 
+	cmdheight = 2, -- more space in the neovim command line for displaying messages
 	showmode = false, -- we don't need to see things like -- INSERT -- anymore
 
 	hidden = true, -- required to keep multiple buffers and open multiple buffers

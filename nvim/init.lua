@@ -11,12 +11,8 @@ keymappings.load()
 plugins.load()
 
 -- Theme
-vim.g.gruvbox_invert_selection = false
-
-require "rose-pine".setup({
- dark_variant = 'moon'
-})
-
+require "rose-pine".setup({ dark_variant = 'moon' })
+require "lualine".setup({ options = { theme = 'rose-pine' } })
 vim.cmd("colorscheme rose-pine")
 vim.cmd("au VimEnter * hi Normal guibg=None")
 
