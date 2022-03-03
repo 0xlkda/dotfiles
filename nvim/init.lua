@@ -12,7 +12,12 @@ plugins.load()
 
 -- Theme
 vim.g.gruvbox_invert_selection = false
-vim.cmd("colorscheme gruvbox")
+
+require "rose-pine".setup({
+ dark_variant = 'moon'
+})
+
+vim.cmd("colorscheme rose-pine")
 vim.cmd("au VimEnter * hi Normal guibg=None")
 
 -- Diagnostic
@@ -32,7 +37,7 @@ require "nvim-lsp-installer".on_server_ready(function(server)
 		opts.settings = {
 			Lua = {
 				diagnostics = {
-					globals = { 'vim' }
+					globals = { 'vim', 'use' }
 				}
 			}
 		}

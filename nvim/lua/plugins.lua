@@ -10,8 +10,9 @@ end
 function M.load()
   require('packer').startup(function()
 
-    -- Gruvbox
+    -- Theme
     use 'gruvbox-community/gruvbox'
+    use 'rose-pine/neovim'
 
     -- Undo history
     use 'mbbill/undotree'
@@ -26,7 +27,7 @@ function M.load()
 		use 'hrsh7th/cmp-vsnip'
 		use 'hrsh7th/vim-vsnip'
 		use 'rafamadriz/friendly-snippets'
-		
+
 		-- Autocomplete
 		use 'hrsh7th/cmp-nvim-lsp'
 		use 'hrsh7th/cmp-buffer'

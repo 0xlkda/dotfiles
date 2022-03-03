@@ -1,2 +1,3 @@
 nvim/plugged
 dotbot
+.pnpm-debug.log
