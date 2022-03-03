@@ -26,15 +26,14 @@ local keys = {
 	},
 
 	normal_mode = {
+		-- Join lines without whitespace
+		["J"] = "gJ",
+
 		-- Quick chmod +x
 		["<space>x"] = ":!chmod +x %<CR>",
 
 		-- Keep cursor pos when indenting buffer
 		["<space>i"] = "gg=G``zz",
-
-		-- Quickfix navigation
-		["<C-j>"] = "cprev<CR>zz",
-		["<C-k>"] = "cnext<CR>zz",
 
 		-- Toggle search highlight
 		["<C-l>"] = ":nohl<CR>",
