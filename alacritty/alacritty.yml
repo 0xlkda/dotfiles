@@ -1,6 +1,7 @@
 window:
   startup_mode: Maximized
   dynamic_padding: true
+  decorations: None
   opacity: 0.98
 
 shell:
