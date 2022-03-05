@@ -1,24 +1,24 @@
-# /Users/alex/.config/tmuxinator/tinkering.yml
-name: tinkering
-root: ~/projects/tinkering
+# /Users/alex/.config/tmuxinator/personal.yml
+name: Personal
+root: ~/projects/personal
 
 windows:
   - base:
       layout: main-vertical
       panes:
         - 
-  - web:
-      root: ~/projects/tinkering/apps/web
+  - site:
+      root: ~/projects/personal/sites
       layout: main-vertical
       panes:
         - 
-  - api:
-      root: ~/projects/tinkering/apps/api
+  - components:
+      root: ~/projects/personal/components
       layout: main-vertical
       panes:
         - 
   - packages:
-      root: ~/projects/tinkering/packages
+      root: ~/projects/personal/packages
       layout: main-vertical
       panes:
         - 

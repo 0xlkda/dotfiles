@@ -14,9 +14,9 @@ plugins.load()
 vim.cmd([[
 " When editing a file, always jump to the last known cursor position.
 autocmd BufReadPost *
-\ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
-\ |   exe "normal! g`\""
-\ | endif
+\  if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
+\| 	exe "normal! g`\""
+\| endif
 ]])
 
 -- Theme

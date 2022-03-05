@@ -1,4 +1,5 @@
 export PATH=$HOME/.local/bin:/usr/local/bin:$PATH # homebrew
+export PATH=./node_modules/.bin:$PATH # node_modules
 export PATH=/usr/local/opt/make/libexec/gnubin:$PATH # gnubin for using gnu make
 export PATH="/usr/local/opt/openjdk/bin:$PATH"
 export ZSH_DISABLE_COMPFIX=true

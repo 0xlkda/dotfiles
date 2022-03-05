@@ -10,7 +10,7 @@ shell:
     - --login
 
 font:
-  size: 18
+  size: 16
 
   normal:
     family: JetBrainsMono Nerd Font
