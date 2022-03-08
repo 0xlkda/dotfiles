@@ -41,10 +41,6 @@ alias tmuxconf='vim ~/projects/dotfiles/tmux/tmux.conf'
 typeset -U path
 typeset -U fpath
 
-# Keep 2 lines when clear screen
-clear-screen() { echoti clear; precmd; zle redisplay; }
-zle -N clear-screen
-
 # Tree
 alias tree='tree -CIa "node_modules|.git|.cache|.next|.turbo" --dirsfirst'
 

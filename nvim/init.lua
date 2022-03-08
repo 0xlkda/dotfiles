@@ -20,10 +20,21 @@ autocmd BufReadPost *
 ]])
 
 -- Theme
-require "rose-pine".setup({ dark_variant = 'moon' })
-require "lualine".setup({ options = { theme = 'rose-pine' } })
+require "rose-pine".setup({
+	---@usage 'main'|'moon'
+	dark_variant = 'moon',
+	disable_background = false,
+	disable_float_background = false,
+})
+
+vim.cmd("set background=light")
+vim.cmd("hi Normal guibg=NONE ctermbg=NONE")
 vim.cmd("colorscheme rose-pine")
-vim.cmd("au VimEnter * hi Normal guibg=None")
+vim.cmd("nnoremap <silent> <C-PageUp> :set background=light<CR>")
+vim.cmd("nnoremap <silent> <C-PageDown> :set background=dark<CR>")
+
+-- Status line
+require "lualine".setup({ options = { theme = 'rose-pine' } })
 
 -- Diagnostic
 vim.diagnostic.config({
@@ -46,9 +57,7 @@ require "nvim-lsp-installer".on_server_ready(function(server)
 				}
 			}
 		}
-	end
-
-	if server.name == "eslint" then
+	end if server.name == "eslint" then
 		opts.on_attach = function (client)
 			client.resolved_capabilities.document_formatting = false
 		end

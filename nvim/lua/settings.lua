@@ -2,7 +2,7 @@ local M = {}
 
 local default_options = {
 	mouse = "a", -- allow the mouse to be used in neovim
-	termguicolors = true, -- set term gui colors (most terminals support this)
+	termguicolors = true, -- allow true color
 	clipboard = "unnamedplus", -- allows neovim to access the system clipboard
 	undofile = true, -- enable persistent undo
 

@@ -8,17 +8,7 @@ windows:
       panes:
         - 
   - site:
-      root: ~/projects/personal/sites
-      layout: main-vertical
-      panes:
-        - 
-  - components:
-      root: ~/projects/personal/components
-      layout: main-vertical
-      panes:
-        - 
-  - packages:
-      root: ~/projects/personal/packages
+      root: ~/projects/personal/apps/web
       layout: main-vertical
       panes:
         - 

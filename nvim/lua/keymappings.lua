@@ -26,9 +26,6 @@ local keys = {
 	},
 
 	normal_mode = {
-		-- Join lines without whitespace
-		["J"] = "gJ",
-
 		-- Quick chmod +x
 		["<space>x"] = ":!chmod +x %<CR>",
 

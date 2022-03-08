@@ -1,7 +1,7 @@
 # /Users/alex/.config/tmuxinator/ecm.yml
 
 name: ecm
-root: ~/projects/ecommonster-latest
+root: ~/projects/ecm
 
 
 windows:

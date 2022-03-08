@@ -1,6 +1,6 @@
 [user]
     email = hello@thealemazing.com
-    name = TheAlemazing
+	name = HoomanOnEarth
 [pull]
     rebase = true
 [core]
@@ -13,3 +13,11 @@
     defaultBranch = main
 [diff]
     tool = vimdiff
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/local/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/usr/local/bin/gh auth git-credential
+[alias]
+	view = !/usr/local/bin/gh browse
