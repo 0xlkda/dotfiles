@@ -36,6 +36,7 @@ alias vimconf='vim ~/projects/dotfiles/nvim/init.lua'
 alias zshconf='vim ~/projects/dotfiles/zsh/zshrc'
 alias bashconf='vim ~/projects/dotfiles/bash/bashrc'
 alias tmuxconf='vim ~/projects/dotfiles/tmux/tmux.conf'
+alias alacritty='/Applications/Alacritty.app/Contents/MacOS/alacritty'
 
 # Prevent duplicate entries
 typeset -U path

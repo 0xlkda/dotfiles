@@ -6,13 +6,13 @@ shell:
 window:
   startup_mode: Maximized
   decorations: None
-  dynamic_padding: false
+  dynamic_padding: true
   padding:
     x: 0
     y: 0
 
 import:
-  - ~/projects/dotfiles/alacritty/dark.yml
+  - ~/projects/dotfiles/alacritty/light.yml
 
 font:
   size: 16
