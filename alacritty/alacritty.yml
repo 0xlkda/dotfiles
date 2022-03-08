@@ -34,6 +34,6 @@ font:
     style: Bold Italic
 
 key_bindings:
-  - { key: PageUp,   mods: Command, command: { program: "sh", args: ["-c", "~/projects/dotfiles/alacritty/use_light_theme"]  } }
-  - { key: PageDown, mods: Command, command: { program: "sh", args: ["-c", "~/projects/dotfiles/alacritty/use_dark_theme"] } }
+  - { key: PageUp,   mods: Command|Control, command: { program: "sh", args: ["-c", "~/projects/dotfiles/alacritty/use_light_theme"]  } }
+  - { key: PageDown, mods: Command|Control, command: { program: "sh", args: ["-c", "~/projects/dotfiles/alacritty/use_dark_theme"] } }
 
