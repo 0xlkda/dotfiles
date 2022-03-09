@@ -11,3 +11,4 @@
     ~/.gitignore_global: git/gitignore_global
     ~/.git-template: git/git-template
     ~/.config/alacritty: alacritty
+    ~/.config/fd: fd
