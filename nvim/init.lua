@@ -20,14 +20,29 @@ autocmd BufReadPost *
 ]])
 
 -- Theme
-require "rose-pine".setup({
-  dark_variant = 'moon', -- 'main'|'moon'
-})
+require "rose-pine".setup({ dark_variant = 'moon' })
 
-vim.cmd("nnoremap <silent> <C-PageUp> :set background=light<CR>")
-vim.cmd("nnoremap <silent> <C-PageDown> :set background=dark<CR>")
-vim.cmd("set background=light")
-vim.cmd("colorscheme rose-pine")
+function ToggleTheme(mode)
+  if mode == 'light' then
+    vim.cmd("set background=light")
+    vim.cmd("silent !~/projects/dotfiles/alacritty/use_light_theme")
+  else
+    vim.cmd("set background=dark")
+    vim.cmd("silent !~/projects/dotfiles/alacritty/use_dark_theme")
+  end
+
+  -- apply theme!
+  vim.cmd("colorscheme rose-pine")
+
+  -- refine color highlight
+  local palette = require "rose-pine.palette"
+  vim.cmd("hi NormalFloat guibg=" .. palette.surface .. " guifg=" .. palette.text)
+end
+
+ToggleTheme('light')
+
+vim.cmd("nnoremap <silent> <C-PageUp> :lua ToggleTheme('light')<CR>")
+vim.cmd("nnoremap <silent> <C-PageDown> :lua ToggleTheme('dark')<CR>")
 
 -- Status line
 require "lualine".setup({ options = { theme = 'rose-pine' } })
@@ -72,6 +87,8 @@ vim.g["prettier#autoformat_require_pragma"] = 0
 
 -- Autocomplete
 local cmp = require "cmp"
+local lspkind = require('lspkind')
+
 cmp.setup {
   snippet = {
     expand = function(args)
@@ -79,7 +96,7 @@ cmp.setup {
     end,
   },
   mapping = {
-    ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
+    ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
     ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
     ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
 
@@ -94,10 +111,17 @@ cmp.setup {
     ["<CR>"] = cmp.mapping.confirm({ select = true }),
   },
   sources = cmp.config.sources({
+    { name = "nvim_lsp_signature_help" },
     { name = "nvim_lsp" },
     { name = "vsnip" },
     { name = "buffer" },
-  })
+  }),
+  formatting = {
+    format = lspkind.cmp_format({
+      mode = 'symbol_text',
+      maxWidth = 42
+    })
+  }
 }
 
 -- Treesitter
@@ -111,3 +135,5 @@ require "nvim-treesitter.configs".setup {
 
 -- Telescope
 require "telescope-config"
+
+-- Helpers
