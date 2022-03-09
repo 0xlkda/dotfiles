@@ -14,8 +14,11 @@ window:
 import:
   - ~/projects/dotfiles/alacritty/light.yml
 
+mouse:
+  hide_when_typing: true
+
 font:
-  size: 18
+  size: 20
 
   normal:
     family: JetBrainsMono Nerd Font
