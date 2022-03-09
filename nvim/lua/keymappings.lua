@@ -39,7 +39,7 @@ local keys = {
     ["<space>u"] = ":UndotreeToggle<CR>",
 
     -- Telescope
-    ["<C-p>"] = ":Telescope find_files<CR>",
+    ["<C-p>"] = ":lua require 'telescope.builtin'.find_files({ hidden = true })<CR>",
     ["<space>b"] = ":Telescope buffers<CR>",
     ["<space>d"] = ":Telescope diagnostics<CR>",
     ["<space>ca"] = ":Telescope lsp_code_actions<CR>",
