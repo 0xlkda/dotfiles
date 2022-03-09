@@ -5,7 +5,7 @@ shell:
 
 window:
   startup_mode: Maximized
-  decorations: Transparent
+  decorations: None
   dynamic_padding: true
   padding:
     x: 0

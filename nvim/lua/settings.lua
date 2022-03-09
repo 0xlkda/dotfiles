@@ -7,7 +7,10 @@ local default_options = {
 	undofile = true, -- enable persistent undo
 
 	tabstop = 2,
+	softtabstop = 2,
 	shiftwidth = 2,
+	autoindent = true,
+	expandtab = true,
 	wrap = false,
 
 	splitright = true,

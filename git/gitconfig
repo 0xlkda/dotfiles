@@ -1,18 +1,16 @@
 [user]
-    email = hello@thealemazing.com
+	email = hello@thealemazing.com
 	name = HoomanOnEarth
 [pull]
-    rebase = true
+	rebase = true
 [core]
-    editor = nvim
-    excludesfile = ~/.gitignore_global
+	editor = nvim
+	excludesfile = ~/.gitignore_global
 [credential]
-    helper = cache
+	helper = cache
 [init]
-    templateDir = ~/.git-template
-    defaultBranch = main
-[diff]
-    tool = vimdiff
+	templateDir = ~/.git-template
+	defaultBranch = main
 [credential "https://github.com"]
 	helper = 
 	helper = !/usr/local/bin/gh auth git-credential
