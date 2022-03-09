@@ -53,7 +53,7 @@ local function set_key (key, action)
 end
 
 -- Project Files selectors
-set_key("<C-p>", "<CMD>lua GetProjectFiles()<CR>")
+set_key("<space>p", "<CMD>lua GetProjectFiles()<CR>")
 
 function GetProjectFiles()
   local opts = require('telescope.themes').get_ivy {
