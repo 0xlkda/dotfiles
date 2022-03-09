@@ -1,5 +1,7 @@
 -- Telescope
-local previewers = require("telescope.previewers")
+local actions = require "telescope.actions"
+local previewers = require "telescope.previewers"
+
 local previewSmallFileOnly = function(filepath, bufnr, opts)
   opts = opts or {}
 
@@ -17,9 +19,11 @@ end
 require "telescope".setup {
   defaults = {
     buffer_previewer_maker = previewSmallFileOnly,
-    layout_strategy = "vertical",
-    layout_config = {
-      vertical = { preview_cutoff = 30 }
+    mappings = {
+      i = {
+        ["<C-f>"] = actions.preview_scrolling_down,
+        ["<C-d>"] = actions.preview_scrolling_up,
+      }
     }
   },
 
@@ -37,7 +41,6 @@ require "telescope".setup {
       disable_icons = false,
     },
   }
-
 }
 
 require "telescope".load_extension("fzy_native")
@@ -50,14 +53,22 @@ end
 
 -- Project Files selectors
 set_key("<C-p>", "<CMD>lua GetProjectFiles()<CR>")
+
 function GetProjectFiles()
-  local opts = require('telescope.themes').get_ivy { shorten_path = true	}
+  local opts = require('telescope.themes').get_ivy {
+    layout_config = {
+      preview_width = 60,
+      preview_cutoff = 1
+    }
+  }
+
   local ok = pcall(require "telescope.builtin".git_files, opts)
   if not ok then require "telescope.builtin".find_files(opts) end
 end
 
 -- Tmuxinator selector
 set_key("<C-\\>", "<CMD>lua GetTmuxProjects()<CR>")
+
 function GetTmuxProjects()
   local theme = require 'telescope.themes'.get_dropdown()
   require 'telescope'.extensions.tmuxinator.projects(theme)
