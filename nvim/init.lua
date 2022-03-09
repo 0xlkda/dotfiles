@@ -21,17 +21,13 @@ autocmd BufReadPost *
 
 -- Theme
 require "rose-pine".setup({
-  ---@usage 'main'|'moon'
-  dark_variant = 'moon',
-  disable_background = false,
-  disable_float_background = false,
+  dark_variant = 'moon', -- 'main'|'moon'
 })
 
-vim.cmd("set background=light")
-vim.cmd("hi Normal guibg=NONE ctermbg=NONE")
-vim.cmd("colorscheme rose-pine")
 vim.cmd("nnoremap <silent> <C-PageUp> :set background=light<CR>")
 vim.cmd("nnoremap <silent> <C-PageDown> :set background=dark<CR>")
+vim.cmd("set background=light")
+vim.cmd("colorscheme rose-pine")
 
 -- Status line
 require "lualine".setup({ options = { theme = 'rose-pine' } })
