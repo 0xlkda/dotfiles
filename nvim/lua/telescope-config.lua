@@ -52,7 +52,21 @@ local function set_key (key, action)
   vim.api.nvim_set_keymap("n", key, action, { noremap = true, silent = true })
 end
 
--- Project Files selectors
+-- Current directory files selectors
+set_key("<C-p>", "<CMD>lua GetCurrentDirFiles()<CR>")
+function GetCurrentDirFiles()
+  local opts = require('telescope.themes').get_ivy {
+    hidden = true,
+    layout_config = {
+      preview_width = 60,
+      preview_cutoff = 1
+    }
+  }
+
+  require "telescope.builtin".find_files(opts)
+end
+
+-- Project files selectors
 set_key("<space>p", "<CMD>lua GetProjectFiles()<CR>")
 
 function GetProjectFiles()
