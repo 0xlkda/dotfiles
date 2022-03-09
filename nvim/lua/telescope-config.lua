@@ -21,6 +21,7 @@ require "telescope".setup {
     buffer_previewer_maker = previewSmallFileOnly,
     mappings = {
       i = {
+        ["<ESC>"] = actions.close,
         ["<C-f>"] = actions.preview_scrolling_down,
         ["<C-d>"] = actions.preview_scrolling_up,
       }

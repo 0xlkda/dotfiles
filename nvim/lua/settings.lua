@@ -9,7 +9,6 @@ local default_options = {
 	tabstop = 2,
 	softtabstop = 2,
 	shiftwidth = 2,
-	autoindent = true,
 	expandtab = true,
 	wrap = false,
 
@@ -19,7 +18,7 @@ local default_options = {
 	hlsearch = true, -- highlight all matches on previous search pattern
 	completeopt = "menuone,preview,noselect",
 	relativenumber = true, -- set relative numbered lines
-	numberwidth = 4, -- set number column width to 2 {default 4}
+	numberwidth = 2, -- set number column width to 2 {default 4}
 	signcolumn = "yes", -- always show the sign column, otherwise it would shift the text each time
 
 	cmdheight = 1, -- more space in the neovim command line for displaying messages
