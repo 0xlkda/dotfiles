@@ -61,24 +61,63 @@ require "nvim-lsp-installer".on_server_ready(function(server)
   end
 
   if server.name == "sumneko_lua" then
+    local library = {}
+    local path = vim.split(package.path, ";")
+
+    table.insert(path, "lua/?.lua")
+    table.insert(path, "lua/?/init.lua")
+
+    local function add(lib)
+      for _, p in pairs(vim.fn.expand(lib, false, true)) do
+        p = vim.loop.fs_realpath(p)
+        library[p] = true
+      end
+    end
+
+    -- Add required paths
+    add("$VIMRUNTIME")
+    add("~/.config/nvim")
+    add("~/.local/share/nvim/site/pack/packer/opt/*")
+    add("~/.local/share/nvim/site/pack/packer/start/*")
+
     opts.settings = {
+      on_new_config = function(config, root)
+        local libs = vim.tbl_deep_extend("force", {}, library)
+        libs[root] = nil
+        config.settings.Lua.workspace.library = libs
+        return config
+      end,
+
       Lua = {
+        runtime = {
+          version = "LuaJIT",
+          path = path
+        },
         diagnostics = {
           globals = { 'vim', 'use' }
-        }
+        },
+        workspace = {
+          -- Make the server aware of Neovim runtime files
+          library = library,
+          maxPreload = 2000,
+          preloadFileSize = 50000
+        },
+        telemetry = { enable = false }
       }
     }
-  end if server.name == "eslint" then
-  opts.on_attach = function (client)
-    client.resolved_capabilities.document_formatting = false
   end
 
-  opts.settings = {
-    format = { enable = false },
-  }
-end
+  if server.name == "eslint" then
+    opts.on_attach = function (client)
+      client.resolved_capabilities.document_formatting = false
+    end
 
-server:setup(opts)
+    opts.settings = {
+      format = { enable = false },
+    }
+  end
+
+  server:setup(opts)
 end)
 
 -- Code formatting

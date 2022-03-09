@@ -1,43 +1,42 @@
 -- Telescope
-local themes = require("telescope.themes")
 local previewers = require("telescope.previewers")
 local previewSmallFileOnly = function(filepath, bufnr, opts)
-	opts = opts or {}
+  opts = opts or {}
 
-	filepath = vim.fn.expand(filepath)
-	vim.loop.fs_stat(filepath, function(_, stat)
-		if not stat then return end
-		if stat.size > 1000000 then
-			return
-		else
-			previewers.buffer_previewer_maker(filepath, bufnr, opts)
-		end
-	end)
+  filepath = vim.fn.expand(filepath)
+  vim.loop.fs_stat(filepath, function(_, stat)
+    if not stat then return end
+    if stat.size > 1000000 then
+      return
+    else
+      previewers.buffer_previewer_maker(filepath, bufnr, opts)
+    end
+  end)
 end
 
 require "telescope".setup {
-	defaults = {
-		buffer_previewer_maker = previewSmallFileOnly,
-		layout_strategy = "vertical",
-		layout_config = {
-			vertical = { preview_cutoff = 30 }
-		}
-	},
+  defaults = {
+    buffer_previewer_maker = previewSmallFileOnly,
+    layout_strategy = "vertical",
+    layout_config = {
+      vertical = { preview_cutoff = 30 }
+    }
+  },
 
-	extensions = {
-		extensions = {
-			fzy_native = {
-				override_generic_sorter = false,
-				override_file_sorter = true,
-			}
-		},
+  extensions = {
+    extensions = {
+      fzy_native = {
+        override_generic_sorter = false,
+        override_file_sorter = true,
+      }
+    },
 
-		tmuxinator = {
-			select_action = "switch", -- | "stop" | "kill"
-			stop_action = "stop", -- | "kill"
-			disable_icons = false,
-		},
-	}
+    tmuxinator = {
+      select_action = "switch", -- | "stop" | "kill"
+      stop_action = "stop", -- | "kill"
+      disable_icons = false,
+    },
+  }
 
 }
 
@@ -45,18 +44,21 @@ require "telescope".load_extension("fzy_native")
 require "telescope".load_extension("buffer_lines")
 require "telescope".load_extension("tmuxinator")
 
-Telescope_project_files = function()
-	local opts = require('telescope.themes').get_ivy { shorten_path = true	}
-	local ok = pcall(require "telescope.builtin".git_files, opts)
-	if not ok then require "telescope.builtin".find_files(opts) end
+local function set_key (key, action)
+  vim.api.nvim_set_keymap("n", key, action, { noremap = true, silent = true })
 end
 
-vim.api.nvim_set_keymap("n","<C-\\>",
-	"<CMD>lua require 'telescope'.extensions.tmuxinator.projects(require 'telescope.themes'.get_dropdown())<CR>",
-	{ noremap = true, silent = true }
-)
+-- Project Files selectors
+set_key("<C-p>", "<CMD>lua GetProjectFiles()<CR>")
+function GetProjectFiles()
+  local opts = require('telescope.themes').get_ivy { shorten_path = true	}
+  local ok = pcall(require "telescope.builtin".git_files, opts)
+  if not ok then require "telescope.builtin".find_files(opts) end
+end
 
-vim.api.nvim_set_keymap("n", "<C-p>",
-	"<CMD>lua Telescope_project_files()<CR>",
-	{ noremap = true, silent = true }
-)
+-- Tmuxinator selector
+set_key("<C-\\>", "<CMD>lua GetTmuxProjects()<CR>")
+function GetTmuxProjects()
+  local theme = require 'telescope.themes'.get_dropdown()
+  require 'telescope'.extensions.tmuxinator.projects(theme)
+end
