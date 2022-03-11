@@ -54,11 +54,10 @@ vim.diagnostic.config({
 
 require "nvim-lsp-installer".on_server_ready(function(server)
   local opts = {}
-  local capabilities = require("cmp_nvim_lsp")
-    .update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
   if server.name == "tsserver" then
-    opts.capabilities = capabilities
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    opts.capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
   end
 
   if server.name == "sumneko_lua" then
