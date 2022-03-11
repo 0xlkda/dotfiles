@@ -52,31 +52,23 @@ local function set_key (key, action)
   vim.api.nvim_set_keymap("n", key, action, { noremap = true, silent = true })
 end
 
--- Current directory files selectors
-set_key("<C-p>", "<CMD>lua GetCurrentDirFiles()<CR>")
-function GetCurrentDirFiles()
-  local opts = require('telescope.themes').get_ivy {
-    hidden = true,
-    layout_config = {
-      preview_width = 60,
-      preview_cutoff = 1
-    }
+IvyThemeOpts = require('telescope.themes').get_ivy {
+  hidden = true,
+  layout_config = {
+    preview_cutoff = 80,
+    preview_width = 60,
   }
+}
 
+-- Current directory files selectors
+set_key("<C-p>", "<CMD>lua GetCurrentDirFiles(IvyThemeOpts)<CR>")
+function GetCurrentDirFiles(opts)
   require "telescope.builtin".find_files(opts)
 end
 
 -- Project files selectors
-set_key("<space>p", "<CMD>lua GetProjectFiles()<CR>")
-
-function GetProjectFiles()
-  local opts = require('telescope.themes').get_ivy {
-    layout_config = {
-      preview_width = 60,
-      preview_cutoff = 1
-    }
-  }
-
+set_key("<space>p", "<CMD>lua GetProjectFiles(IvyThemeOpts)<CR>")
+function GetProjectFiles(opts)
   local ok = pcall(require "telescope.builtin".git_files, opts)
   if not ok then require "telescope.builtin".find_files(opts) end
 end
