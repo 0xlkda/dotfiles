@@ -19,6 +19,8 @@ mouse:
 
 font:
   size: 20
+  offset:
+    y: 12
 
   normal:
     family: JetBrainsMono Nerd Font
