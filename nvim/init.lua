@@ -223,5 +223,3 @@ require "nvim-treesitter.configs".setup {
 
 -- Telescope
 require "telescope-config"
-
--- Helpers

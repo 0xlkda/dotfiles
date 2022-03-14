@@ -1,4 +1,10 @@
 -- Telescope
+local utils = require "telescope.utils"
+local pickers = require "telescope.pickers"
+local finders = require "telescope.finders"
+local themes = require "telescope.themes"
+local conf = require "telescope.config".values
+local action_state = require "telescope.actions.state"
 local actions = require "telescope.actions"
 local previewers = require "telescope.previewers"
 
@@ -52,7 +58,7 @@ local function set_key (key, action)
   vim.api.nvim_set_keymap("n", key, action, { noremap = true, silent = true })
 end
 
-IvyThemeOpts = require('telescope.themes').get_ivy {
+IvyThemeOpts = themes.get_ivy {
   hidden = true,
   layout_config = {
     preview_cutoff = 80,
@@ -75,8 +81,35 @@ end
 
 -- Tmuxinator selector
 set_key("<C-\\>", "<CMD>lua GetTmuxProjects()<CR>")
-
 function GetTmuxProjects()
-  local theme = require 'telescope.themes'.get_dropdown()
+  local theme = themes.get_dropdown()
   require 'telescope'.extensions.tmuxinator.projects(theme)
 end
+
+-- Change directory
+set_key("<C-g>", "<CMD>lua ChangeDirectory({ path = '~/projects' })<CR>")
+function ChangeDirectory(config)
+  local path = config.path or '.'
+  local cmd = { vim.o.shell, '-c', "fd . -td " .. path }
+  local directories = utils.get_os_command_output(cmd)
+  local theme = themes.get_dropdown()
+  local opts = vim.tbl_deep_extend("force", config, theme or {})
+
+  pickers.new(opts, {
+    prompt_title = "Directories",
+    finder = finders.new_table({
+      results = directories,
+    }),
+    sorter = conf.generic_sorter(opts),
+    attach_mappings = function(prompt_bufnr, _)
+      actions.select_default:replace(function()
+        actions.close(prompt_bufnr)
+        local selection = action_state.get_selected_entry()[1]
+        vim.cmd("cd " .. selection)
+        print(string.format("Current directory: %s", selection))
+      end)
+      return true
+    end,
+  }):find()
+end
+
