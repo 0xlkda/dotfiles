@@ -25,6 +25,13 @@ end
 require "telescope".setup {
   defaults = {
     buffer_previewer_maker = previewSmallFileOnly,
+    layout_strategy = 'vertical',
+    layout_config = {
+      prompt_position = "bottom",
+      width = 0.98,
+      height = 0.98,
+      preview_cutoff = 1,
+    },
     mappings = {
       i = {
         ["<ESC>"] = actions.close,
@@ -58,22 +65,14 @@ local function set_key (key, action)
   vim.api.nvim_set_keymap("n", key, action, { noremap = true, silent = true })
 end
 
-IvyThemeOpts = themes.get_ivy {
-  hidden = true,
-  layout_config = {
-    preview_cutoff = 80,
-    preview_width = 60,
-  }
-}
-
 -- Current directory files selectors
-set_key("<C-p>", "<CMD>lua GetCurrentDirFiles(IvyThemeOpts)<CR>")
+set_key("<C-p>", "<CMD>lua GetCurrentDirFiles()<CR>")
 function GetCurrentDirFiles(opts)
   require "telescope.builtin".find_files(opts)
 end
 
 -- Project files selectors
-set_key("<space>p", "<CMD>lua GetProjectFiles(IvyThemeOpts)<CR>")
+set_key("<space>p", "<CMD>lua GetProjectFiles()<CR>")
 function GetProjectFiles(opts)
   local ok = pcall(require "telescope.builtin".git_files, opts)
   if not ok then require "telescope.builtin".find_files(opts) end
