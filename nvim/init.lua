@@ -55,54 +55,11 @@ vim.diagnostic.config({
 require "nvim-lsp-installer".on_server_ready(function(server)
   local clientCapabilities = vim.lsp.protocol.make_client_capabilities()
   local opts = {
-    capabilities = require('cmp_nvim_lsp').update_capabilities(clientCapabilities)
+    capabilities = require 'cmp_nvim_lsp'.update_capabilities(clientCapabilities)
   }
 
   if server.name == "sumneko_lua" then
-    local library = {}
-    local path = vim.split(package.path, ";")
-
-    table.insert(path, "lua/?.lua")
-    table.insert(path, "lua/?/init.lua")
-
-    local function add(lib)
-      for _, p in pairs(vim.fn.expand(lib, false, true)) do
-        p = vim.loop.fs_realpath(p)
-        library[p] = true
-      end
-    end
-
-    -- Add required paths
-    add("$VIMRUNTIME")
-    add("~/.config/nvim")
-    add("~/.local/share/nvim/site/pack/packer/opt/*")
-    add("~/.local/share/nvim/site/pack/packer/start/*")
-
-    opts.settings = {
-      on_new_config = function(config, root)
-        local libs = vim.tbl_deep_extend("force", {}, library)
-        libs[root] = nil
-        config.settings.Lua.workspace.library = libs
-        return config
-      end,
-
-      Lua = {
-        runtime = {
-          version = "LuaJIT",
-          path = path
-        },
-        diagnostics = {
-          globals = { 'vim', 'use' }
-        },
-        workspace = {
-          -- Make the server aware of Neovim runtime files
-          library = library,
-          maxPreload = 2000,
-          preloadFileSize = 50000
-        },
-        telemetry = { enable = false }
-      }
-    }
+    opts = require "lua-dev".setup(opts)
   end
 
   if server.name == "eslint" then
