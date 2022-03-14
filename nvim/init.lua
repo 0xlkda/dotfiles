@@ -53,12 +53,10 @@ vim.diagnostic.config({
 })
 
 require "nvim-lsp-installer".on_server_ready(function(server)
-  local opts = {}
-
-  if server.name == "tsserver" then
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
-    opts.capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
-  end
+  local clientCapabilities = vim.lsp.protocol.make_client_capabilities()
+  local opts = {
+    capabilities = require('cmp_nvim_lsp').update_capabilities(clientCapabilities)
+  }
 
   if server.name == "sumneko_lua" then
     local library = {}
@@ -121,20 +119,56 @@ require "nvim-lsp-installer".on_server_ready(function(server)
 end)
 
 -- Code formatting
-vim.g["prettier#autoformat"] = 1
+vim.g["prettier#exec_cmd_async"] = 1
+vim.g["prettier#autoformat"] = 0
 vim.g["prettier#autoformat_require_pragma"] = 0
+vim.g["prettier#autoformat_config_present"] = 1
 
 -- Autocomplete
 local cmp = require "cmp"
-local lspkind = require('lspkind')
+local lspkind = require "lspkind"
+
+local has_words_before = function()
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
+
+local feedkey = function(key, mode)
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
+end
 
 cmp.setup {
+  experimental = {
+    ghost_text = true
+  },
   snippet = {
     expand = function(args)
       vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
     end,
   },
   mapping = {
+    ["<Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif vim.fn["vsnip#available"](1) == 1 then
+        feedkey("<Plug>(vsnip-expand-or-jump)", "")
+      elseif has_words_before() then
+        cmp.complete()
+      else
+        fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
+      end
+    end, { "i", "s" }),
+    ["<S-Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif vim.fn["vsnip#available"](1) == 1 then
+        feedkey("<Plug>(vsnip-jump-prev)", "")
+      elseif has_words_before() then
+        cmp.complete()
+      else
+        fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
+      end
+    end, { "i", "s" }),
     ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
     ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
     ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
@@ -146,8 +180,9 @@ cmp.setup {
       c = cmp.mapping.close(),
     }),
 
-    -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-    ["<CR>"] = cmp.mapping.confirm({ select = true }),
+    -- Accept currently selected item.
+    -- Set `select` to `false` to only confirm explicitly selected items.
+    ["<CR>"] = cmp.mapping.confirm({ select = false }),
   },
   sources = cmp.config.sources({
     { name = "nvim_lsp_signature_help" },
@@ -162,6 +197,20 @@ cmp.setup {
     })
   }
 }
+
+-- Use cmdline & path source for ':'.
+cmp.setup.cmdline(':', {
+  sources = {
+    { name = 'path' },
+    { name = 'cmdline' }
+  }
+})
+
+cmp.setup.cmdline('/', {
+  sources = {
+    { name = 'buffer' }
+  }
+})
 
 -- Treesitter
 require "nvim-treesitter.configs".setup {
