@@ -1,13 +1,13 @@
 local M = {}
 local fn = vim.fn
-
 if fn.empty(fn.glob(PACKER_INSTALL_PATH)) > 0 then
-  fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', PACKER_INSTALL_PATH})
-  vim.cmd 'packadd packer.nvim'
+  PACKER_BOOTSTRAP = fn.system({
+    'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', PACKER_INSTALL_PATH
+  })
 end
 
 function M.load()
-  require('packer').startup(function()
+  require('packer').startup(function(use)
 
     -- Undo history
     use 'mbbill/undotree'
@@ -70,6 +70,9 @@ function M.load()
     -- Theme
     use 'rose-pine/neovim'
 
+    if PACKER_BOOTSTRAP then
+      require('packer').sync()
+    end
   end)
 end
 
