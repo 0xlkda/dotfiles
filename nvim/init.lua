@@ -128,16 +128,12 @@ cmp.setup {
       end
     end, { "i", "s" }),
 
-    ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
-    ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
+    ["<C-e>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
+    ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
     ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
 
     -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
     ["<C-y>"] = cmp.config.disable,
-    ["<C-e>"] = cmp.mapping({
-      i = cmp.mapping.abort(),
-      c = cmp.mapping.close(),
-    }),
 
     -- Accept currently selected item.
     -- Set `select` to `false` to only confirm explicitly selected items.

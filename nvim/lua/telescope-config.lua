@@ -4,8 +4,9 @@ local pickers = require "telescope.pickers"
 local finders = require "telescope.finders"
 local themes = require "telescope.themes"
 local conf = require "telescope.config".values
-local action_state = require "telescope.actions.state"
 local actions = require "telescope.actions"
+local action_state = require "telescope.actions.state"
+local action_layout = require("telescope.actions.layout")
 local previewers = require "telescope.previewers"
 
 local previewSmallFileOnly = function(filepath, bufnr, opts)
@@ -35,8 +36,9 @@ require "telescope".setup {
     mappings = {
       i = {
         ["<ESC>"] = actions.close,
-        ["<C-f>"] = actions.preview_scrolling_down,
-        ["<C-d>"] = actions.preview_scrolling_up,
+        ["<C-d>"] = actions.preview_scrolling_down,
+        ["<C-e>"] = actions.preview_scrolling_up,
+        ["<C-f>"] = action_layout.toggle_preview
       }
     }
   },
