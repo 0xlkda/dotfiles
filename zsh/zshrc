@@ -12,10 +12,6 @@ plugins=(git zsh-autosuggestions zsh-completions)
 source $ZSH/oh-my-zsh.sh
 source $HOME/.cargo/env
 
-fpath+=('/home/alex/.nvm/versions/node/v14.15.1/lib/node_modules/pure-prompt/functions')
-autoload -U promptinit; promptinit
-prompt pure
-
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
 export XDG_CONFIG_HOME=$HOME/.config
@@ -135,3 +131,21 @@ csview() {
   local file="$1"
   cat "$file" | sed 's/,/ ,/g' | column -t -s, | less -S
 }
+
+# Set Spaceship ZSH as a prompt
+SPACESHIP_PROMPT_ADD_NEWLINE=false
+SPACESHIP_PROMPT_ORDER=(
+  time          # Time stamps section
+  user          # Username section
+  dir           # Current directory section
+  host          # Hostname section
+  git           # Git section (git_branch + git_status)
+  exec_time     # Execution time
+  line_sep      # Line break
+  jobs          # Background jobs indicator
+  exit_code     # Exit code section
+  char          # Prompt character
+)
+
+autoload -U promptinit; promptinit
+prompt spaceship
