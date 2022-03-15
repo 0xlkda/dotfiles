@@ -12,3 +12,4 @@
     ~/.git-template: git/git-template
     ~/.config/alacritty: alacritty
     ~/.config/fd: fd
+    ~/.config/starship.toml: starship/starship.toml
