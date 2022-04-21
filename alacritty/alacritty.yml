@@ -18,7 +18,7 @@ mouse:
   hide_when_typing: true
 
 font:
-  size: 20
+  size: 19
   offset:
     y: 12
 

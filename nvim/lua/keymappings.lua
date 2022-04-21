@@ -26,6 +26,9 @@ local keys = {
   },
 
   normal_mode = {
+    -- disable C-z
+    ["<C-z>"] = "<Nop>",
+
     -- Quick chmod +x
     ["<space>x"] = ":!chmod +x %<CR>",
 

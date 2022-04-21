@@ -77,9 +77,8 @@ end)
 
 -- Code formatting
 vim.g["prettier#exec_cmd_async"] = 1
-vim.g["prettier#autoformat"] = 0
+vim.g["prettier#autoformat"] = 1
 vim.g["prettier#autoformat_require_pragma"] = 0
-vim.g["prettier#autoformat_config_present"] = 1
 
 -- Autocomplete
 local cmp = require "cmp"
@@ -169,11 +168,8 @@ cmp.setup.cmdline('/', {
 
 -- Treesitter
 require "nvim-treesitter.configs".setup {
-  indent = { enable = false },
-  highlight = {
-    enable = true,
-    additional_vim_regex_highlighting = true
-  },
+  indent = { enable = true },
+  highlight = { enable = true },
 }
 
 -- Telescope

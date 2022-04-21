@@ -39,12 +39,7 @@ function M.load()
     use {
       'prettier/vim-prettier',
       run = 'pnpm install',
-      ft = {
-        'javascript', 'typescript',
-        'javascriptreact', 'typescriptreact',
-        'html', 'css', 'json',
-        'graphql', 'markdown'
-      }
+      ft = { 'javascript', 'typescript', 'javascriptreact', 'typescriptreact', 'html', 'css', 'json', 'graphql', 'markdown' }
     }
 
     -- Telescope
@@ -59,16 +54,16 @@ function M.load()
     -- Lua
     use 'folke/lua-dev.nvim'
 
-    -- JSX
-    use 'MaxMEllon/vim-jsx-pretty'
-    use 'styled-components/vim-styled-components'
-
     -- Status line
     use 'nvim-lualine/lualine.nvim'
     use 'kyazdani42/nvim-web-devicons'
 
     -- Theme
-    use 'rose-pine/neovim'
+    use({
+      'rose-pine/neovim',
+      as = 'rose-pine',
+      tag = 'v1.*'
+    })
 
     if PACKER_BOOTSTRAP then
       require('packer').sync()

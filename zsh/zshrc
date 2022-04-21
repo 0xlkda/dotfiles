@@ -1,4 +1,5 @@
 export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=node_modules/.bin:$PATH
 export XDG_CONFIG_HOME=$HOME/.config
 
 export VISUAL=nvim
@@ -18,7 +19,7 @@ alias tn='tmuxinator n'
 alias to='tmuxinator o'
 alias ts='tmuxinator s'
 alias reload='source ~/projects/dotfiles/zsh/zshrc'
-alias cleanup='fd --hidden .DS_Store . | xargs rm'
+alias cleanup='fd --no-ignore --hidden .DS_Store . | xargs rm'
 alias dotconf='cd ~/projects/dotfiles; vim'
 alias vimconf='vim ~/projects/dotfiles/nvim/init.lua'
 alias zshconf='vim ~/projects/dotfiles/zsh/zshrc'
@@ -95,9 +96,7 @@ function workfile() {
     return
   fi
 
-  # validate fzy selection before next execution
-  local selection=$(echo $result | fzy)
-  if [ -z "$selection" ] && return
+  # validate fzy selection before next execution local selection=$(echo $result | fzy) if [ -z "$selection" ] && return
 
   # cd to target directory
   cd $(dirname $(echo $selection))
@@ -121,3 +120,8 @@ csview() {
 
 # starship prompt
 eval "$(starship init zsh)"
+
+# shopify env
+alias shopfami='shopify switch --store=famiprint-veterannations.myshopify.com'
+alias shopvet='shopify switch --store=veteran-nations-store.myshopify.com'
+
