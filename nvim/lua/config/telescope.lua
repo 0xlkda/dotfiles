@@ -73,7 +73,7 @@ function GetCurrentDirFiles(opts)
 end
 
 -- Project files selectors
-set_key("<space>p", ":lua GetProjectFiles()<CR>")
+set_key("<Leader>p", ":lua GetProjectFiles()<CR>")
 function GetProjectFiles(opts)
   local ok = pcall(require "telescope.builtin".git_files, opts)
   if not ok then require "telescope.builtin".find_files(opts) end

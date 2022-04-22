@@ -1,4 +1,4 @@
-vim.g.mapleader = '<Space>'
+vim.g.mapleader = ' '
 
 local allmodes = {'n', 'i', 'v', 't'}
 local normal = 'n'
@@ -20,7 +20,7 @@ setkey(normal, '<Leader>u', ':UndotreeToggle<CR>') -- show undotree
 setkey(normal, '<Leader>b', ':Telescope buffers<CR>')
 setkey(normal, '<Leader>d', ':Telescope diagnostics<CR>')
 setkey(normal, '<Leader>ca', ':Telescope lsp_code_actions<CR>')
-setkey(normal, '<Leader-f>', ':Telescope live_grep<CR>')
+setkey(normal, '<Leader>f', ':Telescope live_grep<CR>')
 setkey(normal, '<C-f>', ':Telescope current_buffer_fuzzy_find<CR>')
 
 -- LSP
@@ -31,10 +31,10 @@ setkey(normal, 'gi', ':Telescope lsp_implementations<CR>')
 setkey(normal, 'K', ':lua vim.lsp.buf.hover()<CR>')
 setkey(normal, '<C-k>', ':lua vim.lsp.buf.signature_help()<CR>')
 setkey(normal, '<Leader>rn', ':lua vim.lsp.buf.rename()<CR>')
-setkey(normal, '<Leader>q', ':lua vim.diagnostics.setloclist()<CR>')
-setkey(normal, '<C-j>', ':lua vim.diagnostics.open_float()<CR>')
-setkey(normal, '<C-[>', ':lua vim.diagnostics.goto_prev()<CR>')
-setkey(normal, '<C-]>', ':lua vim.diagnostics.goto_next()<CR>')
+setkey(normal, '<Leader>q', ':lua vim.diagnostic.setloclist()<CR>')
+setkey(normal, '<C-j>', ':lua vim.diagnostic.open_float()<CR>')
+setkey(normal, '<C-[>', ':lua vim.diagnostic.goto_prev()<CR>')
+setkey(normal, '<C-]>', ':lua vim.diagnostic.goto_next()<CR>')
 
 -- indenting
 setkey(visual, '<', '<gv')
