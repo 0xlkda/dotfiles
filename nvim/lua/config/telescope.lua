@@ -1,4 +1,3 @@
--- Telescope
 local utils = require "telescope.utils"
 local pickers = require "telescope.pickers"
 local finders = require "telescope.finders"
@@ -68,27 +67,27 @@ local function set_key (key, action)
 end
 
 -- Current directory files selectors
-set_key("<C-p>", "<CMD>lua GetCurrentDirFiles()<CR>")
+set_key("<C-p>", ":lua GetCurrentDirFiles()<CR>")
 function GetCurrentDirFiles(opts)
   require "telescope.builtin".find_files(opts)
 end
 
 -- Project files selectors
-set_key("<space>p", "<CMD>lua GetProjectFiles()<CR>")
+set_key("<space>p", ":lua GetProjectFiles()<CR>")
 function GetProjectFiles(opts)
   local ok = pcall(require "telescope.builtin".git_files, opts)
   if not ok then require "telescope.builtin".find_files(opts) end
 end
 
 -- Tmuxinator selector
-set_key("<C-\\>", "<CMD>lua GetTmuxProjects()<CR>")
+set_key("<C-\\>", ":lua GetTmuxProjects()<CR>")
 function GetTmuxProjects()
   local theme = themes.get_dropdown()
   require 'telescope'.extensions.tmuxinator.projects(theme)
 end
 
 -- Change directory
-set_key("<C-g>", "<CMD>lua ChangeDirectory({ path = '~/projects' })<CR>")
+set_key("<C-g>", ":lua ChangeDirectory({ path = '~/projects' })<CR>")
 function ChangeDirectory(config)
   local path = config.path or '.'
   local cmd = { vim.o.shell, '-c', "fd . -td " .. path }
@@ -113,4 +112,3 @@ function ChangeDirectory(config)
     end,
   }):find()
 end
-

@@ -1,57 +1,28 @@
--- Config modules
-require "globals"
+require "common.utils"
+require "common.settings"
+require "common.keymap"
+require "common.plugin"
+require "config.telescope"
+require "rose-pine".setup({ dark_variant = 'moon' })
 
-local settings = require "settings"
-local plugins = require "plugins"
-local keymappings = require "keymappings"
-
--- Bootstrap
-settings.load()
-keymappings.load()
-plugins.load()
+-- Theme
+ToggleTheme('light')
 
 -- Save cursor pos
 vim.cmd([[
-" When editing a file, always jump to the last known cursor position.
 autocmd BufReadPost *
 \  if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
-\| 	exe "normal! g`\""
+\|  exe "normal! g`\""
 \| endif
 ]])
-
--- Theme
-require "rose-pine".setup({ dark_variant = 'moon' })
-
-function ToggleTheme(mode)
-  if mode == 'light' then
-    vim.cmd("set background=light")
-    vim.cmd("silent !~/projects/dotfiles/alacritty/use_light_theme")
-  else
-    vim.cmd("set background=dark")
-    vim.cmd("silent !~/projects/dotfiles/alacritty/use_dark_theme")
-  end
-
-  -- apply theme!
-  vim.cmd("colorscheme rose-pine")
-
-  -- refine color highlight
-  local palette = require "rose-pine.palette"
-  vim.cmd("hi NormalFloat guibg=" .. palette.surface .. " guifg=" .. palette.text)
-end
-
-ToggleTheme('light')
-
-vim.cmd("nnoremap <silent> <C-PageUp> :lua ToggleTheme('light')<CR>")
-vim.cmd("nnoremap <silent> <C-PageDown> :lua ToggleTheme('dark')<CR>")
 
 -- Status line
 require "lualine".setup({ options = { theme = 'rose-pine' } })
 
 -- Diagnostic
-vim.diagnostic.config({
-  virtual_text = false
-})
+vim.diagnostic.config({ virtual_text = false })
 
+-- LSP
 require "nvim-lsp-installer".on_server_ready(function(server)
   local clientCapabilities = vim.lsp.protocol.make_client_capabilities()
   local opts = {
@@ -172,5 +143,3 @@ require "nvim-treesitter.configs".setup {
   highlight = { enable = true },
 }
 
--- Telescope
-require "telescope-config"
