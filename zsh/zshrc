@@ -1,9 +1,8 @@
-export PATH=$HOME/bin:/usr/local/bin:$PATH
-export PATH=node_modules/.bin:$PATH
-export PATH=$HOME/.cargo/bin:$PATH
 export XDG_CONFIG_HOME=$HOME/.config
-export PNPM_HOME="/Users/alex/Library/pnpm"
-export PATH="$PNPM_HOME:$PATH"
+
+export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$PATH:$HOME/.cargo/bin
+export PATH=$PATH:node_modules/.bin
 
 export VISUAL=nvim
 export EDITOR="$VISUAL"
@@ -15,6 +14,8 @@ ZSH_THEME=""
 plugins=(git zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
+
+setopt BEEP NO_AUTOLIST BASH_AUTOLIST NO_MENUCOMPLETE
 
 alias pm='pnpm'
 alias vim='nvim'

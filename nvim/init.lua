@@ -92,7 +92,7 @@ cmp.setup {
       else
         fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
       end
-    end, { "i", "s" }),
+    end, { "c", "i", "s" }),
 
     ["<C-p>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
@@ -104,18 +104,18 @@ cmp.setup {
       else
         fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
       end
-    end, { "i", "s" }),
+    end, { "c", "i", "s" }),
 
     ["<C-e>"] = cmp.mapping.scroll_docs(-4),
     ["<C-d>"] = cmp.mapping.scroll_docs(4),
-    ["<C-Space>"] = cmp.mapping.complete(),
 
     -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
     ["<C-y>"] = cmp.config.disable,
 
     -- Accept currently selected item.
     -- Set `select` to `false` to only confirm explicitly selected items.
-    ["<CR>"] = cmp.mapping.confirm({ select = false }),
+    ["<TAB>"] = cmp.mapping.confirm({ select = true }),
+    ["<CR>"] = cmp.mapping.confirm({ select = true }),
   },
   sources = cmp.config.sources({
     { name = "nvim_lsp_signature_help" },
@@ -150,4 +150,3 @@ require "nvim-treesitter.configs".setup {
   indent = { enable = true },
   highlight = { enable = true },
 }
-
