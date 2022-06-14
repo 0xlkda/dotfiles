@@ -8,6 +8,8 @@ require "rose-pine".setup({ dark_variant = 'moon' })
 -- Theme
 ToggleTheme('light')
 
+vim.cmd([[autocmd FileType js,html,css setlocal noendofline nofixendofline]])
+
 -- Save cursor pos
 vim.cmd([[
 autocmd BufReadPost *
@@ -17,7 +19,12 @@ autocmd BufReadPost *
 ]])
 
 -- Status line
-require "lualine".setup({ options = { theme = 'rose-pine' } })
+require "lualine".setup({
+  options = {
+    theme = 'rose-pine',
+    globalstatus = true
+  }
+})
 
 -- Diagnostic
 vim.diagnostic.config({ virtual_text = false })
@@ -48,8 +55,9 @@ end)
 
 -- Code formatting
 vim.g["prettier#exec_cmd_async"] = 1
-vim.g["prettier#autoformat"] = 1
 vim.g["prettier#autoformat_require_pragma"] = 0
+vim.g["prettier#autoformat_config_present"] = 1
+vim.g["rustfmt_autosave"] = 1
 
 -- Autocomplete
 local cmp = require "cmp"
@@ -74,7 +82,7 @@ cmp.setup {
     end,
   },
   mapping = {
-    ["<Tab>"] = cmp.mapping(function(fallback)
+    ["<C-n>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
       elseif vim.fn["vsnip#available"](1) == 1 then
@@ -86,7 +94,7 @@ cmp.setup {
       end
     end, { "i", "s" }),
 
-    ["<S-Tab>"] = cmp.mapping(function(fallback)
+    ["<C-p>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
       elseif vim.fn["vsnip#available"](1) == 1 then
@@ -98,12 +106,9 @@ cmp.setup {
       end
     end, { "i", "s" }),
 
-    ["<C-p>"] = cmp.mapping.select_prev_item(),
-    ["<C-n>"] = cmp.mapping.select_next_item(),
-
-    ["<C-e>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
-    ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
-    ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
+    ["<C-e>"] = cmp.mapping.scroll_docs(-4),
+    ["<C-d>"] = cmp.mapping.scroll_docs(4),
+    ["<C-Space>"] = cmp.mapping.complete(),
 
     -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
     ["<C-y>"] = cmp.config.disable,

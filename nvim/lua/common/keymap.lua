@@ -10,6 +10,8 @@ local delkey = vim.keymap.del
 local setkey = vim.keymap.set
 
 setkey(allmodes, '<C-z>', '<nop>') -- remove C-z behaviour
+setkey(allmodes, '<C-c>', '<ESC>')
+setkey(normal, ';', ':')
 setkey(normal, '<leader>w', ':write<CR>')
 setkey(normal, '*', '*zz') -- center after search
 setkey(normal, '<Leader>x', ':!chmod +x %<CR>') -- quick chmod +x
@@ -28,8 +30,8 @@ setkey(normal, 'gd', ':Telescope lsp_definitions<CR>')
 setkey(normal, 'gD', ':Telescope lsp_type_definitions<CR>')
 setkey(normal, 'gr', ':Telescope lsp_references<CR>')
 setkey(normal, 'gi', ':Telescope lsp_implementations<CR>')
-setkey(normal, 'K', ':lua vim.lsp.buf.hover()<CR>')
-setkey(normal, '<C-k>', ':lua vim.lsp.buf.signature_help()<CR>')
+setkey(normal, '<C-k>', ':lua vim.lsp.buf.hover()<CR>')
+setkey(normal, 'K', ':lua vim.lsp.buf.signature_help()<CR>')
 setkey(normal, '<Leader>rn', ':lua vim.lsp.buf.rename()<CR>')
 setkey(normal, '<Leader>q', ':lua vim.diagnostic.setloclist()<CR>')
 setkey(normal, '<C-j>', ':lua vim.diagnostic.open_float()<CR>')

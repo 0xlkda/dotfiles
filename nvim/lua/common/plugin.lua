@@ -50,6 +50,9 @@ return require('packer').startup(function(use)
   -- Lua
   use 'folke/lua-dev.nvim'
 
+  -- Rust
+  use 'rust-lang/rust.vim'
+
   -- Status line
   use 'nvim-lualine/lualine.nvim'
   use 'kyazdani42/nvim-web-devicons'

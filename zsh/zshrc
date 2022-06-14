@@ -2,6 +2,8 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 export PATH=node_modules/.bin:$PATH
 export PATH=$HOME/.cargo/bin:$PATH
 export XDG_CONFIG_HOME=$HOME/.config
+export PNPM_HOME="/Users/alex/Library/pnpm"
+export PATH="$PNPM_HOME:$PATH"
 
 export VISUAL=nvim
 export EDITOR="$VISUAL"
@@ -19,11 +21,13 @@ alias vim='nvim'
 alias tn='tmuxinator n'
 alias to='tmuxinator o'
 alias ts='tmuxinator s'
+alias cpwd="pwd | tr -d '\n' | pbcopy && echo 'pwd copied to clipboard'"
 alias reload='source ~/projects/dotfiles/zsh/zshrc'
 alias cleanup='fd --no-ignore --hidden .DS_Store . | xargs rm'
 alias dotconf='cd ~/projects/dotfiles; vim'
 alias vimconf='vim ~/projects/dotfiles/nvim/init.lua'
 alias zshconf='vim ~/projects/dotfiles/zsh/zshrc'
+alias yaconf='vim ~/projects/dotfiles/yabai/yabairc'
 alias bashconf='vim ~/projects/dotfiles/bash/bashrc'
 alias tmuxconf='vim ~/projects/dotfiles/tmux/tmux.conf'
 alias alacritty='/Applications/Alacritty.app/Contents/MacOS/alacritty'
@@ -125,4 +129,4 @@ eval "$(starship init zsh)"
 # shopify env
 alias shopfami='shopify switch --store=famiprint-veterannations.myshopify.com'
 alias shopvet='shopify switch --store=veteran-nations-store.myshopify.com'
-
+alias theme='shopify theme'

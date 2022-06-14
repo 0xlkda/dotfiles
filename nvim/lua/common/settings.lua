@@ -1,5 +1,6 @@
 local set = vim.opt
 
+set.clipboard = "unnamedplus"
 set.tabstop = 2
 set.softtabstop = 2
 set.shiftwidth = 2
@@ -10,7 +11,7 @@ set.splitright = true
 set.splitbelow = true
 
 set.hlsearch = true
-set.completeopt = "menuone,preview,noselect"
+set.completeopt = "menu,menuone,noselect"
 set.relativenumber = true
 set.numberwidth = 2
 set.signcolumn = "yes"
