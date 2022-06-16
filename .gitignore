@@ -1,3 +1,4 @@
+nvim/undodir
 nvim/plugged
 dotbot
 .pnpm-debug.log

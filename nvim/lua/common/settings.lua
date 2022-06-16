@@ -23,6 +23,8 @@ set.hidden = true
 set.backup = false
 set.writebackup = false
 set.swapfile = false
+set.undodir = os.getenv("HOME") .. '/.config/nvim/undodir'
+set.undofile = true
 
 set.wildignore = "*/cache/*,*/tmp/*"
 set.errorformat:prepend('%f|%l col %c|%m')
