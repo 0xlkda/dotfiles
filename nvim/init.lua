@@ -8,8 +8,6 @@ require "rose-pine".setup({ dark_variant = 'moon' })
 -- Theme
 ToggleTheme('light')
 
-vim.cmd([[autocmd FileType js,html,css setlocal noendofline nofixendofline]])
-
 -- Save cursor pos
 vim.cmd([[
 autocmd BufReadPost *
@@ -30,31 +28,29 @@ require "lualine".setup({
 vim.diagnostic.config({ virtual_text = false })
 
 -- LSP
-require "nvim-lsp-installer".on_server_ready(function(server)
-  local clientCapabilities = vim.lsp.protocol.make_client_capabilities()
-  local opts = {
-    capabilities = require 'cmp_nvim_lsp'.update_capabilities(clientCapabilities)
+require("nvim-lsp-installer").setup {}
+local lspconfig = require("lspconfig")
+local client_capabilities = vim.lsp.protocol.make_client_capabilities()
+local opts = {
+  capabilities = require 'cmp_nvim_lsp'.update_capabilities(client_capabilities)
+}
+
+local lua_opts = require("lua-dev").setup(opts)
+lspconfig.sumneko_lua.setup(lua_opts)
+
+lspconfig.eslint.setup {
+  on_attach = function (client)
+    client.resolved_capabilities.document_formatting = false
+  end,
+
+  settings = {
+    format = { enable = false },
   }
-
-  if server.name == "sumneko_lua" then
-    opts = require "lua-dev".setup(opts)
-  end
-
-  if server.name == "eslint" then
-    opts.on_attach = function (client)
-      client.resolved_capabilities.document_formatting = false
-    end
-
-    opts.settings = {
-      format = { enable = false },
-    }
-  end
-
-  server:setup(opts)
-end)
+}
 
 -- Code formatting
 vim.g["prettier#exec_cmd_async"] = 1
+vim.g["prettier#exec_cmd_path"] = "/Users/alex/.nvm/versions/node/v14.19.1/bin/prettier"
 vim.g["prettier#autoformat_require_pragma"] = 0
 vim.g["prettier#autoformat_config_present"] = 1
 vim.g["rustfmt_autosave"] = 1
@@ -147,6 +143,9 @@ cmp.setup.cmdline('/', {
 
 -- Treesitter
 require "nvim-treesitter.configs".setup {
-  indent = { enable = true },
+  indent = {
+    enable = true,
+    disable = { "javascript" }
+  },
   highlight = { enable = true },
 }
