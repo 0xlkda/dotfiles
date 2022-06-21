@@ -49,6 +49,7 @@ return require('packer').startup(function(use)
 
   -- Treesitter
   use 'nvim-treesitter/nvim-treesitter'
+  use 'nvim-treesitter/nvim-treesitter-textobjects'
 
   -- Lua
   use 'folke/lua-dev.nvim'
