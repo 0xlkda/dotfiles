@@ -30,5 +30,6 @@ set.wildignore = "*/cache/*,*/tmp/*"
 set.errorformat:prepend('%f|%l col %c|%m')
 set.listchars = { eol = '↲', tab = '▸ ', trail = '·' }
 
+set.foldenable = false
 set.foldmethod = "expr"
 set.foldexpr = "nvim_treesitter#foldexpr()"

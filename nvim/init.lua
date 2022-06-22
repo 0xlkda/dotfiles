@@ -169,21 +169,25 @@ vim.api.nvim_create_autocmd({ "BufReadPost" }, {
 })
 
 -- Code foldings
-local fold_id = vim.api.nvim_create_augroup("fix:folds", { clear = true })
--- FIX folding not create for telescope_find_files: https://github.com/nvim-telescope/telescope.nvim/issues/699
-vim.api.nvim_create_autocmd({ "BufEnter" }, {
-  group = fold_id,
-  pattern = { "*" },
-  command = "normal zx | zR",
+vim.o.fillchars = "fold:‧"
+vim.g.crease_foldtext = { default = "%{repeat('‧', indent(v:foldstart))}%t %= (%l lines) %f%f%f" }
+
+-- FIX fold not trigger when open file by telescope
+vim.api.nvim_create_autocmd("BufRead", {
+  callback = function()
+    vim.api.nvim_create_autocmd("BufWinEnter", {
+      once = true,
+      command = "normal! zx"
+    })
+  end
 })
--- FIX folding randomly in INSERT mode
-vim.api.nvim_create_autocmd({ "InsertEnter" }, {
-  group = fold_id,
+
+-- FIX folding in insert mode. Foldmethod is local to the window. Protect against screwing up folding when switching between windows.
+vim.api.nvim_create_autocmd("InsertEnter", {
   pattern = { "*" },
   command = [[ if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif ]]
 })
-vim.api.nvim_create_autocmd({ "InsertLeave", "WinLeave" }, {
-  group = fold_id,
+vim.api.nvim_create_autocmd("InsertLeave", {
   pattern = { "*" },
   command = [[ if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif ]]
 })

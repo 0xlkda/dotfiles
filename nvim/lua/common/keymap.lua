@@ -11,8 +11,6 @@ local setkey = vim.keymap.set
 
 setkey(allmodes, '<C-z>', '<nop>') -- remove C-z behaviour
 setkey(allmodes, '<C-c>', '<ESC>')
-setkey(insert, '<ESC>', '<ESC>zv')
-setkey(insert, '<C-c>', '<ESC>zv')
 
 setkey(normal, ';', ':')
 setkey(normal, '<leader>w', ':write<CR>')

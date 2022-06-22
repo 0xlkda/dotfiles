@@ -68,6 +68,9 @@ return require('packer').startup(function(use)
     tag = 'v1.*'
   })
 
+  -- Code folding
+  use 'scr1pt0r/crease.vim'
+
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
   if Packer_bootstrap then
