@@ -8,14 +8,6 @@ require "rose-pine".setup({ dark_variant = 'moon' })
 -- Theme
 ToggleTheme('light')
 
--- Save cursor pos
-vim.cmd([[
-autocmd BufReadPost *
-\  if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
-\|  exe "normal! g`\""
-\| endif
-]])
-
 -- Status line
 require "lualine".setup({
   options = {
@@ -35,11 +27,16 @@ local opts = {
   capabilities = require 'cmp_nvim_lsp'.update_capabilities(client_capabilities)
 }
 
-local lua_opts = require("lua-dev").setup(opts)
-lspconfig.sumneko_lua.setup(lua_opts)
+lspconfig.tsserver.setup {
+  on_attach = function(client)
+    client.resolved_capabilities.document_formatting = false
+  end,
+}
+
+lspconfig.sumneko_lua.setup(require("lua-dev").setup(opts))
 
 lspconfig.eslint.setup {
-  on_attach = function (client)
+  on_attach = function(client)
     client.resolved_capabilities.document_formatting = false
   end,
 
@@ -127,7 +124,6 @@ cmp.setup {
   }
 }
 
--- Use cmdline & path source for ':'.
 cmp.setup.cmdline(':', {
   sources = {
     { name = 'path' },
@@ -143,14 +139,13 @@ cmp.setup.cmdline('/', {
 
 -- Treesitter
 require "nvim-treesitter.configs".setup {
+  highlight = { enable = true },
+
   indent = {
     enable = true,
     disable = { "javascript" }
   },
-  highlight = { enable = true },
-}
 
-require'nvim-treesitter.configs'.setup {
   textobjects = {
     select = {
       enable = true,
@@ -167,3 +162,28 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 
+-- Save cursor pos
+vim.api.nvim_create_autocmd({ "BufReadPost" }, {
+  pattern = { "*" },
+  command = [[ if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif ]]
+})
+
+-- Code foldings
+local fold_id = vim.api.nvim_create_augroup("fix:folds", { clear = true })
+-- FIX folding not create for telescope_find_files: https://github.com/nvim-telescope/telescope.nvim/issues/699
+vim.api.nvim_create_autocmd({ "BufEnter" }, {
+  group = fold_id,
+  pattern = { "*" },
+  command = "normal zx | zR",
+})
+-- FIX folding randomly in INSERT mode
+vim.api.nvim_create_autocmd({ "InsertEnter" }, {
+  group = fold_id,
+  pattern = { "*" },
+  command = [[ if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif ]]
+})
+vim.api.nvim_create_autocmd({ "InsertLeave", "WinLeave" }, {
+  group = fold_id,
+  pattern = { "*" },
+  command = [[ if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif ]]
+})

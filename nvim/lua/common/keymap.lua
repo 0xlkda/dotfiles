@@ -11,6 +11,9 @@ local setkey = vim.keymap.set
 
 setkey(allmodes, '<C-z>', '<nop>') -- remove C-z behaviour
 setkey(allmodes, '<C-c>', '<ESC>')
+setkey(insert, '<ESC>', '<ESC>zv')
+setkey(insert, '<C-c>', '<ESC>zv')
+
 setkey(normal, ';', ':')
 setkey(normal, '<leader>w', ':write<CR>')
 setkey(normal, '*', '*zz') -- center after search
@@ -21,7 +24,7 @@ setkey(normal, '<Leader>u', ':UndotreeToggle<CR>') -- show undotree
 -- Telescope
 setkey(normal, '<Leader>b', ':Telescope buffers<CR>')
 setkey(normal, '<Leader>d', ':Telescope diagnostics<CR>')
-setkey(normal, '<Leader>ca', ':Telescope lsp_code_actions<CR>')
+setkey(normal, '<Leader>ca', ':lua vim.lsp.buf.code_action()<CR>')
 setkey(normal, '<Leader>f', ':Telescope live_grep<CR>')
 setkey(normal, '<C-f>', ':Telescope current_buffer_fuzzy_find<CR>')
 
@@ -35,8 +38,8 @@ setkey(normal, 'K', ':lua vim.lsp.buf.signature_help()<CR>')
 setkey(normal, '<Leader>rn', ':lua vim.lsp.buf.rename()<CR>')
 setkey(normal, '<Leader>q', ':lua vim.diagnostic.setloclist()<CR>')
 setkey(normal, '<C-j>', ':lua vim.diagnostic.open_float()<CR>')
-setkey(normal, '<C-[>', ':lua vim.diagnostic.goto_prev()<CR>')
-setkey(normal, '<C-]>', ':lua vim.diagnostic.goto_next()<CR>')
+setkey(normal, '[d', ':lua vim.diagnostic.goto_prev()<CR>')
+setkey(normal, ']d', ':lua vim.diagnostic.goto_next()<CR>')
 
 -- indenting
 setkey(visual, '<', '<gv')
