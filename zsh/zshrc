@@ -34,6 +34,7 @@ alias tmuxconf='vim ~/projects/dotfiles/tmux/tmux.conf'
 alias alacritty='/Applications/Alacritty.app/Contents/MacOS/alacritty'
 alias wf=workfile
 alias wd=workdir
+alias wt=worktree
 
 # Tree
 alias tree='tree -CIa "node_modules|.git|.cache|.next|.turbo" --dirsfirst'
@@ -42,8 +43,8 @@ alias t2='tree -L 2 -CIa "node_modules|.git|.cache|.next|.turbo" --dirsfirst'
 alias t3='tree -L 3 -CIa "node_modules|.git|.cache|.next|.turbo" --dirsfirst'
 
 # ls
-alias ls="gls -A --group-directories-first --color=auto"
-alias ll="gls -lA --group-directories-first --color=auto"
+alias ls="gls --group-directories-first --color=auto"
+alias ll="gls -l --group-directories-first --color=auto"
 
 # quickly jump to workdir
 #
@@ -71,6 +72,28 @@ function workdir() {
   if [ -z "$selection" ] && return
 
   cd $(echo $selection)
+}
+
+# quickly change to worktree
+#
+# Usecases:
+#
+# worktree <pattern>
+# worktree
+
+function worktree() {
+  local result=$(git worktree list)
+
+  # validate fd command before pipe to fzy
+  if [ -z "$result" ] && echo "No directory match query: $1" && return
+
+  # validate fzy selection before next execution
+  local selection=$(echo $result | fzy)
+  if [ -z "$selection" ] && return
+
+  # cd to target directory
+  local target=$(echo $selection | awk '{print $1}')
+  cd $target
 }
 
 # quickly open any file in ~/projects/<target> with $EDITOR
@@ -128,6 +151,5 @@ csview() {
 eval "$(starship init zsh)"
 
 # shopify env
-alias shopfami='shopify switch --store=famiprint-veterannations.myshopify.com'
-alias shopvet='shopify switch --store=veteran-nations-store.myshopify.com'
+source $HOME/projects/dotfiles/shopify_alias.sh
 alias theme='shopify theme'

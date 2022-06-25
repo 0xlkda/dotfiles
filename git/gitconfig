@@ -19,6 +19,7 @@
   rebase = true
 [alias]
 	view = !/usr/local/bin/gh browse
+  wt = worktree
   cwt = !sh $HOME/projects/dotfiles/clone-for-worktree.sh
 [difftool]
 	prompt = false

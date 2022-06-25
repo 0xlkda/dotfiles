@@ -1,4 +1,6 @@
 nvim/undodir
 nvim/plugged
 dotbot
+shopify_alias.sh
 .pnpm-debug.log
+
