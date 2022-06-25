@@ -1,21 +1,26 @@
+[init]
+	templateDir = ~/.git-template
+	defaultBranch = main
 [user]
 	email = hello@thealemazing.com
 	name = HoomanOnEarth
-[pull]
-	rebase = true
 [core]
 	editor = nvim
 	excludesfile = ~/.gitignore_global
 [credential]
 	helper = cache
-[init]
-	templateDir = ~/.git-template
-	defaultBranch = main
 [credential "https://github.com"]
 	helper = 
 	helper = !/usr/local/bin/gh auth git-credential
 [credential "https://gist.github.com"]
 	helper = 
 	helper = !/usr/local/bin/gh auth git-credential
+[pull]
+  rebase = true
 [alias]
 	view = !/usr/local/bin/gh browse
+  cwt = !sh $HOME/projects/dotfiles/clone-for-worktree.sh
+[difftool]
+	prompt = false
+[diff]
+	tool = vimdiff
