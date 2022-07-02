@@ -3,6 +3,7 @@ require "common.settings"
 require "common.keymap"
 require "common.plugin"
 require "config.telescope"
+require "autocommands"
 require "rose-pine".setup({ dark_variant = 'moon' })
 
 -- Theme
@@ -27,23 +28,9 @@ local opts = {
   capabilities = require 'cmp_nvim_lsp'.update_capabilities(client_capabilities)
 }
 
-lspconfig.tsserver.setup {
-  on_attach = function(client)
-    client.resolved_capabilities.document_formatting = false
-  end,
-}
-
+lspconfig.tsserver.setup {}
 lspconfig.sumneko_lua.setup(require("lua-dev").setup(opts))
-
-lspconfig.eslint.setup {
-  on_attach = function(client)
-    client.resolved_capabilities.document_formatting = false
-  end,
-
-  settings = {
-    format = { enable = false },
-  }
-}
+lspconfig.svelte.setup {}
 
 -- Code formatting
 vim.g["prettier#exec_cmd_async"] = 1
@@ -75,6 +62,9 @@ cmp.setup {
     end,
   },
   mapping = {
+    ["<C-l>"] = cmp.mapping(function()
+      cmp.complete()
+    end, { "i" }),
     ["<C-n>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
@@ -189,5 +179,5 @@ vim.api.nvim_create_autocmd("InsertEnter", {
 })
 vim.api.nvim_create_autocmd("InsertLeave", {
   pattern = { "*" },
-  command = [[ if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif ]]
+  command = [[ if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif | normal! zx<CR> ]]
 })
