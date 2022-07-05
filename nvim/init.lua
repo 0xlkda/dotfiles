@@ -47,6 +47,11 @@ local feedkey = function(key, mode)
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
 end
 
+local confirmOpts = {
+  behavior = cmp.ConfirmBehavior.Insert,
+  select = true,
+}
+
 cmp.setup {
   experimental = {
     ghost_text = true
@@ -57,7 +62,11 @@ cmp.setup {
     end,
   },
   mapping = {
-    ["<C-l>"] = cmp.mapping(cmp.complete, { "i" }),
+    -- Accept currently selected item.
+    -- Set `select` to `false` to only confirm explicitly selected items.
+    ["<TAB>"] = cmp.mapping.confirm(confirmOpts),
+    ["<CR>"] = cmp.mapping.confirm(confirmOpts),
+    ["<C-l>"] = cmp.mapping.confirm(confirmOpts),
 
     ["<C-n>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
@@ -83,16 +92,11 @@ cmp.setup {
     ["<C-d>"] = cmp.mapping.scroll_docs(4),
 
     -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
-    ["<C-y>"] = cmp.config.disable,
-
-    -- Accept currently selected item.
-    -- Set `select` to `false` to only confirm explicitly selected items.
-    ["<TAB>"] = cmp.mapping.confirm({ select = true }),
-    ["<CR>"] = cmp.mapping.confirm({ select = true }),
+    ["<C-y>"] = cmp.config.disable
   },
   sources = cmp.config.sources({
-    { name = "nvim_lsp_signature_help" },
     { name = "nvim_lsp" },
+    { name = "nvim_lsp_signature_help" },
     { name = "vsnip" },
     { name = "buffer" },
   }),

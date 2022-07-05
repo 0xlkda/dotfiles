@@ -20,7 +20,6 @@ return require('packer').startup(function(use)
   -- snippet
   use 'hrsh7th/cmp-vsnip'
   use 'hrsh7th/vim-vsnip'
-  use 'hrsh7th/vim-vsnip-integ'
   use 'rafamadriz/friendly-snippets'
 
   -- Autocomplete
