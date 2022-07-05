@@ -40,6 +40,8 @@ vim.g["prettier#autoformat_config_present"] = 1
 vim.g["rustfmt_autosave"] = 1
 
 -- Autocomplete
+vim.g.vsnip_snippet_dir = "~/projects/dotfiles/nvim/vsnip"
+
 local cmp = require "cmp"
 local lspkind = require "lspkind"
 
@@ -66,7 +68,6 @@ cmp.setup {
     -- Set `select` to `false` to only confirm explicitly selected items.
     ["<TAB>"] = cmp.mapping.confirm(confirmOpts),
     ["<CR>"] = cmp.mapping.confirm(confirmOpts),
-    ["<C-l>"] = cmp.mapping.confirm(confirmOpts),
 
     ["<C-n>"] = cmp.mapping(function(fallback)
       if cmp.visible() then

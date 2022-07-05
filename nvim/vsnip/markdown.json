@@ -1,0 +1,21 @@
+{
+  "ECM CX Meeting": {
+    "prefix": ["ecmcx"],
+    "body": [
+      "### ECM Customer Experiences Meeting | $CURRENT_DATE/$CURRENT_MONTH/$CURRENT_YEAR",
+      "",
+      "Participants:",
+      "- Duy Anh",
+      "- Quyên",
+      "- Anh Thơ",
+      "- Mi",
+      "",
+      "#### Retrospective",
+      "",
+      "$0",
+      "#### Agenda",
+      "",
+      "$1"
+    ]
+  }
+}
