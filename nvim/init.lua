@@ -28,9 +28,9 @@ local opts = {
   capabilities = require 'cmp_nvim_lsp'.update_capabilities(client_capabilities)
 }
 
-lspconfig.tsserver.setup {}
 lspconfig.sumneko_lua.setup(require("lua-dev").setup(opts))
-lspconfig.svelte.setup {}
+lspconfig.tsserver.setup(opts)
+lspconfig.svelte.setup(opts)
 
 -- Code formatting
 vim.g["prettier#exec_cmd_async"] = 1
@@ -42,11 +42,6 @@ vim.g["rustfmt_autosave"] = 1
 -- Autocomplete
 local cmp = require "cmp"
 local lspkind = require "lspkind"
-
-local has_words_before = function()
-  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-end
 
 local feedkey = function(key, mode)
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
@@ -62,16 +57,13 @@ cmp.setup {
     end,
   },
   mapping = {
-    ["<C-l>"] = cmp.mapping(function()
-      cmp.complete()
-    end, { "i" }),
+    ["<C-l>"] = cmp.mapping(cmp.complete, { "i" }),
+
     ["<C-n>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
       elseif vim.fn["vsnip#available"](1) == 1 then
         feedkey("<Plug>(vsnip-expand-or-jump)", "")
-      elseif has_words_before() then
-        cmp.complete()
       else
         fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
       end
@@ -82,8 +74,6 @@ cmp.setup {
         cmp.select_prev_item()
       elseif vim.fn["vsnip#available"](1) == 1 then
         feedkey("<Plug>(vsnip-jump-prev)", "")
-      elseif has_words_before() then
-        cmp.complete()
       else
         fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
       end
@@ -170,14 +160,4 @@ vim.api.nvim_create_autocmd("BufRead", {
       command = "normal! zx"
     })
   end
-})
-
--- FIX folding in insert mode. Foldmethod is local to the window. Protect against screwing up folding when switching between windows.
-vim.api.nvim_create_autocmd("InsertEnter", {
-  pattern = { "*" },
-  command = [[ if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif ]]
-})
-vim.api.nvim_create_autocmd("InsertLeave", {
-  pattern = { "*" },
-  command = [[ if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif | normal! zx<CR> ]]
 })
