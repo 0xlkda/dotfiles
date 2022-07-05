@@ -46,7 +46,6 @@ set.listchars = { eol = '↲', tab = '▸ ', trail = '·' }
 
 -- Only save information about the cursor and folds on exit
 set.viewoptions = { "cursor", "folds" }
-set.foldenable = false
 set.foldmethod = "expr"
 set.foldexpr = "nvim_treesitter#foldexpr()"
 

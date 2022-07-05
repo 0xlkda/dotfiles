@@ -64,29 +64,30 @@ require "telescope".load_extension("tmuxinator")
 
 local normal = 'n'
 local setkey = vim.keymap.set
+local setKeyOpts = { silent = true }
 
 -- Current directory files selectors
-setkey(normal, "<C-p>", ":lua GetCurrentDirFiles()<CR>")
+setkey(normal, "<C-p>", ":lua GetCurrentDirFiles()<CR>", setKeyOpts)
 function GetCurrentDirFiles(opts)
   require "telescope.builtin".find_files(opts)
 end
 
 -- Project files selectors
-setkey(normal, "<Leader>p", ":lua GetProjectFiles()<CR>")
+setkey(normal, "<Leader>p", ":lua GetProjectFiles()<CR>", setKeyOpts)
 function GetProjectFiles(opts)
   local ok = pcall(require "telescope.builtin".git_files, opts)
   if not ok then require "telescope.builtin".find_files(opts) end
 end
 
 -- Tmuxinator selector
-setkey(normal, "<C-\\>", ":lua GetTmuxProjects()<CR>")
+setkey(normal, "<C-\\>", ":lua GetTmuxProjects()<CR>", setKeyOpts)
 function GetTmuxProjects()
   local theme = themes.get_dropdown()
   require 'telescope'.extensions.tmuxinator.projects(theme)
 end
 
 -- Change directory
-setkey(normal, "<C-g>", ":lua ChangeDirectory({ path = '~/projects' })<CR>")
+setkey(normal, "<C-g>", ":lua ChangeDirectory({ path = '~/projects' })<CR>", setKeyOpts)
 function ChangeDirectory(config)
   local path = config.path or '.'
   local cmd = { vim.o.shell, '-c', "fd . -td " .. path }
