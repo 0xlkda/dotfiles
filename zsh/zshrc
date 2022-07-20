@@ -153,3 +153,10 @@ eval "$(starship init zsh)"
 # shopify env
 source $HOME/projects/dotfiles/shopify_alias.sh
 alias theme='shopify theme'
+
+# bun completions
+[ -s "/Users/alex/.bun/_bun" ] && source "/Users/alex/.bun/_bun"
+
+# Bun
+export BUN_INSTALL="/Users/alex/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
