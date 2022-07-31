@@ -37,7 +37,7 @@ return require('packer').startup(function(use)
   use {
     'prettier/vim-prettier',
     run = 'pnpm install',
-    ft = { 'javascript', 'typescript', 'javascriptreact', 'typescriptreact', 'html', 'css', 'json', 'graphql', 'markdown', 'svelte', 'lua' }
+    ft = { 'javascript', 'typescript', 'javascriptreact', 'typescriptreact', 'html', 'css', 'json', 'graphql', 'markdown', 'svelte', 'lua', 'liquid' }
   }
 
   -- Telescope
