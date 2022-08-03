@@ -18,6 +18,14 @@ mappings.find_files = function()
     require('telescope.builtin').find_files(default_opt)
 end
 
+mappings.diagnostics = function()
+    require('telescope.builtin').diagnostics(default_opt)
+end
+
+mappings.live_search = function()
+    require('telescope.builtin').live_grep(default_opt)
+end
+
 mappings.current_buffer_search = function()
     require('telescope.builtin').current_buffer_fuzzy_find(opt)
 end

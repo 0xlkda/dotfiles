@@ -22,3 +22,5 @@ vmap({ '<C-k>', ":m '<-2<CR>gv=gv" })
 nmap({ "<Right>", function() vim.cmd [[checktime]] vim.api.nvim_feedkeys("gt", "n", true) end })
 nmap({ "<Left>", function() vim.cmd [[checktime]] vim.api.nvim_feedkeys("gT", "n", true) end })
 
+-- theme
+nmap({ '<C-\\>', ':lua ToggleTheme()<CR>' })
