@@ -1,27 +1,54 @@
+vim.opt.completeopt = { "menu", "menuone", "noselect" }
+vim.opt.shortmess:append "c"
+
+local ok, lspkind = pcall(require, "lspkind")
+if not ok then
+    return
+end
+
+lspkind.init()
+
 local cmp = require("cmp")
+if cmp == nil then
+    return
+end
 
 cmp.setup({
     snippet = {
         expand = function(args)
-            require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+            require("luasnip").lsp_expand(args.body)
         end,
-    },
-    window = {
-        -- completion = cmp.config.window.bordered(),
-        -- documentation = cmp.config.window.bordered(),
     },
     mapping = cmp.mapping.preset.insert({
         ['<C-u>'] = cmp.mapping.scroll_docs(-4),
         ['<C-d>'] = cmp.mapping.scroll_docs(4),
         ['<C-e>'] = cmp.mapping.abort(),
-        ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+        ['<tab>'] = cmp.config.disable,
     }),
-    sources = cmp.config.sources({
-        { name = 'nvim_lsp' },
-        { name = 'luasnip' },
-    }, {
-        { name = 'buffer' },
-    })
+    sources = {
+        { name = "nvim_lua" },
+        { name = "nvim_lsp" },
+        { name = "path" },
+        { name = "luasnip" },
+        { name = "buffer", keyword_length = 5 }
+    },
+
+    formatting = {
+        format = lspkind.cmp_format {
+            with_text = true,
+            menu = {
+                buffer = "[buf]",
+                nvim_lsp = "[LSP]",
+                nvim_lua = "[api]",
+                path = "[path]",
+                luasnip = "[snip]"
+            },
+        },
+    },
+    experimental = {
+        native_menu = false,
+        ghost_text = false,
+    },
 })
 
 -- Set configuration for specific filetype.
@@ -30,14 +57,5 @@ cmp.setup.filetype('gitcommit', {
         { name = 'cmp_git' },
     }, {
         { name = 'buffer' },
-    })
-})
-
-cmp.setup.cmdline(':', {
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = cmp.config.sources({
-        { name = 'path' }
-    }, {
-        { name = 'cmdline' }
     })
 })
