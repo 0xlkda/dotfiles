@@ -1,29 +1,46 @@
+# Set the shell to zsh
+export SHELL=/usr/local/bin/zsh
+export LANG=en_US.UTF8
+export LC_ALL=en_US.UTF-8
+
+# Import locations
+export ZSH_CUSTOM=~/.config/zsh/custom/
+export ZSH_ENV_HOME=$HOME/
 export XDG_CONFIG_HOME=$HOME/.config
+export PATH="$HOME/.local/bin/:$PATH"
 
-export PATH=$HOME/bin:/usr/local/bin:$PATH
-export PATH=$PATH:$HOME/.cargo/bin
-export PATH=$PATH:node_modules/.bin
+# ZSH options
+setopt emacs
+setopt functionargzero
+setopt hist_ignore_space
 
-export VISUAL=nvim
-export EDITOR="$VISUAL"
+export HISTSIZE=100000000
+export SAVEHIST=$HISTSIZE
+export HISTFILE=$HOME/.local/zsh_history
 
-export ZSH=$HOME/.oh-my-zsh
-export ZSH_DISABLE_COMPFIX=true
-ZSH_THEME=""
+# Plugins
+source $XDG_CONFIG_HOME/antigen/antigen.zsh
 
-plugins=(git zsh-autosuggestions)
+antigen bundle 'zsh-users/zsh-syntax-highlighting'
+antigen bundle 'zsh-users/zsh-autosuggestions'
 
-source $ZSH/oh-my-zsh.sh
+antigen apply
 
-setopt BEEP NO_AUTOLIST BASH_AUTOLIST NO_MENUCOMPLETE
+# Key bindings
+bindkey '^n' autosuggest-accept
 
-alias pm='pnpm'
+# starship prompt
+eval "$(starship init zsh)"
+
+# My "Plugins"
+sources=()
+
+for s in "${sources[@]}"; do
+  source $HOME/.config/zsh/include/${s}.zsh
+done
+
 alias vim='nvim'
-alias tn='tmuxinator n'
-alias to='tmuxinator o'
-alias ts='tmuxinator s'
-alias cpwd="pwd | tr -d '\n' | pbcopy && echo 'pwd copied to clipboard'"
-alias reload='omz reload'
+alias reload='source ~/.zshrc'
 alias cleanup='fd --no-ignore --hidden .DS_Store . | xargs rm'
 alias dotconf='cd ~/projects/dotfiles; vim'
 alias vimconf='vim ~/projects/dotfiles/nvim/init.lua'
@@ -31,6 +48,11 @@ alias zshconf='vim ~/projects/dotfiles/zsh/zshrc'
 alias yaconf='vim ~/projects/dotfiles/yabai/yabairc'
 alias bashconf='vim ~/projects/dotfiles/bash/bashrc'
 alias tmuxconf='vim ~/projects/dotfiles/tmux/tmux.conf'
+alias tn='tmuxinator n'
+alias to='tmuxinator o'
+alias ts='tmuxinator s'
+alias pm='pnpm'
+alias cpwd="pwd | tr -d '\n' | pbcopy && echo 'pwd copied to clipboard'"
 alias alacritty='/Applications/Alacritty.app/Contents/MacOS/alacritty'
 alias wf=workfile
 alias wd=workdir
@@ -44,6 +66,7 @@ alias t3='tree -L 3 -CIa "node_modules|.git|.cache|.next|.turbo" --dirsfirst'
 
 # ls
 alias ls="gls --group-directories-first --color=auto"
+alias la="gls -la --group-directories-first --color=auto"
 alias ll="gls -l --group-directories-first --color=auto"
 
 # quickly jump to workdir
@@ -96,44 +119,6 @@ function worktree() {
   cd $target
 }
 
-# quickly open any file in ~/projects/<target> with $EDITOR
-#
-# Usecases:
-#
-# workfile <pattern> <directory>
-# workfile <pattern>
-# workfile
-
-function workfile() {
-  local result=""
-
-  if [ $# -eq 0 ]; then
-    result=$(fd --hidden --type file . ~/projects)
-
-  elif [ $# -eq 1 ]; then
-    result=$(fd --hidden --type file $1 ~/projects)
-
-  elif [ -d ~/projects/$2 ]; then
-    result=$(fd --hidden --type file $1 ~/projects/$2)
-
-  else echo "~/projects/$2 does not exists." && return
-  fi
-
-  # validate fd command before pipe to fzy
-  if [ -z "$result" ]; then
-    echo "No file match query: $1"
-    return
-  fi
-
-  # validate fzy selection before next execution local selection=$(echo $result | fzy) if [ -z "$selection" ] && return
-
-  # cd to target directory
-  cd $(dirname $(echo $selection))
-
-  # open with favourite editor
-  $EDITOR $(echo $selection)
-}
-
 # NPM
 alias nr="npm run"
 alias np="npm version patch && npm publish && git push origin master --tags"
@@ -146,9 +131,6 @@ csview() {
   local file="$1"
   cat "$file" | sed 's/,/ ,/g' | column -t -s, | less -S
 }
-
-# starship prompt
-eval "$(starship init zsh)"
 
 # shopify env
 source $HOME/projects/dotfiles/shopify_alias.sh
