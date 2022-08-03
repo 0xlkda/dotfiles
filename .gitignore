@@ -1,7 +1,6 @@
-nvim/undodir
-nvim/plugged
 dotbot
 shopify_alias.sh
 .pnpm-debug.log
 plugin/packer_compiled.lua
-
+nvim/.undodir
+nvim/plugged

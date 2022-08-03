@@ -42,7 +42,6 @@ local vmap = ku.vmap
 local mappings = require('me.telescope.mappings')
 
 imap({ '<C-c>', '<esc>' })
-nmap({ '<Leader><CR>', mappings.reload_vimrc })
 nmap({ '<Leader>d', mappings.diagnostics })
 nmap({ '<Leader>h', mappings.vim_help_tags })
 nmap({ '<Leader>b', mappings.list_buffers })

@@ -1,7 +1,11 @@
+local mappings = require("me.mappings")
 local ku = require("me.keymap.util")
 local nmap = ku.nmap
 local imap = ku.imap
 local vmap = ku.vmap
+
+nmap({ '<C-r>', mappings.reload_buffer })
+nmap({ '<leader><CR>', mappings.reload_vimrc })
 
 -- Disable C-z
 nmap({ '<C-z>', '<nop>' })

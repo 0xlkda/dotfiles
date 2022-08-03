@@ -7,6 +7,8 @@ opt.guicursor = ''
 opt.wrap = false
 opt.belloff = "all" -- Just turn the dang bell off
 opt.scrolloff = 4
+opt.listchars = { eol = '↲', tab = '▸ ', trail = '·' }
+opt.signcolumn = "yes"
 
 -- Cool floating window popup menu for completion on command line
 opt.pumblend = 17
@@ -64,6 +66,7 @@ opt.breakindent = true
 opt.showbreak = string.rep(" ", 3) -- Make it so that long lines wrap smartly
 opt.linebreak = true
 
+opt.viewoptions = { "cursor", "folds" }
 opt.foldmethod = "marker"
 opt.foldlevel = 0
 opt.modelines = 1
