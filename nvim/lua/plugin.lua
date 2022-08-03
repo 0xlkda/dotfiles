@@ -1,4 +1,4 @@
-local plugins = { }
+local plugins = {}
 plugins.setup = function(uses)
     require('packer').startup(uses)
 end

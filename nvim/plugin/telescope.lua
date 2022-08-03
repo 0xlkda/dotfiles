@@ -3,8 +3,6 @@ if not pcall(require, "telescope") then
     return
 end
 
-local actions = require "telescope.actions"
-local action_state = require "telescope.actions.state"
 local action_layout = require "telescope.actions.layout"
 local previewers = require "telescope.previewers"
 
@@ -38,7 +36,6 @@ require("telescope").setup {
 local keys = require("me.keys")
 local nmap = keys.nmap
 local imap = keys.imap
-local vmap = keys.vmap
 local mappings = require('me.telescope.mappings')
 
 imap({ '<C-c>', '<esc>' })

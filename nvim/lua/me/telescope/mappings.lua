@@ -2,7 +2,8 @@ local mappings = {}
 local themes = require('telescope.themes')
 local finders = require('telescope.finders')
 local pickers = require('telescope.pickers')
-local actions = require('telescope.actions')
+local actions = require "telescope.actions"
+local action_state = require "telescope.actions.state"
 local conf = require "telescope.config".values
 local utils = require('telescope.utils')
 
@@ -58,4 +59,4 @@ mappings.change_project = function()
     }):find()
 end
 
-return mappings 
+return mappings

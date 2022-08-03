@@ -1,9 +1,9 @@
 -- https://github.dev/tjdevries/config_manager/xdg_config/nvim/lua/tj/globals.lua
 local ok, plenary_reload = pcall(require, "plenary.reload")
 if not ok then
-    reloader = require
+    Reloader = require
 else
-    reloader = plenary_reload.reload_module
+    Reloader = plenary_reload.reload_module
 end
 
 P = function(v)
@@ -12,7 +12,7 @@ P = function(v)
 end
 
 RELOAD = function(...)
-    return reloader(...)
+    return Reloader(...)
 end
 
 R = function(name)
@@ -41,7 +41,7 @@ function ToggleTheme()
     else
         ToggleThemeLight()
     end
-    
+
     -- apply theme!
     vim.cmd("colorscheme rose-pine")
 
