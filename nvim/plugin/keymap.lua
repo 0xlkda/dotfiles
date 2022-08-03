@@ -1,23 +1,11 @@
-local imap = function(tbl)
-  vim.keymap.set("i", tbl[1], tbl[2], tbl[3])
-end
+local ku = require("me.keymap.util")
+local nmap = ku.nmap
+local imap = ku.imap
+local vmap = ku.vmap
 
-local nmap = function(tbl)
-  vim.keymap.set("n", tbl[1], tbl[2], tbl[3])
-end
-
-local vmap = function(tbl)
-  vim.keymap.set("v", tbl[1], tbl[2], tbl[3])
-end
-
-local telescope_mappings = require('telescope_mappings')
-
-imap({ '<C-c>', '<esc>' })
-nmap({ '<Leader><CR>', telescope_mappings.reload_vimrc })
-nmap({ '<Leader>h', telescope_mappings.vim_help_tags })
-nmap({ '<Leader>b', telescope_mappings.list_buffers })
-nmap({ '<C-f>', telescope_mappings.current_buffer_search })
-nmap({ '<C-p>', telescope_mappings.find_files })
+-- Disable C-z
+nmap({ '<C-z>', '<nop>' })
+imap({ '<C-z>', '<nop>' })
 
 -- Opens line below or above the current line
 imap({ '<S-CR>', '<C-O>o' })
