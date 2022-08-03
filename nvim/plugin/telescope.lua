@@ -39,7 +39,7 @@ local imap = keys.imap
 local mappings = require('me.telescope.mappings')
 
 imap({ '<C-c>', '<esc>' })
-nmap({ '<Leader>d', mappings.diagnostics })
+nmap({ '<Leader>dd', mappings.diagnostics })
 nmap({ '<Leader>h', mappings.vim_help_tags })
 nmap({ '<Leader>b', mappings.list_buffers })
 nmap({ '<Leader>f', mappings.live_search })
