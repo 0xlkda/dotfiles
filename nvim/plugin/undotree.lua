@@ -1,4 +1,4 @@
-local nmap = require("me.keys").nmap
+local nmap = require("mappings.util").nmap
 local opt = vim.opt
 
 opt.undodir = os.getenv("HOME") .. '/.config/nvim/.undodir'

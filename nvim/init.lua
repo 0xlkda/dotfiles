@@ -9,7 +9,8 @@ vim.g.mapleader = ' '
 vim.g.do_filetype_lua = 1
 vim.g.did_load_filetypes = 0
 
-require('plugin').setup(function(use)
+require('package_manager').setup(function(use)
+    -- Common
     use 'wbthomason/packer.nvim'
     use 'nvim-lua/plenary.nvim'
     use 'rose-pine/neovim'
@@ -39,14 +40,15 @@ require('plugin').setup(function(use)
     use 'hrsh7th/cmp-nvim-lsp-signature-help'
 
     -- Misc
+    use 'numToStr/Comment.nvim'
     use 'kyazdani42/nvim-web-devicons'
     use {
-      'tpope/vim-scriptease',
-      cmd = {
-        'Messages', --view messages in quickfix list
-        'Verbose', -- view verbose output in preview window.
-        'Time', -- measure how long it takes to run some stuff.
-      },
+        'tpope/vim-scriptease',
+        cmd = {
+            'Messages', --view messages in quickfix list
+            'Verbose', -- view verbose output in preview window.
+            'Time', -- measure how long it takes to run some stuff.
+        },
     }
 end)
 

@@ -1,8 +1,8 @@
-local mappings = require("me.mappings")
-local keys = require("me.keys")
-local nmap = keys.nmap
-local imap = keys.imap
-local vmap = keys.vmap
+local mappings = require("mappings.me")
+local keys_util = require("mappings.util")
+local nmap = keys_util.nmap
+local imap = keys_util.imap
+local vmap = keys_util.vmap
 
 nmap({ '<C-r>', mappings.reload_buffer })
 nmap({ '<leader><CR>', mappings.reload_vimrc })

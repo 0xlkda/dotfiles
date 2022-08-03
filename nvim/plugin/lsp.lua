@@ -3,9 +3,9 @@ if not has_lsp then
     return
 end
 
-local keys = require("me.keys")
-local buf_nnoremap = keys.buf_nnoremap
-local buf_inoremap = keys.buf_inoremap
+local keys_util = require("mappings.util")
+local buf_nnoremap = keys_util.buf_nnoremap
+local buf_inoremap = keys_util.buf_inoremap
 
 require("mason").setup()
 require("mason-lspconfig").setup({

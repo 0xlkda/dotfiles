@@ -33,10 +33,10 @@ require("telescope").setup {
     }
 }
 
-local keys = require("me.keys")
-local nmap = keys.nmap
-local imap = keys.imap
-local mappings = require('me.telescope.mappings')
+local keys_util = require("mappings.util")
+local nmap = keys_util.nmap
+local imap = keys_util.imap
+local mappings = require('mappings.telescope')
 
 imap({ '<C-c>', '<esc>' })
 nmap({ '<Leader>dd', mappings.diagnostics })
