@@ -1,24 +1,31 @@
-[init]
-    templateDir = ~/.git-template
-    defaultBranch = main
 [user]
     email = hello@thealemazing.com
     name = HoomanOnEarth
-[core]
-    editor = nvim
-    excludesfile = ~/.gitignore_global
+[init]
+    templateDir = ~/.git-template
+    defaultBranch = main
 [credential]
     helper = cache
 [credential "https://github.com"]
-    helper = 
     helper = !/usr/local/bin/gh auth git-credential
 [credential "https://gist.github.com"]
-    helper = 
     helper = !/usr/local/bin/gh auth git-credential
+[core]
+    editor = nvim
+    pager = delta
+    excludesfile = ~/.gitignore_global
+[interactive]
+    diffFilter = delta --color-only
 [pull]
     rebase = true
+[diff]
+    colorMoved = default
+[delta]
+    light = true
+    navigate = true    # use n and N to move between diff sections
+    features = side-by-side
+    syntax-theme = none
 [alias]
     view = !/usr/local/bin/gh browse
     wt = worktree
     cwt = !sh $HOME/projects/dotfiles/clone-for-worktree.sh
-    show2 = !git show | ydiff -s

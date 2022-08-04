@@ -1,7 +1,6 @@
 local opt = vim.opt
 
 opt.laststatus = 3
-opt.background = 'light'
 opt.clipboard = 'unnamedplus'
 opt.mouse = "n"
 opt.wrap = false
@@ -23,7 +22,6 @@ opt.number = true
 opt.relativenumber = true
 
 opt.hlsearch = true
-vim.cmd([[hi Search guibg=yellow]])
 
 opt.incsearch = true
 opt.showmatch = true
