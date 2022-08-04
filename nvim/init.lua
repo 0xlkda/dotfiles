@@ -27,6 +27,8 @@ require('package_manager').setup(function(use)
     use 'nvim-treesitter/nvim-treesitter'
     use 'nvim-treesitter/nvim-treesitter-textobjects'
 
+    -- Javascript
+    
     -- Snippets
     use 'L3MON4D3/LuaSnip'
     use 'rafamadriz/friendly-snippets'

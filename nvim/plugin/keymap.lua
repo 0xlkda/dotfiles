@@ -4,7 +4,6 @@ local nmap = keys_util.nmap
 local imap = keys_util.imap
 local vmap = keys_util.vmap
 
-nmap({ '<C-r>', mappings.reload_buffer })
 nmap({ '<leader><CR>', mappings.reload_vimrc })
 
 -- Disable C-z
