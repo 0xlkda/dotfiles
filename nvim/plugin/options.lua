@@ -3,7 +3,6 @@ local opt = vim.opt
 opt.background = 'light'
 opt.clipboard = 'unnamedplus'
 opt.mouse = "n"
-opt.guicursor = ''
 opt.wrap = false
 opt.belloff = "all" -- Just turn the dang bell off
 opt.scrolloff = 4

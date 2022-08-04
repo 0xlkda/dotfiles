@@ -28,7 +28,9 @@ require('package_manager').setup(function(use)
     use 'nvim-treesitter/nvim-treesitter-textobjects'
 
     -- Javascript
-    
+    use 'pangloss/vim-javascript'
+    use 'MaxMEllon/vim-jsx-pretty'
+
     -- Snippets
     use 'L3MON4D3/LuaSnip'
     use 'rafamadriz/friendly-snippets'
@@ -53,5 +55,3 @@ require('package_manager').setup(function(use)
         },
     }
 end)
-
-require('disable_builtin')
