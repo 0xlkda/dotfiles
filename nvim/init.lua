@@ -44,6 +44,7 @@ require('package_manager').setup(function(use)
     use 'hrsh7th/cmp-nvim-lsp-signature-help'
 
     -- Misc
+    use 'nvim-lualine/lualine.nvim'
     use 'numToStr/Comment.nvim'
     use 'kyazdani42/nvim-web-devicons'
     use {

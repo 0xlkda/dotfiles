@@ -18,9 +18,12 @@ mouse:
   hide_when_typing: true
 
 font:
+  use_thin_strokes: true
   size: 16
   offset:
     y: 12
+  glyph_offset:
+    y: 6
 
   normal:
     family: JetBrainsMono Nerd Font

@@ -1,5 +1,6 @@
 local opt = vim.opt
 
+opt.laststatus = 3
 opt.background = 'light'
 opt.clipboard = 'unnamedplus'
 opt.mouse = "n"
@@ -10,7 +11,7 @@ opt.listchars = { eol = '↲', tab = '▸ ', trail = '·' }
 opt.signcolumn = "yes"
 
 -- Cool floating window popup menu for completion on command line
-opt.pumblend = 17
+opt.pumblend = 15
 opt.wildmode = "longest:full"
 opt.wildoptions = "pum"
 
@@ -51,11 +52,11 @@ set_cursorline("WinLeave", false)
 set_cursorline("WinEnter", true)
 set_cursorline("FileType", false, "TelescopePrompt")
 
--- Tabs
 opt.autoindent = true
 opt.cindent = true
 opt.wrap = true
 
+-- Tabs
 opt.tabstop = 4
 opt.shiftwidth = 4
 opt.softtabstop = 4
