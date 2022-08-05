@@ -70,12 +70,7 @@ alias la="gls -la --group-directories-first --color=auto"
 alias ll="gls -l --group-directories-first --color=auto"
 
 # quickly jump to workdir
-#
-# Usecases:
-#
-# workdir <pattern>
-# workdir
-
+# workdir pattern?
 function workdir() {
   local result=""
 
@@ -97,13 +92,11 @@ function workdir() {
   cd $(echo $selection)
 }
 
-# quickly change to worktree
-#
-# Usecases:
-#
-# worktree <pattern>
-# worktree
+zle -N workdir
+bindkey '^g' workdir
 
+# quickly change to worktree
+# worktree pattern?
 function worktree() {
   local result=$(git worktree list)
 
@@ -118,6 +111,9 @@ function worktree() {
   local target=$(echo $selection | awk '{print $1}')
   cd $target
 }
+
+zle -N worktree
+bindkey '^t' worktree
 
 # NPM
 alias nr="npm run"
@@ -146,4 +142,22 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 # pnpm
 export PNPM_HOME="/Users/alex/Library/pnpm"
 export PATH="$PNPM_HOME:$PATH"
-# pnpm end
+
+# better history
+function history-fzy() {
+  local tac
+
+  if which tac > /dev/null; then
+    tac="tac"
+  else
+    tac="tail -r"
+  fi
+
+  BUFFER=$(history -n 1 | eval $tac | awk '!a[$0]++' | fzy --query "$LBUFFER")
+  CURSOR=$#BUFFER
+
+  zle reset-prompt
+}
+
+zle -N history-fzy
+bindkey '^r' history-fzy
