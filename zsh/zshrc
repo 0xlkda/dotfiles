@@ -21,6 +21,7 @@ export HISTFILE=$HOME/.local/zsh_history
 # Plugins
 source $XDG_CONFIG_HOME/antigen/antigen.zsh
 
+antigen bundle git
 antigen bundle 'zsh-users/zsh-syntax-highlighting'
 antigen bundle 'zsh-users/zsh-autosuggestions'
 
@@ -161,3 +162,15 @@ function history-fzy() {
 
 zle -N history-fzy
 bindkey '^r' history-fzy
+
+function slugify() {
+  # Forcing the POSIX local so alnum is only 0-9A-Za-z
+  export LANG=POSIX
+  export LC_ALL=POSIX
+
+  # Keep only alphanumeric value
+  # Keep only one dash if there is multiple one consecutively
+  # Lowercase everything
+  # Remove last dash if there is nothing after
+  sed -e 's/[^[:alnum:]]/-/g' | tr -s '-' | tr A-Z a-z | sed -e 's/-$//'
+}
