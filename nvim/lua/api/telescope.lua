@@ -47,7 +47,7 @@ api.change_project = function()
             results = directories,
         }),
         sorter = conf.generic_sorter(opts),
-        attach_api = function(prompt_bufnr, _)
+        attach_mappings = function(prompt_bufnr, _)
             actions.select_default:replace(function()
                 actions.close(prompt_bufnr)
                 local selection = action_state.get_selected_entry()[1]

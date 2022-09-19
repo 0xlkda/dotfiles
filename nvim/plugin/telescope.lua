@@ -12,7 +12,7 @@ local previewSmallFileOnly = function(filepath, bufnr, opts)
   filepath = vim.fn.expand(filepath)
   vim.loop.fs_stat(filepath, function(_, stat)
     if not stat then return end
-    if stat.size > 1000000 then
+    if stat.size > 100000 then
       return
     else
       previewers.buffer_previewer_maker(filepath, bufnr, opts)
