@@ -1,41 +1,41 @@
-local mappings = {}
+local api = {}
 local themes = require('telescope.themes')
 local finders = require('telescope.finders')
 local pickers = require('telescope.pickers')
-local actions = require "telescope.actions"
-local action_state = require "telescope.actions.state"
-local conf = require "telescope.config".values
+local actions = require('telescope.actions')
+local action_state = require('telescope.actions.state')
+local conf = require('telescope.config').values
 local utils = require('telescope.utils')
 
 local default_ivy_theme_config = { sorting_strategy = 'ascending', prompt_position = 'bottom' }
 local default_opt = themes.get_ivy(default_ivy_theme_config)
 local builtin = require('telescope.builtin')
 
-mappings.find_files = function()
+api.find_files = function()
     builtin.find_files(default_opt)
 end
 
-mappings.diagnostics = function()
+api.diagnostics = function()
     builtin.diagnostics(default_opt)
 end
 
-mappings.live_search = function()
+api.live_search = function()
     builtin.live_grep(default_opt)
 end
 
-mappings.current_buffer_search = function()
+api.current_buffer_search = function()
     builtin.current_buffer_fuzzy_find(default_opt)
 end
 
-mappings.vim_help_tags = function()
+api.vim_help_tags = function()
     builtin.help_tags(default_opt)
 end
 
-mappings.list_buffers = function()
+api.list_buffers = function()
     builtin.buffers(default_opt)
 end
 
-mappings.change_project = function()
+api.change_project = function()
     local cmd = { vim.o.shell, '-c', "fd . -td " .. '~/projects' }
     local directories = utils.get_os_command_output(cmd)
     local theme = themes.get_dropdown()
@@ -47,7 +47,7 @@ mappings.change_project = function()
             results = directories,
         }),
         sorter = conf.generic_sorter(opts),
-        attach_mappings = function(prompt_bufnr, _)
+        attach_api = function(prompt_bufnr, _)
             actions.select_default:replace(function()
                 actions.close(prompt_bufnr)
                 local selection = action_state.get_selected_entry()[1]
@@ -59,4 +59,4 @@ mappings.change_project = function()
     }):find()
 end
 
-return mappings
+return api

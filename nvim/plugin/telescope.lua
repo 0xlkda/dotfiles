@@ -33,16 +33,16 @@ require("telescope").setup {
     }
 }
 
-local keys_util = require("mappings.util")
-local nmap = keys_util.nmap
-local imap = keys_util.imap
-local mappings = require('mappings.telescope')
+local keymap = require("utils.keymap")
+local nmap = keymap.nmap
+local imap = keymap.imap
+local api = require('api.telescope')
 
 imap({ '<C-c>', '<esc>' })
-nmap({ '<Leader>dd', mappings.diagnostics })
-nmap({ '<Leader>h', mappings.vim_help_tags })
-nmap({ '<Leader>b', mappings.list_buffers })
-nmap({ '<Leader>f', mappings.live_search })
-nmap({ '<C-f>', mappings.current_buffer_search })
-nmap({ '<C-p>', mappings.find_files })
-nmap({ '<C-g>', mappings.change_project })
+nmap({ '<Leader>dd', api.diagnostics })
+nmap({ '<Leader>h', api.vim_help_tags })
+nmap({ '<Leader>b', api.list_buffers })
+nmap({ '<Leader>f', api.live_search })
+nmap({ '<C-f>', api.current_buffer_search })
+nmap({ '<C-p>', api.find_files })
+nmap({ '<C-g>', api.change_project })
