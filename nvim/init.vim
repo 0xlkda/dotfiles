@@ -38,6 +38,8 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'mbbill/undotree'
 Plug 'yuezk/vim-js'
 Plug 'MaxMEllon/vim-jsx-pretty'
+Plug 'tpope/vim-liquid'
+Plug 'airblade/vim-gitgutter'
 call plug#end()
 
 set background=light
