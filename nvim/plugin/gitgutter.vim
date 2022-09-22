@@ -1,0 +1,1 @@
+command! Changes GitGutterQuickFix | copen
