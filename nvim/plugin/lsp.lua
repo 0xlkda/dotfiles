@@ -17,7 +17,7 @@ local custom_init = function(client)
     client.config.flags.allow_incremental_sync = true
 end
 
-local custom_attach = function()
+local custom_attach = function(client, bufnr)
     buf_inoremap { "<C-s>", vim.lsp.buf.signature_help }
 
     buf_nnoremap { "<leader>rr", "LspRestart<CR>" }
@@ -28,10 +28,11 @@ local custom_attach = function()
     buf_nnoremap { "gd", vim.lsp.buf.definition }
     buf_nnoremap { "gD", vim.lsp.buf.declaration }
     buf_nnoremap { "gT", vim.lsp.buf.type_definition }
+
+    require('aerial').on_attach(client, bufnr)
 end
 
 local updated_capabilities = vim.lsp.protocol.make_client_capabilities()
--- updated_capabilities = require("cmp_nvim_lsp").update_capabilities(updated_capabilities)
 
 local servers = {
     tsserver = {

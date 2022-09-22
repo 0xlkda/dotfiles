@@ -1,40 +1,22 @@
 local api = {}
-local themes = require('telescope.themes')
+local themes = require 'telescope.themes'
 local finders = require('telescope.finders')
 local pickers = require('telescope.pickers')
 local actions = require('telescope.actions')
 local action_state = require('telescope.actions.state')
 local conf = require('telescope.config').values
 local utils = require('telescope.utils')
-
-local default_ivy_theme_config = { sorting_strategy = 'ascending', prompt_position = 'bottom' }
-local default_opt = themes.get_ivy(default_ivy_theme_config)
 local builtin = require('telescope.builtin')
 
-api.find_files = function()
-    builtin.find_files(default_opt)
-end
+-- built-in apis
+api.find_files = builtin.find_files
+api.diagnostics = builtin.diagnostics
+api.live_search = builtin.live_grep
+api.current_buffer_search = builtin.current_buffer_fuzzy_find
+api.vim_help_tags = builtin.help_tags
+api.list_buffers = builtin.buffers
 
-api.diagnostics = function()
-    builtin.diagnostics(default_opt)
-end
-
-api.live_search = function()
-    builtin.live_grep(default_opt)
-end
-
-api.current_buffer_search = function()
-    builtin.current_buffer_fuzzy_find(default_opt)
-end
-
-api.vim_help_tags = function()
-    builtin.help_tags(default_opt)
-end
-
-api.list_buffers = function()
-    builtin.buffers(default_opt)
-end
-
+-- my custom apis
 api.change_project = function()
     local cmd = { vim.o.shell, '-c', "fd . -td " .. '~/projects' }
     local directories = utils.get_os_command_output(cmd)

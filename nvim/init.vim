@@ -31,15 +31,16 @@ Plug 'neovim/nvim-lspconfig'
 
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim' 
+Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/nvim-cmp'
 
 Plug 'mbbill/undotree'
-Plug 'yuezk/vim-js'
 Plug 'MaxMEllon/vim-jsx-pretty'
 Plug 'tpope/vim-liquid'
 Plug 'airblade/vim-gitgutter'
+Plug 'stevearc/aerial.nvim'
 call plug#end()
 
 set background=light
