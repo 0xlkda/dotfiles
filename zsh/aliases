@@ -7,6 +7,7 @@ USE_NODE="ln -s $CONFIG/environments/node/shell.nix shell.nix"
 USE_ESLINT="ln $CONFIG/environments/node/eslintrc-with-style .eslintrc"
 alias newnode="$USE_NIX | $USE_NODE | $USE_ESLINT"
 alias nn=newnode
+alias nd="nix develop --command $SHELL"
 
 # Basic
 alias lns="ln -rs"
@@ -19,6 +20,10 @@ alias vi=vim
 alias edit=vim
 alias vl="vim -c \"normal '0\" -c \"bn\" -c \"bd\""
 alias pc="pbcopy <"
+alias treeI="tree -I"
+
+alias ghds="gh auth switch --user dalk-hds"
+alias glkda="gh auth switch --user 0xlkda"
 
 # Config Dotfiles
 alias reload="source ~/.zshrc && source ~/.zshenv"
@@ -43,15 +48,12 @@ alias pip=pip3
 
 # JavaScript & NodeJS
 alias vp="vim package.json"
-alias np="pnpm"
-alias npx="pnpx"
-alias na="pnpm add"
-alias ni="pnpm install"
-alias nid="pnpm install -D"
-alias ns="pnpm start"
-alias nr="pnpm run"
-alias nrs="pnpm run start"
-alias nrd="pnpm run dev"
+alias na="npm add"
+alias ni="npm install"
+alias nid="npm install -D"
+alias nr="npm run"
+alias nrs="npm run start"
+alias nrd="npm run start:dev"
 
 # starship prompt
 alias ss="starship"
@@ -123,3 +125,16 @@ alias theme="shopify theme"
 
 # Video downloader
 alias vd=yt-dlp
+
+# Nginx
+alias nginx="nginx -p ~/nginx"
+alias nginx.test='nginx -t'
+alias nginx.start='nginx'
+alias nginx.stop='nginx -s stop'
+alias nginx.reload='nginx -s reload'
+alias nginx.config='vim ~/nginx/conf/nginx.conf'
+alias nginx.restart='nginx.stop && nginx.start'
+alias nginx.errors='tail -250f ~/nginx/logs/nginx.error.log'
+alias nginx.access='tail -250f ~/nginx/logs/nginx.access.log'
+alias nginx.logs.default.access='tail -250f ~/nginx/logs/nginx.default.access.log'
+alias nginx.logs.default-ssl.access='tail -250f ~/nginx/logs/nginx.default.ssl.log'

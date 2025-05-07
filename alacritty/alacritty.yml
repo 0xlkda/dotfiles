@@ -7,7 +7,7 @@ import:
   - ~/code/dotfiles/alacritty/light.yml
 
 window:
-  decorations: none
+  decorations: ButtonLess
   dynamic_padding: true
   option_as_alt: OnlyLeft
   dimensions:

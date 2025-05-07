@@ -21,4 +21,4 @@ au BufWinLeave *.js mkview
 " javascript development mappings
 map <leader>. :silent! clear<CR>:!node %<CR>
 map <leader>, :silent! clear<CR>:!jest %:r.spec.js<CR>
-map <leader>; :e %:r.spec.js<CR>
+map <leader>/ :e %:r.spec.js<CR>

@@ -175,6 +175,7 @@ auto_cmd({ "BufEnter" }, {
 })
 
 require("lazy").setup({
+  "nvim-treesitter/nvim-treesitter",
   "tpope/vim-fugitive",
   "tpope/vim-liquid",
   "tpope/vim-markdown",
@@ -247,6 +248,7 @@ require("lazy").setup({
   {
     "mhartington/formatter.nvim",
     config = function()
+      local util = require("formatter.util")
       require("formatter").setup({
         logging = true,
         log_level = vim.log.levels.INFO,
@@ -258,7 +260,13 @@ require("lazy").setup({
           html = require("formatter.filetypes.html").prettierd,
           javascript = require("formatter.filetypes.javascript").eslint_d,
           javascriptreact = require("formatter.filetypes.javascriptreact").eslint_d,
-          typescript = require("formatter.filetypes.typescript").eslint_d,
+          typescript = function()
+            return {
+              exe = "eslint",
+              args = { util.escape_path(util.get_current_buffer_file_path()), "--fix" },
+              stdin = false
+            }
+          end,
           typescriptreact = require("formatter.filetypes.typescriptreact").eslint_d,
           rust = require("formatter.filetypes.rust").rustfmt,
         },
