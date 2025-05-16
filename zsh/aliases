@@ -20,6 +20,7 @@ alias vi=vim
 alias edit=vim
 alias vl="vim -c \"normal '0\" -c \"bn\" -c \"bd\""
 alias pc="pbcopy <"
+alias tree="tree --gitignore"
 alias treeI="tree -I"
 
 alias ghds="gh auth switch --user dalk-hds"
@@ -134,6 +135,7 @@ alias nginx.stop='nginx -s stop'
 alias nginx.reload='nginx -s reload'
 alias nginx.config='vim ~/nginx/conf/nginx.conf'
 alias nginx.restart='nginx.stop && nginx.start'
+alias nginx.debug='tail -250f ~/nginx/logs/debug.log'
 alias nginx.error='tail -250f ~/nginx/logs/error.log'
 alias nginx.access='tail -250f ~/nginx/logs/access.log'
 alias nginx.logs.default-ssl.access='tail -250f ~/nginx/logs/nginx.default.ssl.log'

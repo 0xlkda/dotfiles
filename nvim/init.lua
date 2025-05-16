@@ -267,7 +267,13 @@ require("lazy").setup({
               stdin = false
             }
           end,
-          typescriptreact = require("formatter.filetypes.typescriptreact").eslint_d,
+          typescriptreact = function()
+            return {
+              exe = "eslint",
+              args = { util.escape_path(util.get_current_buffer_file_path()), "--fix" },
+              stdin = false
+            }
+          end,
           rust = require("formatter.filetypes.rust").rustfmt,
         },
       })
@@ -354,8 +360,8 @@ require("lazy").setup({
 
         map({ "n", "i" }, "<C-k>", SignatureFixed, { desc = "LSP hover" })
         map("n", "K", HoverFixed, { desc = "LSP hover" })
-        map("n", "<leader>rn", vim.lsp.buf.rename, { desc = "LSP rename" })
-        map("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "LSP code actions" })
+        map("n", "grn", vim.lsp.buf.rename, { desc = "LSP rename" })
+        map("n", "gra", vim.lsp.buf.code_action, { desc = "LSP code actions" })
 
         map("n", "gd", vim.lsp.buf.definition, { desc = "Goto definitions" })
         map("n", "gT", vim.lsp.buf.type_definition, { desc = "Goto type definitions" })
@@ -363,7 +369,8 @@ require("lazy").setup({
 
         local telescope_builtin = require("telescope.builtin")
         map("n", "gr", telescope_builtin.lsp_references, { desc = "Goto references" })
-        map("n", "gs", telescope_builtin.lsp_document_symbols, { desc = "List document symbols" })
+        map("n", "gS", telescope_builtin.lsp_document_symbols, { desc = "List document symbols" })
+        map("n", "gs", telescope_builtin.lsp_workspace_symbols, { desc = "List workspace symbols" })
       end
 
       local servers_settings = {

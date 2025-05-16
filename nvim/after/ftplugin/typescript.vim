@@ -1,3 +1,13 @@
+if &filetype ==# 'typescriptreact'
+  autocmd BufEnter <buffer> ++once call TSReactEnable()
+endif
+
+function! TSReactEnable()
+  if exists(':TSEnable')
+    silent! TSEnable highlight indent
+  endif
+endfunction
+
 function! MyFold()
   let startLine = getline(v:foldstart)
   let endLine = substitute(getline(v:foldend), '\s\+\([}<>)\]]\)', '\1', '')
