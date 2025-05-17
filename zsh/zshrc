@@ -3,7 +3,7 @@ typeset -U path
 typeset -U fpath
 
 fpath=("$HOME/code/dotfiles/zsh/functions/" $fpath)
-path=("$HOME/.nix-profile/bin $HOME/code/dotfiles/bin" "$HOME/.local/bin" "$HOME/.npm_packages/node_modules/.bin" $path)
+path=("$HOME/.nix-profile/bin $HOME/code/dotfiles/bin" "$HOME/.local/bin" "$HOME/.npm_packages/node_modules/.bin" "node_modules/.bin" $path)
 
 # Changing directories
 setopt auto_cd                 # if a command isn't valid, but is a directory, cd to that dir

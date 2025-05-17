@@ -4,7 +4,7 @@ endif
 
 function! TSReactEnable()
   if exists(':TSEnable')
-    silent! TSEnable highlight indent
+    silent! TSEnable highlight
   endif
 endfunction
 
@@ -25,7 +25,7 @@ set foldlevelstart=1 "start file with all folds opened
 hi Folded guifg=none guibg=none
 
 au BufWinLeave *.ts,tsx mkview
-au BufEnter *.ts,tsx :TSEnable highlight indent
+au BufEnter *.ts :TSEnable highlight
 
 " typescript development mappings
 map <leader>. :silent! clear<CR>:!ts-node %<CR>

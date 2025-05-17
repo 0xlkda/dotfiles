@@ -121,7 +121,7 @@ vim.cmd([[
   augroup FormatAutogroup
     autocmd!
     autocmd User FormatterPre mkview
-    autocmd User FormatterPost loadview | silent! norm zO
+    autocmd User FormatterPost loadview | silent! edit | silent! norm zO
   augroup END
 
   " table mode
@@ -251,7 +251,7 @@ require("lazy").setup({
       local util = require("formatter.util")
       require("formatter").setup({
         logging = true,
-        log_level = vim.log.levels.INFO,
+        log_level = vim.log.levels.info,
         filetype = {
           c = require("formatter.filetypes.c").clangformat,
           json = require("formatter.filetypes.json").prettierd,
@@ -260,20 +260,8 @@ require("lazy").setup({
           html = require("formatter.filetypes.html").prettierd,
           javascript = require("formatter.filetypes.javascript").eslint_d,
           javascriptreact = require("formatter.filetypes.javascriptreact").eslint_d,
-          typescript = function()
-            return {
-              exe = "eslint",
-              args = { util.escape_path(util.get_current_buffer_file_path()), "--fix" },
-              stdin = false
-            }
-          end,
-          typescriptreact = function()
-            return {
-              exe = "eslint",
-              args = { util.escape_path(util.get_current_buffer_file_path()), "--fix" },
-              stdin = false
-            }
-          end,
+          typescript = require("formatter.filetypes.typescript").eslint_d,
+          typescriptreact = require("formatter.filetypes.typescriptreact").eslint_d,
           rust = require("formatter.filetypes.rust").rustfmt,
         },
       })
@@ -376,7 +364,7 @@ require("lazy").setup({
       local servers_settings = {
         clangd = {
         },
-        tsserver = {
+        ts_ls = {
           diagnostics = {
             ignoredCodes = {
               7016,
@@ -439,17 +427,9 @@ require("lazy").setup({
 
       require("mason").setup()
       local mason_lspconfig = require("mason-lspconfig")
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
 
-      mason_lspconfig.setup({ ensure_installed = vim.tbl_keys(servers_settings) })
-      mason_lspconfig.setup_handlers({
-        function(server_name)
-          require("lspconfig")[server_name].setup({
-            on_attach = on_attach,
-            capabilities = capabilities,
-            settings = servers_settings[server_name],
-          })
-        end,
+      mason_lspconfig.setup({
+        ensure_installed = vim.tbl_keys(servers_settings)
       })
 
       -- Swift
