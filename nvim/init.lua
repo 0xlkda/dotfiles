@@ -723,6 +723,42 @@ require("lazy").setup({
           max_item_count = 8,
           keyword_length = 1,
         },
+        sorting = {
+          comparators = {
+            function(entry1, entry2)
+              local kind_priority = {
+                Field = 1,
+                Method = 2,
+                Function = 3,
+                Property = 4,
+                Variable = 5,
+                Snippet = 100,
+              }
+
+              local kind1 = entry1:get_kind() or 100
+              local kind2 = entry2:get_kind() or 100
+
+              local name_from_kind = require("cmp.types").lsp.CompletionItemKind
+              local kind1_name = name_from_kind[kind1] or ""
+              local kind2_name = name_from_kind[kind2] or ""
+
+              local priority1 = kind_priority[kind1_name] or 100
+              local priority2 = kind_priority[kind2_name] or 100
+
+              if priority1 ~= priority2 then
+                return priority1 < priority2
+              end
+            end,
+
+            -- Fallback to default comparators
+            cmp.config.compare.offset,
+            cmp.config.compare.exact,
+            cmp.config.compare.score,
+            cmp.config.compare.sort_text,
+            cmp.config.compare.length,
+            cmp.config.compare.order,
+          },
+        },
       })
     end,
   },
