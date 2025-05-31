@@ -226,14 +226,17 @@ vim.cmd([[
   \ <SID>isAtStartOfLine('__') ?
   \ '<c-o>:silent! TableModeDisable<cr>' : '__'
 
+  " Update quickfixlist
+  command! UpdateQF call setqflist(map(getqflist(), 'extend(v:val, {"text":get(getbufline(v:val.bufnr, v:val.lnum),0)})'))
+
   " Delete item in quickfix
   function! RemoveQFItem()
-  let curqfidx = line('.') - 1
-  let qfall = getqflist()
-  call remove(qfall, curqfidx)
-  call setqflist(qfall, 'r')
-  execute curqfidx + 1 . "cfirst"
-  :copen
+    let curqfidx = line('.') - 1
+    let qfall = getqflist()
+    call remove(qfall, curqfidx)
+    call setqflist(qfall, 'r')
+    execute curqfidx + 1 . "cfirst"
+      :copen
   endfunction
   autocmd FileType qf map <buffer> dd :call RemoveQFItem()<cr>
 ]])
