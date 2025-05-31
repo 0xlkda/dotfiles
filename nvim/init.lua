@@ -91,7 +91,7 @@ vim.cmd([[
   set noshowmode
   set number
   set relativenumber
-  set statusline="2"
+  set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
   set signcolumn=yes
 
   set complete-=ti
@@ -155,8 +155,8 @@ vim.cmd([[
   nnoremap gl :lua vim.diagnostic.open_float(nil, { focus = false })<CR>
 
   " jumps
-  nnoremap <C-j> :lprev<CR>zz
-  nnoremap <C-k> :lnext<CR>zz
+  nnoremap <C-j> :lnext<CR>zz
+  nnoremap <C-k> :lprev<CR>zz
 
   " split lines
   command! -range Split '<,'>s/, /,\r/gI
@@ -177,42 +177,43 @@ vim.cmd([[
   autocmd! BufEnter *.c set makeprg=make
   augroup END
 
-  augroup fugitive_mapping_autocmd
-  function DiffModeMap()
-  if &diff
-  set cursorline
-  nmap gj <cmd>diffget //2<CR>
-  nmap gk <cmd>diffget //3<CR>
-  endif
-  endfunction
+  augroup fugitive_settings
+    function DiffModeMap()
+      if &diff
+        set cursorline
+        nmap gj <cmd>diffget //2<CR>
+        nmap gk <cmd>diffget //3<CR>
+      endif
+    endfunction
 
-  autocmd! BufEnter * call DiffModeMap()
+    autocmd! BufEnter * call DiffModeMap()
+    autocmd! BufReadPost fugitive://* set bufhidden=delete
   augroup END
 
   augroup cursor_hold_hints_autocmd
-  autocmd!
-  autocmd CursorHold * lua vim.diagnostic.open_float({ scope = "cursor", focus = false })
-  autocmd CursorMoved, CursorMovedI * lua vim.lsp.buf.clear_references()
+    autocmd!
+    autocmd CursorHold * lua vim.diagnostic.open_float({ scope = "cursor", focus = false })
+    autocmd CursorMoved, CursorMovedI * lua vim.lsp.buf.clear_references()
   augroup END
 
   augroup chmod_my_script_autocmd
-  autocmd!
-  autocmd BufWinEnter ~/code/scripts/* if &ft == "" | setlocal ft=sh | endif
-  autocmd BufWritePost * if &ft == "sh" | silent! execute "!chmod +x %" | endif
+    autocmd!
+    autocmd BufWinEnter ~/code/scripts/* if &ft == "" | setlocal ft=sh | endif
+    autocmd BufWritePost * if &ft == "sh" | silent! execute "!chmod +x %" | endif
   augroup END
 
   augroup FormatAutogroup
-  autocmd!
-  autocmd User FormatterPre mkview
-  autocmd User FormatterPost loadview | silent! norm zO
+    autocmd!
+    autocmd User FormatterPre mkview
+    autocmd User FormatterPost loadview | silent! norm zO
   augroup END
 
   " table mode
   function! s:isAtStartOfLine(mapping)
-  let text_before_cursor = getline('.')[0 : col('.')-1]
-  let mapping_pattern = '\V' . escape(a:mapping, '\')
-  let comment_pattern = '\V' . escape(substitute(&l:commentstring, '%s.*$', '', ''), '\')
-  return (text_before_cursor =~? '^' . ('\v(' . comment_pattern . '\v)?') . '\s*\v' . mapping_pattern . '\v$')
+    let text_before_cursor = getline('.')[0 : col('.')-1]
+    let mapping_pattern = '\V' . escape(a:mapping, '\')
+    let comment_pattern = '\V' . escape(substitute(&l:commentstring, '%s.*$', '', ''), '\')
+    return (text_before_cursor =~? '^' . ('\v(' . comment_pattern . '\v)?') . '\s*\v' . mapping_pattern . '\v$')
   endfunction
 
   " disable folding in telescope's result window
@@ -235,9 +236,9 @@ vim.cmd([[
     let qfall = getqflist()
     call remove(qfall, curqfidx)
     call setqflist(qfall, 'r')
-    execute curqfidx + 1 . "cfirst"
-      :copen
+    execute curqfidx + 1 . "cfirst" :copen
   endfunction
+
   autocmd FileType qf map <buffer> dd :call RemoveQFItem()<cr>
 ]])
 
