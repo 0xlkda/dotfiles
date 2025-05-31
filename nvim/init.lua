@@ -192,7 +192,7 @@ vim.cmd([[
   augroup cursor_hold_hints_autocmd
   autocmd!
   autocmd CursorHold * lua vim.diagnostic.open_float({ scope = "cursor", focus = false })
-  autocmd CursorMoved * lua vim.lsp.buf.clear_references()
+  autocmd CursorMoved, CursorMovedI * lua vim.lsp.buf.clear_references()
   augroup END
 
   augroup chmod_my_script_autocmd
@@ -309,9 +309,9 @@ auto_cmd("LspAttach", {
 
       function SignatureFixed()
         close_floating_windows()
-        vim.opt.eventignore:append({ "CursorHoldI" })
+        vim.opt.eventignore:append({ "CursorHold", "CursorHoldI" })
         vim.cmd(":silent LspOverloadsSignature") -- vim.lsp.buf.signature_help()
-        vim.api.nvim_command('autocmd CursorMovedI <buffer> ++once set eventignore=""')
+        vim.api.nvim_command('autocmd CursorMoved, CursorMovedI <buffer> ++once set eventignore=""')
       end
 
       auto_cmd("CursorHoldI", {
