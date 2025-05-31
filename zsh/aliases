@@ -139,3 +139,19 @@ alias nginx.debug='tail -250f ~/nginx/logs/debug.log'
 alias nginx.error='tail -250f ~/nginx/logs/error.log'
 alias nginx.access='tail -250f ~/nginx/logs/access.log'
 alias nginx.logs.default-ssl.access='tail -250f ~/nginx/logs/nginx.default.ssl.log'
+
+# Docker
+alias docker.file="vim Dockerfile"
+
+docker.build() {
+    docker build . -t "$PROJECT" "$@"
+}
+
+docker.run() {
+    docker rm "$PROJECT"
+    docker run --name "$PROJECT" --env-file .env "$@" "$PROJECT" 
+}
+
+docker.up() {
+    docker compose up
+}

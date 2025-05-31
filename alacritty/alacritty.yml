@@ -6,16 +6,17 @@ shell:
 import:
   - ~/code/dotfiles/alacritty/light.yml
 
+
 window:
+  option_as_alt: OnlyLeft
   decorations: ButtonLess
   dynamic_padding: true
-  option_as_alt: OnlyLeft
   dimensions:
     columns: 80
     lines: 20
 
 font:
-  size: 12
+  size: 14
   offset:
     y: 8
   glyph_offset:
