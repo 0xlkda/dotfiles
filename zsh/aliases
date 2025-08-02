@@ -81,7 +81,30 @@ alias s="search"
 alias header="curl -I"
 
 # Git
-# reset autor for all commit history 
+function try() {
+  local DATE=$(TZ='UTC-7' date '+%Y-%m-%dT%H%M%S.000+0700')
+  local NOTE="${1:-NO_NOTE}"
+
+  git checkout -b "try/${DATE}+${NOTE}"
+}
+
+function delete-git-branches() {
+  # Delete remote branches
+  git branch -a | grep 'remotes/origin' | grep -v main \
+  | sed 's|remotes/origin/||' \
+  | xargs -r git push origin --delete 2>&1 \
+  | sed \
+    -e "s/error: unable to delete '\([^']*\)': remote ref does not exist/no remote \1/" \
+    -e '/error: failed to push some refs/d'
+
+  # Delete local branches
+  git branch | grep -v main | xargs -r git branch -D
+
+  echo 'Current branches:'
+  git fetch --prune && git branch -a
+}
+
+# reset author for all commits in history 
 function reset-author () {
   git rebase -r --root --exec "git commit --amend --no-edit --reset-author"
 }
@@ -135,7 +158,7 @@ alias git.conflicts='$(git diff --name-only --diff-filter=U)'
 alias gist="gh gist"
 alias ghc="gh repo clone"
 
-alias gs="git reset --soft $(git merge-base origin/main HEAD)"
+alias gs='git reset --soft $(git merge-base origin/main HEAD)'
 alias gcb="git checkout -b"
 alias gss="git show -s"
 alias gst="git status -s"
@@ -163,9 +186,36 @@ alias gbD="git branch -D"
 
 alias gl='git log'
 alias gl1='git log --oneline'
+alias gla1='git log --oneline --all'
 alias gla="git log --graph --all -15"
 alias gls="git log --stat -n3"
 alias glc="git log -p"
+
+last() {
+  {
+     git diff;
+     echo 'What elder says when asked'
+     echo '"Is that truth"'
+     echo '"Is it'\''s redundant imports hide leak?"'
+     echo '"Is it production ready?"'
+     echo
+     echo "=== FILES ===";
+     tree -I node_modules
+
+     echo "=== CONTENTS ===";
+     find . -maxdepth 2 \( -name "*.ts" -o -name "*.json" \) -exec sh -c 'echo "--- {} ---"; cat "{}"' \;
+
+     echo "=== BUILD ==="
+     npm run build 2>&1
+
+     echo "=== PROOF ==="
+     npm run proof 2>&1
+
+     echo "=== REALITY ==="
+     sh scripts/reality-truth.sh 2>&1
+
+   } | tee >(pbcopy)
+}
 
 # Tmux
 alias tks="tmux kill-server"
