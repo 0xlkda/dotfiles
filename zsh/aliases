@@ -135,7 +135,7 @@ alias git.conflicts='$(git diff --name-only --diff-filter=U)'
 alias gist="gh gist"
 alias ghc="gh repo clone"
 
-alias gs="git reset --soft $(git merge-base origin/main HEAD)"
+alias gs='git reset --soft $(git merge-base origin/main HEAD)'
 alias gcb="git checkout -b"
 alias gss="git show -s"
 alias gst="git status -s"
@@ -163,6 +163,7 @@ alias gbD="git branch -D"
 
 alias gl='git log'
 alias gl1='git log --oneline'
+alias gla1='git log --oneline --all'
 alias gla="git log --graph --all -15"
 alias gls="git log --stat -n3"
 alias glc="git log -p"

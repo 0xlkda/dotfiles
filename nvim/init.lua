@@ -249,8 +249,13 @@ vim.lsp.config.ts_ls = {
     "typescriptreact",
     "typescript.tsx",
   },
-  root_markers = { "tsconfig.json", "jsconfig.json", "package.json" },
-  single_file_support = true,
+  root_markers = { "tsconfig.json", "jsconfig.json", ".git" },
+  single_file_support = false,
+  init_options = {
+    preferences = {
+      importModuleSpecifierPreference = "non-relative",
+    },
+  },
   diagnostics = {
     ignoredCodes = {
       2589, -- Type instantiation is excessively deep and possibly infinite. [2589]
