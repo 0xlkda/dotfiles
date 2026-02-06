@@ -1,6 +1,6 @@
 -- packages management
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
   vim.fn.system({
     "git",
     "clone",
@@ -13,7 +13,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 -- end packages management
 
-function close_floating_windows()
+local function close_floating_windows()
   for _, win in ipairs(vim.api.nvim_list_wins()) do
     local ok, cfg = pcall(vim.api.nvim_win_get_config, win)
     if ok and cfg and cfg.relative ~= "" then
@@ -79,9 +79,16 @@ auto_cmd({ "BufEnter" }, {
 vim.cmd([[
   let g:omni_sql_no_default_maps = 1
 
-  colorscheme quiet 
   set updatetime=60
   set mouse=a
+
+  " Reverse scroll direction (natural scrolling, matches tmux config)
+  nnoremap <ScrollWheelUp> 1<C-e>
+  nnoremap <ScrollWheelDown> 1<C-y>
+  inoremap <ScrollWheelUp> <C-o>1<C-e>
+  inoremap <ScrollWheelDown> <C-o>1<C-y>
+  vnoremap <ScrollWheelUp> 1<C-e>
+  vnoremap <ScrollWheelDown> 1<C-y>
   set termguicolors
   set clipboard=unnamedplus
   set expandtab
@@ -91,7 +98,7 @@ vim.cmd([[
   set noshowmode
   set number
   set relativenumber
-  set statusline="2"
+  set laststatus=2
   set signcolumn=yes
 
   set complete-=ti
@@ -99,8 +106,7 @@ vim.cmd([[
   set incsearch
   set ignorecase
   set smartcase
-  set whichwrap="b,s,<,>,h,l,[,],`"
-  set grepprg="rg --vimgrep --smart-case"
+  set whichwrap=b,s,<,>,h,l,[,]
   set grepformat=%f:%l:%c:%m,%f:%l:%m
 
   set wrap
@@ -192,7 +198,7 @@ vim.cmd([[
   augroup cursor_hold_hints_autocmd
   autocmd!
   autocmd CursorHold * lua vim.diagnostic.open_float({ scope = "cursor", focus = false })
-  autocmd CursorMoved, CursorMovedI * lua vim.lsp.buf.clear_references()
+  autocmd CursorMoved,CursorMovedI * lua vim.lsp.buf.clear_references()
   augroup END
 
   augroup chmod_my_script_autocmd
@@ -237,6 +243,8 @@ vim.cmd([[
   endfunction
   autocmd FileType qf map <buffer> dd :call RemoveQFItem()<cr>
 ]])
+
+vim.o.grepprg = "rg --vimgrep --smart-case"
 
 -- setup lsp
 vim.lsp.config.ts_ls = {
@@ -298,16 +306,12 @@ auto_cmd("LspAttach", {
   callback = function(ev)
     local buffer = ev.buf
     local client = vim.lsp.get_client_by_id(ev.data.client_id)
-    local buf_set_option = function(...)
-      vim.api.nvim_buf_set_option(buffer, ...)
-    end
-
     -- lsp mappings
-    map("n", "gd", vim.lsp.buf.definition, { desc = "Goto definitions" })
-    map("n", "gT", vim.lsp.buf.type_definition, { desc = "Goto type definitions" })
+    map("n", "gd", vim.lsp.buf.definition, { buffer = buffer, desc = "Goto definitions" })
+    map("n", "gT", vim.lsp.buf.type_definition, { buffer = buffer, desc = "Goto type definitions" })
 
     -- signature helps
-    function setup_signature_helps()
+    local function setup_signature_helps()
       require("lsp-overloads").setup(client, {
         ui = {
           border = "single",
@@ -338,11 +342,11 @@ auto_cmd("LspAttach", {
     if client.server_capabilities.signatureHelpProvider then
       setup_signature_helps()
 
-      function SignatureFixed()
+      local function SignatureFixed()
         close_floating_windows()
         vim.opt.eventignore:append({ "CursorHold", "CursorHoldI" })
         vim.cmd(":silent LspOverloadsSignature") -- vim.lsp.buf.signature_help()
-        vim.api.nvim_command('autocmd CursorMoved, CursorMovedI <buffer> ++once set eventignore=""')
+        vim.api.nvim_command('autocmd CursorMoved,CursorMovedI <buffer> ++once set eventignore=""')
       end
 
       auto_cmd("CursorHoldI", {
@@ -357,7 +361,7 @@ auto_cmd("LspAttach", {
         { buffer = buffer, desc = "LspOverloadsSignature" }
       )
 
-      function HoverFixed()
+      local function HoverFixed()
         close_floating_windows()
         vim.opt.eventignore:append({ "CursorHold" })
         vim.lsp.buf.hover()
@@ -466,9 +470,6 @@ require("lazy").setup({
   "Issafalcon/lsp-overloads.nvim",
   {
     "nvim-treesitter/nvim-treesitter",
-    dependencies = {
-      "nvim-treesitter/playground",
-    },
     config = function()
       local read_query = function(filename)
         return table.concat(vim.fn.readfile(vim.fn.expand(filename)))
@@ -564,7 +565,7 @@ require("lazy").setup({
           buffer_previewer_maker = function(filepath, bufnr, opts)
             opts = opts or {}
             filepath = vim.fn.expand(filepath)
-            vim.loop.fs_stat(filepath, function(_, stat)
+            vim.uv.fs_stat(filepath, function(_, stat)
               if not stat then
                 return
               end

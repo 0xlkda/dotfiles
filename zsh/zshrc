@@ -132,3 +132,6 @@ eval "$(starship init zsh)"
 
 # direnv
 eval "$(direnv hook zsh)"
+
+# 1password
+eval "$(op completion zsh)"; compdef _op op
