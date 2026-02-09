@@ -20,7 +20,13 @@ alias vl="vim -c \"normal '0\" -c \"bn\" -c \"bd\""
 alias pc="pbcopy <"
 
 # Tree
-tree() { command tree --gitignore -L "${1:-3}" "${@:2}"; }
+tree() {
+  if [[ "$1" =~ ^[0-9]+$ ]]; then
+    command tree --gitignore -L "$1" "${@:2}"
+  else
+    command tree --gitignore -L 3 "$@"
+  fi
+}
 alias treeI="command tree -I"
 
 # Config Dotfiles

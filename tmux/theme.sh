@@ -30,6 +30,7 @@ apply_theme() {
   tmux set -g pane-border-style "fg=$MUTED"
   tmux set -g pane-active-border-style "fg=$PINE"
 
+  tmux set -g window-status-format "#[fg=$MUTED]#I:#W"
   tmux set -g window-status-current-format "#[fg=$HL]#I:#W"
 
   tmux set -g @theme "$theme"
