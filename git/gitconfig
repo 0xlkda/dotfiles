@@ -1,0 +1,56 @@
+# vim: set ft=gitconfig:ts=2:sw=2
+
+[core]
+  pager = less -eFiJM~ -j3 --tabs=3
+  editor = nvim
+  excludesfile = ~/.gitignore
+
+[user]
+  name = 0xlkda
+  email = lekhacduyanh@gmail.com
+  signingkey = /Users/alex/.ssh/id_ed25519_signing
+
+[init]
+  defaultBranch = main
+
+[credential]
+  helper = cache
+
+[credential "https://github.com"]
+  helper = !/Users/alex/.nix-profile/bin/gh auth git-credential
+
+[credential "https://gist.github.com"]
+  helper = !/Users/alex/.nix-profile/bin/gh auth git-credential
+
+[alias]
+  view = !$(which gh) browse
+  wt = worktree
+  cwt = !sh $HOME/code/dotfiles/clone-for-worktree.sh
+  unstage = reset HEAD --
+  untrack = rm --cached --
+  last = log -1 HEAD
+  diffs = diff --staged --
+  rename = mv --
+
+[push]
+  autoSetupRemote = true
+  default = current
+
+[pull]
+  rebase = true
+
+[gpg]
+  format = ssh
+
+[gpg "ssh"]
+  program = /usr/bin/ssh-keygen
+  allowedSignersFile = /Users/alex/code/dotfiles/git/allowed_signers
+
+[commit]
+  gpgsign = true
+
+[merge]
+  tool = nvimdiff2
+
+[mergetool]
+  keepBackup = false

@@ -1,0 +1,16 @@
+fpath=("$HOME/code/dotfiles/zsh/functions/" $fpath)
+
+path=(
+  "$HOME/.nix-profile/bin"
+  "$HOME/code/dotfiles/bin"
+  "$HOME/.local/bin"
+  "$HOME/.npm_packages/node_modules/.bin"
+  "$HOME/code/lkda/my-scripts/bin"
+  "node_modules/.bin"
+  "/opt/local/bin"
+  "/opt/local/sbin"
+  $path
+)
+
+# Nix daemon
+source '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'

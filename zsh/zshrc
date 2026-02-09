@@ -1,0 +1,23 @@
+# Source modular config
+ZSH_DIR="$HOME/code/dotfiles/zsh"
+source "$ZSH_DIR/conf.d/options.zsh"
+source "$ZSH_DIR/conf.d/keybindings.zsh"
+source "$ZSH_DIR/conf.d/aliases.zsh"
+source "$ZSH_DIR/conf.d/git.zsh"
+source "$ZSH_DIR/private_aliases"
+
+# Completions
+zstyle ':completion:*' completer _expand _complete _ignored _approximate
+zstyle ':completion:*' list-suffixes true
+zstyle :compinstall filename "$ZSH_DIR/zshrc"
+autoload -Uz compinit
+compinit
+
+# tabtab (npm completion)
+[[ -f ~/.config/tabtab/zsh/__tabtab.zsh ]] && . ~/.config/tabtab/zsh/__tabtab.zsh || true
+
+# Tools
+eval "$(starship init zsh)"
+eval "$(direnv hook zsh)"
+eval "$(op completion zsh)"; compdef _op op
+source /Users/alex/.config/op/plugins.sh

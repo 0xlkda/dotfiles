@@ -1,0 +1,46 @@
+shell:
+  program: /bin/zsh
+  args:
+    - -l
+
+import:
+  - ~/code/dotfiles/alacritty/light.yml
+
+
+window:
+  option_as_alt: OnlyLeft
+  decorations: Buttonless
+  padding:
+    x: 4
+    y: 4
+  dimensions:
+    columns: 80
+    lines: 20
+
+font:
+  size: 14
+  offset:
+    y: 8
+  glyph_offset:
+    y: 4
+
+  normal:
+    family: JetBrainsMono Nerd Font Mono
+    style: Regular
+
+  medium:
+    family: JetBrainsMono Nerd Font Mono
+    style: Medium
+
+  bold:
+    family: JetBrainsMono Nerd Font Mono
+    style: Bold
+
+  italic:
+    family: JetBrainsMono Nerd Font Mono
+    style: Italic
+
+key_bindings:
+  - { key: LBracket, mods: Command, command: { program: 'sh', args: ['-c', '~/code/dotfiles/alacritty/use_light_theme'] } }
+  - { key: RBracket, mods: Command, command: { program: 'sh', args: ['-c', '~/code/dotfiles/alacritty/use_dark_theme'] } }
+  - { key: Return, mods: Shift, chars: "\x1b\r" }

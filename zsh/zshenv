@@ -1,0 +1,8 @@
+export ENVIRONMENT=local
+export EDITOR=nvim
+export LESSHISTFILE=-
+export LANG=en_US.UTF-8
+
+# Prevent duplicates
+typeset -U path
+typeset -U fpath
