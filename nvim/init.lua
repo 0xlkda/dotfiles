@@ -59,13 +59,20 @@ end
 local map = vim.keymap.set
 local auto_cmd = vim.api.nvim_create_autocmd
 
--- reverse scroll direction (natural scrolling, matches tmux config)
-map("n", "<ScrollWheelUp>", "1<C-e>", { noremap = true })
-map("n", "<ScrollWheelDown>", "1<C-y>", { noremap = true })
-map("i", "<ScrollWheelUp>", "<C-o>1<C-e>", { noremap = true })
-map("i", "<ScrollWheelDown>", "<C-o>1<C-y>", { noremap = true })
-map("v", "<ScrollWheelUp>", "1<C-e>", { noremap = true })
-map("v", "<ScrollWheelDown>", "1<C-y>", { noremap = true })
+-- sync scroll direction with tmux @scroll-reversed setting
+function SyncScroll()
+  local reversed = vim.fn.system("tmux show -gv @scroll-reversed 2>/dev/null"):gsub("%s+", "") == "1"
+  local up = reversed and "1<C-e>" or "1<C-y>"
+  local down = reversed and "1<C-y>" or "1<C-e>"
+  map("n", "<ScrollWheelUp>", up, { noremap = true })
+  map("n", "<ScrollWheelDown>", down, { noremap = true })
+  map("i", "<ScrollWheelUp>", "<C-o>" .. up, { noremap = true })
+  map("i", "<ScrollWheelDown>", "<C-o>" .. down, { noremap = true })
+  map("v", "<ScrollWheelUp>", up, { noremap = true })
+  map("v", "<ScrollWheelDown>", down, { noremap = true })
+end
+SyncScroll()
+auto_cmd("FocusGained", { callback = SyncScroll })
 
 -- better zoom
 map("n", "<C-w>o", ":mksession! ~/.config/nvim/session.vim<CR>:wincmd o<CR>", { noremap = true })

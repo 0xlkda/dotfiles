@@ -18,8 +18,10 @@ alias vi=vim
 alias edit=vim
 alias vl="vim -c \"normal '0\" -c \"bn\" -c \"bd\""
 alias pc="pbcopy <"
-alias tree="tree --gitignore"
-alias treeI="tree -I"
+
+# Tree
+tree() { command tree --gitignore -L "${1:-3}" "${@:2}"; }
+alias treeI="command tree -I"
 
 # Config Dotfiles
 alias reload="source ~/.zshrc && source ~/.zshenv"
