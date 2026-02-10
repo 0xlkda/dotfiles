@@ -1,5 +1,8 @@
-tmux/plugins
-.undodir
+.claude
 .luarc.json
-private_aliases
+.undodir
+bin/*.txt
+git/allowed_signers
 lazy-lock.json
+private_aliases
+tmux/plugins

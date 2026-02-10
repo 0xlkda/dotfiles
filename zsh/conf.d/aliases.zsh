@@ -30,8 +30,15 @@ tree() {
 alias treeI="command tree -I"
 
 # Config Dotfiles
-alias reload="source ~/.zshrc && source ~/.zshenv"
+reset-aliases() {
+  local f=~/code/dotfiles/zsh/conf.d/aliases.zsh
+  grep -oE '^alias [a-zA-Z0-9._-]+=' "$f" | sed 's/^alias //;s/=$//' | while read -r name; do
+    unalias "$name" 2>/dev/null
+  done
+}
+alias reload="reset-aliases && source ~/.zshrc && source ~/.zshenv"
 alias rl=reload
+alias rla="~/code/dotfiles/tmux/reload-zsh.sh"
 alias zc="vim ~/.zshrc"
 alias zac="vim ~/code/dotfiles/zsh/conf.d/aliases.zsh"
 alias vc="vim ~/.config/nvim/init.lua"
@@ -57,7 +64,7 @@ alias ni="npm install"
 alias nid="npm install -D"
 alias nr="npm run"
 alias nrs="npm run start"
-alias nrd="npm run start:dev"
+alias nrd="npm run dev"
 
 # NestJS
 alias ng="nest generate"
