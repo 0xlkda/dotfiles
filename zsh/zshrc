@@ -21,3 +21,5 @@ eval "$(starship init zsh)"
 eval "$(direnv hook zsh)"
 eval "$(op completion zsh)"; compdef _op op
 source /Users/alex/.config/op/plugins.sh
+
+export LESS="-R --mouse"

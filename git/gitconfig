@@ -1,7 +1,7 @@
 # vim: set ft=gitconfig:ts=2:sw=2
 
 [core]
-  pager = less -eFiJM~ -j3 --tabs=3
+  pager = less -FiJMRSx4 --mouse -j3 --tilde
   editor = nvim
   excludesfile = ~/.gitignore
 
