@@ -41,26 +41,44 @@ fi
 # Apply all bindings atomically via source-file to prevent partial updates
 # Updates root, copy-mode, AND copy-mode-vi tables to avoid stale conflicts
 tmpfile=$(mktemp /tmp/tmux-scroll.XXXXXX)
-if [ "$reverse" = "1" ]; then
-  cat > "$tmpfile" << 'CONF'
-bind-key -T root WheelUpPane if-shell -F '#{||:#{pane_in_mode},#{mouse_any_flag}}' 'send-keys -M'
-bind-key -T root WheelDownPane if-shell -F '#{||:#{pane_in_mode},#{mouse_any_flag}}' 'send-keys -M' 'copy-mode -e'
-bind-key -T copy-mode-vi WheelUpPane select-pane \; send-keys -X -N 3 scroll-down
-bind-key -T copy-mode-vi WheelDownPane select-pane \; send-keys -X -N 3 scroll-up
-bind-key -T copy-mode WheelUpPane select-pane \; send-keys -X -N 3 scroll-down
-bind-key -T copy-mode WheelDownPane select-pane \; send-keys -X -N 3 scroll-up
-set -g @scroll-reversed 1
-CONF
-else
-  cat > "$tmpfile" << 'CONF'
-bind-key -T root WheelUpPane if-shell -F '#{||:#{pane_in_mode},#{mouse_any_flag}}' 'send-keys -M' 'copy-mode -e'
-bind-key -T root WheelDownPane if-shell -F '#{||:#{pane_in_mode},#{mouse_any_flag}}' 'send-keys -M'
-bind-key -T copy-mode-vi WheelUpPane select-pane \; send-keys -X -N 3 scroll-up
-bind-key -T copy-mode-vi WheelDownPane select-pane \; send-keys -X -N 3 scroll-down
-bind-key -T copy-mode WheelUpPane select-pane \; send-keys -X -N 3 scroll-up
-bind-key -T copy-mode WheelDownPane select-pane \; send-keys -X -N 3 scroll-down
+cat > "$tmpfile" << 'CONF'
+# WheelUp = scroll into history / entry direction
+# Check pane_in_mode FIRST so copy mode takes priority over mouse_any_flag
+bind-key -T root WheelUpPane if-shell -F "#{pane_in_mode}" {
+  send-keys -X -N 3 scroll-up
+} {
+  if-shell -F "#{mouse_any_flag}" { send-keys -M } {
+    if-shell -F "#{@scroll-cooldown}" {} { copy-mode }
+  }
+}
+# WheelDown = scroll toward bottom / exit direction
+bind-key -T root WheelDownPane if-shell -F "#{pane_in_mode}" {
+  send-keys -X -N 3 scroll-down
+  if-shell -F "#{==:#{scroll_position},0}" {
+    send-keys -X cancel
+    set -g @scroll-cooldown 1
+    run-shell -b 'sleep 0.5 && tmux set -g @scroll-cooldown 0'
+  }
+} {
+  if-shell -F "#{mouse_any_flag}" { send-keys -M }
+}
+unbind-key -T copy-mode-vi WheelUpPane
+unbind-key -T copy-mode-vi WheelDownPane
+unbind-key -T copy-mode WheelUpPane
+unbind-key -T copy-mode WheelDownPane
+set-hook -g pane-mode-changed[100] "refresh-client"
+set -g @scroll-cooldown 0
 set -g @scroll-reversed 0
 CONF
+
+# If reversed, swap wheel directions atomically
+if [ "$reverse" = "1" ]; then
+  sed -i '' \
+    -e 's/WheelUpPane/__UP__/g' \
+    -e 's/WheelDownPane/WheelUpPane/g' \
+    -e 's/__UP__/WheelDownPane/g' \
+    -e 's/@scroll-reversed 0/@scroll-reversed 1/' \
+    "$tmpfile"
 fi
 tmux source-file "$tmpfile"
 rm -f "$tmpfile"

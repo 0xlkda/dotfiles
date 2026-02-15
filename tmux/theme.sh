@@ -14,7 +14,7 @@ apply_theme() {
   else
     BG="#232136"       SURFACE="#2a273f"
     OVERLAY="#393552"  BASE="#44415a"
-    HL="#e0def4"     MUTED="#6e6a86"
+    HL="#ff22cc"     MUTED="#6e6a86"
     PINE="#3e8fb0"     GOLD="#ea9d34"
     ROSE="#ea9a97"     LOVE="#eb6f92"
     FOAM="#9ccfd8"
@@ -24,7 +24,7 @@ apply_theme() {
   tmux set -g status-left " #[fg=$GOLD][#S]: "
   tmux set -g status-right "#[fg=$MUTED]#{@active-device} "
 
-  tmux set -g mode-style "bg=$MUTED,fg=$BASE"
+  tmux set -g mode-style "bg=$GOLD,fg=$BG"
   tmux set -g message-style "fg=$OVERLAY,bg=$GOLD"
 
   tmux set -g pane-border-style "fg=$MUTED"
@@ -34,7 +34,7 @@ apply_theme() {
   tmux set -g window-status-current-format "#[fg=$HL]#I:#W"
 
   tmux set -g @theme "$theme"
-}
+} 
 
 mode="${1:-dark}"
 

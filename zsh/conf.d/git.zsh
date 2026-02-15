@@ -73,40 +73,44 @@ alias ghas="gh auth status"
 # alias ghds="gh auth switch --user dalk-hds"
 alias glkda="gh auth switch --user 0xlkda"
 
-alias git.conflicts='$(git diff --name-only --diff-filter=U)'
+alias git.conflicts='git diff --name-only --diff-filter=U'
 alias gist="gh gist"
 alias ghc="gh repo clone"
 
 # Git aliases
-alias gs='git reset --soft $(git merge-base origin/main HEAD)'
+alias gsquash='git reset --soft $(git merge-base origin/main HEAD)'
 alias gcb="git checkout -b"
-alias gss="git show -s"
+alias gs="git show -s"
 alias gst="git status -s"
 alias gf="git fetch"
 alias gd="git diff"
 alias gds="git diff --staged"
+alias gdh="git diff HEAD"
+alias gdst="git diff --stat"
 alias gp="git pull"
 alias gP="git push"
 alias gPf="git push --force-with-lease"
 
 alias gw="git worktree"
+alias gsh="git stash"
+alias gshp="git stash pop"
+alias gshl="git stash list"
 alias gb="git branch"
 alias gc="git commit --verbose"
 alias gcm="git commit --verbose --message"
-alias gca="git commit --all --verbose"
 alias gcam="git commit --amend --verbose"
 alias gcam!="git commit --amend --no-edit"
 
 alias ga="git add -p"
-alias gaa="git add -p --all --verbose"
-alias gac="git add -p --update --verbose"
+alias gac="git add -u"
+alias gaf="git add"
+alias gaa="git add --all"
 
 alias gbd="git branch -d"
 alias gbD="git branch -D"
 
 alias gl='git log'
-alias gl1='git log --oneline'
-alias gla1='git log --oneline --all'
-alias gla="git log --graph --all -15"
-alias gls="git log --stat -n3"
-alias glc="git log -p"
+alias gl1='git log --oneline -20'
+alias gla='git log --oneline --graph --all -20'
+alias gls='git log --stat -5'
+alias glp='git log -p'
