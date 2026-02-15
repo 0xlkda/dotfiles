@@ -97,9 +97,9 @@ alias gca="git commit --all --verbose"
 alias gcam="git commit --amend --verbose"
 alias gcam!="git commit --amend --no-edit"
 
-alias ga="git add --verbose"
-alias gaa="git add --all --verbose"
-alias gac="git add --update --verbose"
+alias ga="git add -p"
+alias gaa="git add -p --all --verbose"
+alias gac="git add -p --update --verbose"
 
 alias gbd="git branch -d"
 alias gbD="git branch -D"
