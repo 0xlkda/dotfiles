@@ -61,6 +61,20 @@ alias mkc="make clean"
 # Tunneling Tailscale
 alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 
+# mitmproxy
+mitm-start() {
+  tmux new-window -n mitm "mitmproxy --listen-port 8080"
+  export HTTPS_PROXY=http://127.0.0.1:8080
+  export NODE_EXTRA_CA_CERTS=~/.mitmproxy/mitmproxy-ca-cert.pem
+  echo "mitmproxy started on :8080 — HTTPS_PROXY and NODE_EXTRA_CA_CERTS set"
+}
+
+mitm-stop() {
+  unset HTTPS_PROXY NODE_EXTRA_CA_CERTS
+  tmux kill-window -t mitm
+  echo "mitmproxy stopped — env vars unset"
+}
+
 # Python3
 alias py=python3
 alias pip=pip3
