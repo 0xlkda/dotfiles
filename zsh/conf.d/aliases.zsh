@@ -1,8 +1,9 @@
 # Environments
-CONFIG="~/code/dotfiles"
+CONFIG=~/code/dotfiles
 USE_NIX="ln -s $CONFIG/environments/direnv .envrc | direnv allow ."
 USE_NODE="ln -s $CONFIG/environments/node/shell.nix shell.nix"
 USE_ESLINT="ln $CONFIG/environments/node/eslintrc-with-style .eslintrc"
+
 alias newnode="$USE_NIX | $USE_NODE | $USE_ESLINT"
 alias nn=newnode
 alias nd="nix develop --command $SHELL"
@@ -38,15 +39,6 @@ treeI() {
 }
 
 # Config Dotfiles
-reset-aliases() {
-  local f=~/code/dotfiles/zsh/conf.d/aliases.zsh
-  grep -oE '^alias [a-zA-Z0-9._-]+=' "$f" | sed 's/^alias //;s/=$//' | while read -r name; do
-    unalias "$name" 2>/dev/null
-  done
-}
-alias reload="reset-aliases && source ~/.zshrc && source ~/.zshenv"
-alias rl=reload
-alias rla="~/code/dotfiles/tmux/reload-zsh.sh"
 alias zc="vim ~/.zshrc"
 alias zac="vim ~/code/dotfiles/zsh/conf.d/aliases.zsh"
 alias vc="vim ~/.config/nvim/init.lua"

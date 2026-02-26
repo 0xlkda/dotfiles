@@ -1,3 +1,20 @@
+# Zsh play nice with Git
+alias git='noglob git'
+
+# Commit 
+gc() {
+  local args=(--verbose)
+  case "$1" in
+    -a)  shift; args+=(--amend) ;;
+    -a!) shift; args+=(--amend --no-edit) ;;
+    *)   [[ -n "$1" ]] && { args+=(--message "$1"); shift } ;;
+  esac
+  git commit $args "$@"
+}
+
+alias gca='gc -a'
+alias gcam='gc -a!'
+
 # Git functions
 function try() {
   local DATE=$(TZ='UTC-7' date '+%Y-%m-%dT%H%M%S.000+0700')
@@ -96,14 +113,10 @@ alias gsh="git stash"
 alias gshp="git stash pop"
 alias gshl="git stash list"
 alias gb="git branch"
-alias gc="git commit --verbose"
-alias gcm="git commit --verbose --message"
-alias gcam="git commit --amend --verbose"
-alias gcam!="git commit --amend --no-edit"
 
 alias ga="git add -p"
-alias gac="git add -u"
 alias gaf="git add"
+alias gac="git add -u"
 alias gaa="git add --all"
 
 alias gbd="git branch -d"

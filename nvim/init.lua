@@ -283,6 +283,15 @@ vim.cmd([[
   \ '<c-o>:silent! TableModeDisable<cr>' : '__'
 ]])
 
+vim.api.nvim_create_autocmd("BufEnter", {
+  pattern = "*.ts",
+  callback = function()
+    if vim.bo.filetype ~= "typescript" then
+      vim.bo.filetype = "typescript"
+    end
+  end,
+})
+
 -- LSP
 vim.lsp.config.ts_ls = {
   cmd = { "typescript-language-server", "--stdio" },

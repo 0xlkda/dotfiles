@@ -1,15 +1,19 @@
+# pre-flight
+unalias -a
+alias reload="source ~/.zshrc && source ~/.zshenv"
+alias rl=reload
+
 # Source modular config
-ZSH_DIR="$HOME/code/dotfiles/zsh"
-source "$ZSH_DIR/conf.d/options.zsh"
-source "$ZSH_DIR/conf.d/keybindings.zsh"
-source "$ZSH_DIR/conf.d/aliases.zsh"
-source "$ZSH_DIR/conf.d/git.zsh"
-source "$ZSH_DIR/private_aliases"
+source ~/code/dotfiles/zsh/conf.d/options.zsh
+source ~/code/dotfiles/zsh/conf.d/keybindings.zsh
+source ~/code/dotfiles/zsh/conf.d/aliases.zsh
+source ~/code/dotfiles/zsh/conf.d/git.zsh
+source ~/code/dotfiles/zsh/private_aliases
 
 # Completions
 zstyle ':completion:*' completer _expand _complete _ignored _approximate
 zstyle ':completion:*' list-suffixes true
-zstyle :compinstall filename "$ZSH_DIR/zshrc"
+zstyle :compinstall filename ~/code/dotfiles/zsh/zshrc
 autoload -Uz compinit
 compinit
 
@@ -20,6 +24,6 @@ compinit
 eval "$(starship init zsh)"
 eval "$(direnv hook zsh)"
 eval "$(op completion zsh)"; compdef _op op
-source /Users/alex/.config/op/plugins.sh
+source ~/.config/op/plugins.sh
 
 export LESS="-R --mouse"
