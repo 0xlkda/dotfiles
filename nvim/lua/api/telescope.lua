@@ -34,17 +34,21 @@ function api.change_directory(path)
 end
 
 -- respect folding: https://github.com/nvim-telescope/telescope.nvim/issues/559#issuecomment-864530935
+local function restore_folds_after_select(prompt_bufnr)
+  actions.select_default(prompt_bufnr)
+  vim.schedule(function()
+    vim.wo.foldmethod = vim.wo.foldmethod or "indent"
+    vim.cmd("normal! zx")
+    vim.cmd("normal! zz")
+    pcall(vim.cmd, "loadview")
+  end)
+end
+
 local find_files_opts = {
   hidden = true,
-  attach_mappings = function(_)
-    ---@diagnostic disable-next-line: undefined-field
-    actions.center:replace(function(_)
-      vim.wo.foldmethod = vim.wo.foldmethod or "indent"
-      vim.cmd(":normal! zx")
-      vim.cmd(":normal! zz")
-      ---@diagnostic disable-next-line: param-type-mismatch
-      pcall(vim.cmd, ":loadview") -- silent load view
-    end)
+  attach_mappings = function(_, map)
+    map("i", "<cr>", restore_folds_after_select)
+    map("n", "<cr>", restore_folds_after_select)
     return true
   end,
 }

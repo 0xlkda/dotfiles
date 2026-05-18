@@ -127,3 +127,5 @@ alias gl1='git log --oneline -20'
 alias gla='git log --oneline --graph --all -20'
 alias gls='git log --stat -5'
 alias glp='git log -p'
+
+wip() { gac && gc "WIP: $*" --no-verify }

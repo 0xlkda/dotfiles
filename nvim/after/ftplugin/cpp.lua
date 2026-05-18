@@ -10,4 +10,4 @@ end, {})
 vim.keymap.set("n", "<leader>,", ':redir! @o<CR>:silent !gcc -o %:r % && ./%:r<CR>:redir END<CR>:Scratch<CR>"op<C-w>p', { buffer = true })
 vim.keymap.set("n", "<leader>.", ':redir! @o<CR>:!otool -tv %:r<CR>:redir END<CR>:Scratch<CR>"op<C-w>p', { buffer = true })
 
-vim.api.nvim_set_hl(0, "Folded", { fg = "NONE", bg = "NONE" })
+vim.api.nvim_set_hl(0, "Folded", { bg = "NONE" })

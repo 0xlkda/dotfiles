@@ -4,6 +4,23 @@ USE_NIX="ln -s $CONFIG/environments/direnv .envrc | direnv allow ."
 USE_NODE="ln -s $CONFIG/environments/node/shell.nix shell.nix"
 USE_ESLINT="ln $CONFIG/environments/node/eslintrc-with-style .eslintrc"
 
+# graceful: TERM, then 5s grace, then KILL
+supervise() (
+  "$@" &
+  pid=$!
+  cleanup() {
+    kill -0 "$pid" 2>/dev/null || return       # already dead → done
+    kill -TERM "$pid" 2>/dev/null
+    for _ in 1 2 3; do
+      kill -0 "$pid" 2>/dev/null || return     # exited during grace → done
+      sleep 1
+    done
+    kill -KILL "$pid" 2>/dev/null              # still alive after 3s → force
+  }
+  trap cleanup EXIT
+  wait "$pid"
+)
+
 alias newnode="$USE_NIX | $USE_NODE | $USE_ESLINT"
 alias nn=newnode
 alias nd="nix develop --command $SHELL"
@@ -19,6 +36,10 @@ alias vi=vim
 alias edit=vim
 alias vl="vim -c \"normal '0\" -c \"bn\" -c \"bd\""
 alias pc="pbcopy <"
+
+# DBG
+alias dbg='node inspect'
+alias dbgreport='node --report-on-signal --report-directory=/tmp'
 
 # Tree
 tree() {
@@ -151,3 +172,7 @@ docker.run() {
 docker.up() {
     docker compose up
 }
+
+psg() { ps -o pid,ppid,rss,%cpu,state,command -p "$(pgrep -d, "$@")"; }
+  # psg node
+  # psg -f 'tsx app/dev'

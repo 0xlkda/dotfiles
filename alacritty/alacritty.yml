@@ -43,4 +43,4 @@ font:
 key_bindings:
   - { key: LBracket, mods: Command, command: { program: 'sh', args: ['-c', '~/code/dotfiles/alacritty/use_light_theme'] } }
   - { key: RBracket, mods: Command, command: { program: 'sh', args: ['-c', '~/code/dotfiles/alacritty/use_dark_theme'] } }
-  - { key: Return, mods: Shift, chars: "\x1b\r" }
+  - { key: Return, mods: Shift, chars: "\u001B\r" }

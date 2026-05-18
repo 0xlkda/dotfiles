@@ -62,4 +62,4 @@ for pane_info in $(tmux list-panes -a -F '#{pane_id}:#{pane_current_command}'); 
 done
 wait
 
-tmux display "Theme: $mode"
+tmux display "Theme: $mode" 2>/dev/null || true

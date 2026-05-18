@@ -16,9 +16,13 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = ","
 vim.g.maplocalleader = ","
 
+-- Disable matchparen (runs on every CursorMoved; expensive in deeply-nested code)
+vim.g.loaded_matchparen = 1
+
 -- Options
 vim.g.omni_sql_no_default_maps = 1
-vim.opt.updatetime = 60
+vim.opt.updatetime = 250
+vim.opt.autoread = true
 vim.opt.mouse = "a"
 vim.opt.termguicolors = true
 vim.opt.clipboard = "unnamedplus"
@@ -31,20 +35,23 @@ vim.opt.relativenumber = true
 vim.opt.laststatus = 2
 vim.opt.signcolumn = "yes"
 vim.opt.complete:remove({ "t", "i" })
-vim.opt.completeopt = "fuzzy,menuone,preview,noselect"
+vim.opt.completeopt = "menuone,preview,noselect"
 vim.opt.incsearch = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.whichwrap = "b,s,<,>,h,l,[,]"
 vim.opt.grepformat = "%f:%l:%c:%m,%f:%l:%m"
-vim.opt.wrap = true
+vim.opt.wrap = false
 vim.opt.linebreak = true
+vim.opt.scrolloff = 8
+vim.opt.sidescroll = 1
+vim.opt.sidescrolloff = 8
 vim.opt.splitright = true
-vim.opt.foldlevel = 99
 vim.opt.foldlevelstart = 1
 vim.opt.foldnestmax = 6
 vim.opt.foldcolumn = "0"
 vim.opt.fillchars = { fold = " " }
+vim.opt.foldopen:remove("insert")
 vim.o.grepprg = "rg --vimgrep --smart-case"
 
 -- Tmux theme sync server
@@ -79,6 +86,27 @@ map("n", "<C-w>o", ":mksession! ~/.config/nvim/session.vim<CR>:wincmd o<CR>", { 
 map("n", "<C-w>u", ":source ~/.config/nvim/session.vim<CR>", { noremap = true })
 
 map("n", "<space>", "za", { noremap = true })
+
+-- mouse click to expand/collapse folds in the fold column
+map("n", "<LeftMouse>", function()
+  local pos = vim.fn.getmousepos()
+  local fdc = tonumber(vim.wo[pos.winid].foldcolumn) or 0
+  if fdc > 0 and pos.column <= fdc then
+    vim.api.nvim_set_current_win(pos.winid)
+    vim.api.nvim_win_set_cursor(pos.winid, { pos.line, 0 })
+    vim.cmd("normal! za")
+  else
+    vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<LeftMouse>", true, true, true), "n")
+  end
+end, { noremap = true })
+
+-- double-click toggles fold on current line
+map("n", "<2-LeftMouse>", function()
+  if vim.fn.foldlevel(vim.fn.line(".")) > 0 then
+    vim.cmd("normal! za")
+  end
+end, { noremap = true })
+
 map("n", "<leader>cd", ":cd %:p:h<CR>:pwd<CR>", { noremap = true, silent = true })
 map("v", "<", "<gv", { noremap = true })
 map("v", ">", ">gv", { noremap = true })
@@ -110,8 +138,8 @@ map("n", "gl", function()
 end, { noremap = true })
 
 -- jumps
-map("n", "<C-j>", ":lprev<CR>zz", { noremap = true })
-map("n", "<C-k>", ":lnext<CR>zz", { noremap = true })
+map("n", "<C-j>", ":silent! lprev<CR>zz", { noremap = true })
+map("n", "<C-k>", ":silent! lnext<CR>zz", { noremap = true })
 
 -- split lines
 vim.api.nvim_create_user_command("Split", "'<,'>s/, /,\\r/gI", { range = true })
@@ -130,6 +158,22 @@ local function close_floating_windows()
     end
   end
 end
+
+-- enable wrap for prose filetypes
+auto_cmd("FileType", {
+  pattern = { "markdown", "text", "gitcommit" },
+  callback = function() vim.opt_local.wrap = true end,
+})
+
+-- auto-reload externally changed files
+auto_cmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
+  pattern = "*",
+  callback = function()
+    if vim.fn.mode() ~= "c" and vim.fn.getcmdwintype() == "" then
+      vim.cmd("checktime")
+    end
+  end,
+})
 
 -- highlight current line
 auto_cmd("ModeChanged", {
@@ -159,7 +203,7 @@ auto_cmd("BufEnter", {
 auto_cmd("BufEnter", {
   pattern = { "*.lua", "*.json", "*.js", "*.jsx", "*.ts", "*.tsx", "*.html", "*.css", "*.liquid", "*.c", "*.rs", "*.py" },
   callback = function()
-    map("n", "gq", ":Format<CR>", { desc = "Formatter format" })
+    map("n", "gq", ":Format<CR>", { buffer = true, desc = "Formatter format" })
   end,
 })
 
@@ -205,7 +249,7 @@ auto_cmd("CursorHold", {
     vim.diagnostic.open_float({ scope = "cursor", focus = false })
   end,
 })
-auto_cmd({ "CursorMoved", "CursorMovedI" }, {
+auto_cmd("CursorMoved", {
   group = cursor_hold_group,
   callback = function() vim.lsp.buf.clear_references() end,
 })
@@ -223,6 +267,7 @@ auto_cmd("BufWinEnter", {
 })
 auto_cmd("BufWritePost", {
   group = chmod_group,
+  pattern = vim.fn.expand("~/code/scripts/*"),
   callback = function()
     if vim.bo.filetype == "sh" then
       vim.fn.system("chmod +x " .. vim.fn.expand("%"))
@@ -283,7 +328,9 @@ vim.cmd([[
   \ '<c-o>:silent! TableModeDisable<cr>' : '__'
 ]])
 
+local ts_ft_group = vim.api.nvim_create_augroup("ts_filetype_fix", { clear = true })
 vim.api.nvim_create_autocmd("BufEnter", {
+  group = ts_ft_group,
   pattern = "*.ts",
   callback = function()
     if vim.bo.filetype ~= "typescript" then
@@ -310,13 +357,14 @@ vim.lsp.config.ts_ls = {
       importModuleSpecifierPreference = "non-relative",
     },
   },
-  diagnostics = {
-    ignoredCodes = {
-      2589,
-      7016,
-      80001,
-      80002,
-    },
+  handlers = {
+    ["textDocument/publishDiagnostics"] = function(err, result, ctx)
+      local dominated = { [2589] = true, [7016] = true, [80001] = true, [80002] = true }
+      result.diagnostics = vim.tbl_filter(function(d)
+        return not dominated[d.code]
+      end, result.diagnostics)
+      vim.lsp.diagnostic.on_publish_diagnostics(err, result, ctx)
+    end,
   },
 }
 
@@ -383,14 +431,18 @@ auto_cmd("LspAttach", {
       setup_signature_helps()
 
       local function SignatureFixed()
+        local ok_cmp, cmp = pcall(require, "cmp")
+        if ok_cmp and cmp.visible() then return end
         close_floating_windows()
         vim.opt.eventignore:append({ "CursorHold", "CursorHoldI" })
         vim.cmd(":silent LspOverloadsSignature")
         vim.api.nvim_command('autocmd CursorMoved,CursorMovedI <buffer> ++once set eventignore=""')
       end
 
+      local sig_group = vim.api.nvim_create_augroup("lsp_signature_" .. buffer, { clear = true })
       auto_cmd("CursorHoldI", {
-        pattern = { "*.ts", "*.tsx", "*.js" },
+        group = sig_group,
+        buffer = buffer,
         callback = SignatureFixed,
       })
 
@@ -581,6 +633,8 @@ require("lazy").setup({
         vim.o.background = theme
         vim.cmd("colorscheme rose-pine")
         vim.api.nvim_set_hl(0, "NormalNC", { bg = overlays[theme] })
+        vim.api.nvim_set_hl(0, "Folded", { bg = "NONE" })
+        vim.api.nvim_set_hl(0, "FoldColumn", { fg = "NONE", bg = "NONE" })
       end
 
       SyncTheme()

@@ -5,11 +5,11 @@ colors:
 
   cursor:
     text: '0x232136'
-    cursor: '0x825B65'
+    cursor: '0xea9a97'
 
   vi_mode_cursor:
     text: '0x191724'
-    cursor: '0x825B65'
+    cursor: '0xea9a97'
 
   line_indicator:
     foreground: None
