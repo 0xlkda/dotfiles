@@ -1,8 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(tmux source-file:*)",
-      "Bash(tmux list-keys:*)"
-    ]
-  }
-}
