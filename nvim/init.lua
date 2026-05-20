@@ -23,6 +23,29 @@ vim.g.loaded_matchparen = 1
 vim.g.omni_sql_no_default_maps = 1
 vim.opt.updatetime = 250
 vim.opt.autoread = true
+
+local fold_persist_autoread = vim.api.nvim_create_augroup("fold_persist_autoread", { clear = true })
+local autoread_saved_view
+vim.api.nvim_create_autocmd("FileChangedShell", {
+  group = fold_persist_autoread,
+  callback = function() autoread_saved_view = vim.fn.winsaveview() end,
+})
+vim.api.nvim_create_autocmd("FileChangedShellPost", {
+  group = fold_persist_autoread,
+  callback = function()
+    local bufnr = vim.api.nvim_get_current_buf()
+    local ok, parser = pcall(vim.treesitter.get_parser, bufnr)
+    if ok and parser then parser:parse() end
+    if vim.wo.foldmethod == "expr" then
+      vim.wo.foldmethod = "manual"
+      vim.wo.foldmethod = "expr"
+    end
+    if autoread_saved_view then
+      vim.fn.winrestview(autoread_saved_view)
+      autoread_saved_view = nil
+    end
+  end,
+})
 vim.opt.mouse = "a"
 vim.opt.termguicolors = true
 vim.opt.clipboard = "unnamedplus"
@@ -81,9 +104,17 @@ end
 SyncScroll()
 auto_cmd("FocusGained", { callback = SyncScroll })
 
--- better zoom
-map("n", "<C-w>o", ":mksession! ~/.config/nvim/session.vim<CR>:wincmd o<CR>", { noremap = true })
-map("n", "<C-w>u", ":source ~/.config/nvim/session.vim<CR>", { noremap = true })
+-- better zoom (toggle: save layout + zoom; press again to restore)
+map("n", "<C-w>o", function()
+  if vim.g.zoom_active then
+    vim.cmd("source ~/.config/nvim/session.vim")
+    vim.g.zoom_active = false
+  else
+    vim.cmd("mksession! ~/.config/nvim/session.vim")
+    vim.cmd("wincmd o")
+    vim.g.zoom_active = true
+  end
+end, { noremap = true })
 
 map("n", "<space>", "za", { noremap = true })
 
@@ -114,14 +145,28 @@ map("v", ">", ">gv", { noremap = true })
 -- fold level shortcuts
 map("n", "zM", ":set foldlevel=0<CR>", { noremap = true })
 map("n", "zm", ":set foldlevel=1<CR>", { noremap = true })
-for i = 2, 9 do
+for i = 1, 9 do
   map("n", "z" .. i .. "f", ":set foldlevel=" .. i .. "<CR>", { noremap = true })
 end
+map("n", "zZ", ":set foldlevel=0<CR>", { noremap = true })
+
+map("n", "zx", function()
+  local bufnr = vim.api.nvim_get_current_buf()
+  local ok, parser = pcall(vim.treesitter.get_parser, bufnr)
+  if ok and parser then parser:parse() end
+  if vim.wo.foldmethod == "expr" then
+    vim.wo.foldmethod = "manual"
+    vim.wo.foldmethod = "expr"
+  end
+  vim.cmd("silent! normal! zv")
+end, { noremap = true })
 
 -- keep cursor in place
 map("n", "J", "mzJ`z", { noremap = true })
 
 map("n", "<leader>x", ":silent !chmod +x %<CR>", { noremap = true })
+
+map("n", "<leader>T", ":silent !~/code/dotfiles/tmux/theme.sh toggle<CR>", { noremap = true, desc = "Toggle light/dark theme" })
 
 -- moving line
 map("n", "<M-j>", ":m .+1<CR>==", { noremap = true })

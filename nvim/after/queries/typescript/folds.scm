@@ -30,3 +30,7 @@
 (generator_function_declaration body: (statement_block) @fold)
 
 (class_declaration body: (class_body) @fold)
+
+(try_statement body: (statement_block) @fold)
+(catch_clause body: (statement_block) @fold)
+(finally_clause body: (statement_block) @fold)

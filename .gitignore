@@ -4,5 +4,6 @@
 bin/*.txt
 git/allowed_signers
 lazy-lock.json
+nvim/session.vim
 private_aliases
 tmux/plugins

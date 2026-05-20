@@ -63,6 +63,23 @@ function M.setup(opts)
         end
       end)
     end
+
+    local bufnr_ins = vim.api.nvim_get_current_buf()
+    local group = vim.api.nvim_create_augroup("config_folding_" .. bufnr_ins, { clear = true })
+    vim.api.nvim_create_autocmd("InsertEnter", {
+      group = group,
+      buffer = bufnr_ins,
+      callback = function() vim.wo.foldmethod = "manual" end,
+    })
+    vim.api.nvim_create_autocmd("InsertLeave", {
+      group = group,
+      buffer = bufnr_ins,
+      callback = function()
+        local ok2, p = pcall(vim.treesitter.get_parser, bufnr_ins)
+        if ok2 and p then p:parse() end
+        vim.wo.foldmethod = "expr"
+      end,
+    })
   end
   vim.wo.foldtext = "v:lua.require('config.folding').foldtext()"
   vim.api.nvim_set_hl(0, "Folded", { bg = "NONE" })
