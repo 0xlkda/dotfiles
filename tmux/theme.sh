@@ -22,7 +22,7 @@ apply_theme() {
 
   tmux set -g status-style "bg=$BG,fg=default"
   tmux set -g status-left " #[fg=$GOLD][#S]: "
-  tmux set -g status-right "#[fg=$MUTED]#{@active-device} "
+  tmux set -g status-right "#[range=user|follow_other fg=$MUTED]#{?#{==:#{session_name},lkda},Mac,iPad}#[norange] "
 
   tmux set -g mode-style "bg=$GOLD,fg=$BG"
   tmux set -g message-style "fg=$OVERLAY,bg=$GOLD"
@@ -48,6 +48,18 @@ if [ "$mode" = "toggle" ]; then
 fi
 
 apply_theme "$mode"
+
+# Sync alacritty (portable in-place rewrite: works with both BSD and GNU sed)
+alacritty_yml="$HOME/code/dotfiles/alacritty/alacritty.yml"
+if [ -f "$alacritty_yml" ]; then
+  tmp=$(mktemp)
+  if [ "$mode" = "light" ]; then
+    sed -e 's/dark.yml/light.yml/g' "$alacritty_yml" > "$tmp"
+  else
+    sed -e 's/light.yml/dark.yml/g' "$alacritty_yml" > "$tmp"
+  fi
+  mv "$tmp" "$alacritty_yml"
+fi
 
 # Notify nvim instances
 for pane_info in $(tmux list-panes -a -F '#{pane_id}:#{pane_current_command}'); do
