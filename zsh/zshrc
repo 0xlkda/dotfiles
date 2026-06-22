@@ -8,6 +8,7 @@ source ~/code/dotfiles/zsh/conf.d/options.zsh
 source ~/code/dotfiles/zsh/conf.d/keybindings.zsh
 source ~/code/dotfiles/zsh/conf.d/aliases.zsh
 source ~/code/dotfiles/zsh/conf.d/git.zsh
+source ~/code/dotfiles/zsh/conf.d/macos.zsh
 source ~/code/dotfiles/zsh/private_aliases
 
 # Completions
