@@ -54,3 +54,5 @@
 
 [mergetool]
   keepBackup = false
+[safe]
+	directory = /Users/alex/lkda-runner-work/my-scripts/my-scripts

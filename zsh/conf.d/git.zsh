@@ -123,7 +123,7 @@ alias gbd="git branch -d"
 alias gbD="git branch -D"
 
 alias gl='git log'
-alias gl1='git log --oneline -20'
+alias gl1='git log --pretty=tformat:"%C(auto)%h %s%C(auto)%d" -20'
 alias gla='git log --oneline --graph --all -20'
 alias gls='git log --stat -5'
 alias glp='git log -p'
