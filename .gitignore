@@ -22,5 +22,4 @@ bin/ask
 bin/ask-context.sh
 bin/ask-fan
 bin/claude-worktree.sh
-bin/clone-for-worktree.sh
 bin/render-stream.sh

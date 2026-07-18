@@ -50,7 +50,7 @@ The same reproducibility story at two scales. Machine scale: [`flake.nix`](flake
 
 ### Git: small verbs, worktrees, SSH signing
 
-[`gitconfig`](git/gitconfig) signs commits with a plain **SSH key** instead of GPG (`gpg.format = ssh`) — one less key ecosystem to maintain — and delegates HTTPS credentials to `gh`, so no tokens live in git config. The alias layer ([`git.zsh`](zsh/conf.d/git.zsh)) is a vocabulary of one-to-three-letter verbs for the inner loop (`gst`, `gd`, `ga` = `add -p`, `wip` = stage-all-and-WIP-commit), plus a few codified habits: `try` starts a timestamped throwaway branch, `gsquash` soft-resets to the merge-base with main. Worktrees are the default multitasking model — a bare-repo layout where each branch checks out as a sibling directory — and `Ctrl-T` in the shell fuzzy-jumps between them.
+[`gitconfig`](git/gitconfig) signs commits with a plain **SSH key** instead of GPG (`gpg.format = ssh`) — one less key ecosystem to maintain — and delegates HTTPS credentials to `gh`, so no tokens live in git config. The alias layer ([`git.zsh`](zsh/conf.d/git.zsh)) is a vocabulary of one-to-three-letter verbs for the inner loop (`gst`, `gd`, `ga` = `add -p`, `wip` = stage-all-and-WIP-commit), plus a few codified habits: `try` starts a timestamped throwaway branch, `gsquash` soft-resets to the merge-base with main. Worktrees are the default multitasking model: [`clone-for-worktree.sh`](bin/clone-for-worktree.sh) sets up the bare-repo layout where branches live as sibling directories, and `Ctrl-T` in the shell fuzzy-jumps between them.
 
 ### The shell remembers so you don't
 
@@ -78,7 +78,7 @@ Scattered, deliberate, each commented at the source: `matchparen` is disabled (i
 | `zsh/` | entry files + modular `conf.d/` (options, keybindings, aliases, git, macOS) |
 | `nvim/` | single-file `init.lua` + fold queries, filetype tweaks |
 | `tmux/` | config + the theme/mobile/scroll/copy scripts described above |
-| `bin/` | small utilities (`countdown.sh`, `tmux-selector.sh`) |
+| `bin/` | small utilities (`clone-for-worktree.sh`, `countdown.sh`, `tmux-selector.sh`) |
 | `git/` | gitconfig, global ignore |
 | `alacritty/`, `starship/` | terminal + prompt (Rosé Pine light/dark) |
 | `environments/` | per-project nix/direnv templates |
