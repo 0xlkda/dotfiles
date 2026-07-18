@@ -35,6 +35,13 @@ in
 
   home.packages = with pkgs; [
     act cloudflared coreutils docker fd fzy gettext gh git jq mitmproxy
-    mosh neovim ripgrep starship stylua tmux toxiproxy tree yt-dlp
+    mosh neovim nginx ripgrep starship tmux tmuxinator toxiproxy tree yt-dlp
+
+    # editor tooling referenced by nvim/init.lua (LSP + formatters)
+    typescript-language-server pyright
+    eslint_d prettier black rustfmt clang-tools stylua
+
+    # font required by alacritty.yml
+    nerd-fonts.jetbrains-mono
   ];
 }
