@@ -1,0 +1,21 @@
+path=(
+  "$HOME/.nix-profile/bin"
+  "$HOME/code/dotfiles/bin"
+  "$HOME/.local/bin"
+  "$HOME/.npm_packages/node_modules/.bin"
+  "$HOME/code/lkda/my-scripts/bin"
+  "/opt/local/bin"
+  "/opt/local/sbin"
+  $path
+)
+
+# Nix daemon (guarded like nix's own installer snippet — portable to non-nix hosts)
+[[ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]] \
+  && source '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+
+# Auto-attach to the mobile tmux clone on interactive SSH logins (e.g. Termius).
+# Guards: interactive shell, real TTY on stdout, inside SSH, not already in tmux.
+# Run as a child (no exec) so a failed attach still drops you to a shell — no lockout.
+if [[ -o interactive ]] && [ -t 1 ] && [ -n "$SSH_CONNECTION" ] && [ -z "$TMUX" ]; then
+  ~/code/dotfiles/tmux/attach-mobile.sh
+fi

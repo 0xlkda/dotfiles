@@ -1,0 +1,97 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+apply_theme() {
+  local theme="$1"
+
+  if [ "$theme" = "light" ]; then
+    BG="#faf4ed"       SURFACE="#d9d6d4"
+    OVERLAY="#eee8e1"  BASE="#e4e1df"
+    HL="#ff22cc"     MUTED="#6e6a86"
+    PINE="#3e8fb0"     GOLD="#ea9d34"
+    ROSE="#d7827e"     LOVE="#eb6f92"
+    FOAM="#56949f"
+  else
+    BG="#232136"       SURFACE="#2a273f"
+    OVERLAY="#393552"  BASE="#44415a"
+    HL="#ff22cc"     MUTED="#6e6a86"
+    PINE="#3e8fb0"     GOLD="#ea9d34"
+    ROSE="#ea9a97"     LOVE="#eb6f92"
+    FOAM="#9ccfd8"
+  fi
+
+  tmux set -g status-style "bg=$BG,fg=default"
+  tmux set -g status-left " #[fg=$GOLD][#S]: "
+  tmux set -g status-right "#[range=user|follow_other fg=$MUTED]#{?#{==:#{session_name},lkda},Mac,#{s/lkda-//:session_name}}#[norange] "
+
+  tmux set -g mode-style "bg=$GOLD,fg=$BG"
+  tmux set -g message-style "fg=$OVERLAY,bg=$GOLD"
+
+  tmux set -g pane-border-style "fg=$MUTED"
+  tmux set -g pane-active-border-style "fg=$PINE"
+
+  tmux set -g window-status-format "#[fg=$MUTED]#I:#W"
+  tmux set -g window-status-current-format "#[fg=$HL]#I:#W"
+
+  tmux set -g @theme "$theme"
+} 
+
+mode="${1:-dark}"
+
+if [ "$mode" = "keep" ]; then
+  # Preserve the active theme across reloads; default to light on a fresh server.
+  mode=$(tmux show -gv @theme 2>/dev/null || true)
+  [ -z "$mode" ] && mode="light"
+elif [ "$mode" = "toggle" ]; then
+  current=$(tmux show -gv @theme 2>/dev/null || echo "dark")
+  if [ "$current" = "dark" ]; then
+    mode="light"
+  else
+    mode="dark"
+  fi
+fi
+
+apply_theme "$mode"
+
+# Sync alacritty (portable in-place rewrite: works with both BSD and GNU sed)
+alacritty_yml="$HOME/code/dotfiles/alacritty/alacritty.yml"
+if [ -f "$alacritty_yml" ]; then
+  tmp=$(mktemp)
+  if [ "$mode" = "light" ]; then
+    sed -e 's/dark.yml/light.yml/g' "$alacritty_yml" > "$tmp"
+  else
+    sed -e 's/light.yml/dark.yml/g' "$alacritty_yml" > "$tmp"
+  fi
+  mv "$tmp" "$alacritty_yml"
+fi
+
+# Sync Claude Code CLI theme. Claude stores `theme` ONLY in ~/.claude.json
+# (since v2.1.119+ it's rejected from settings.json). There's no documented
+# hot-reload or CLI flag for it, so this applies on the NEXT Claude launch — a
+# running session keeps its theme until restart. Atomic write (Claude also keeps
+# its own timestamped backups); small race window if Claude writes the file at
+# the same instant, acceptable for an interactive toggle.
+claude_json="$HOME/.claude.json"
+if [ -f "$claude_json" ] && command -v jq >/dev/null 2>&1; then
+  tmp=$(mktemp)
+  if jq --arg t "$mode" '.theme = $t' "$claude_json" > "$tmp" 2>/dev/null && [ -s "$tmp" ]; then
+    mv "$tmp" "$claude_json"
+  else
+    rm -f "$tmp"
+  fi
+fi
+
+# Notify nvim instances
+for pane_info in $(tmux list-panes -a -F '#{pane_id}:#{pane_current_command}'); do
+  pane_id="${pane_info%%:*}"
+  pane_cmd="${pane_info##*:}"
+  if [ "$pane_cmd" = "nvim" ] || [ "$pane_cmd" = "vim" ]; then
+    sock="/tmp/nvim-tmux-${pane_id//%/}"
+    if [ -S "$sock" ]; then
+      nvim --server "$sock" --remote-send "<Cmd>lua SyncTheme()<CR>" 2>/dev/null &
+    fi
+  fi
+done
+wait
+
+tmux display "Theme: $mode" 2>/dev/null || true

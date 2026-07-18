@@ -1,0 +1,22 @@
+command_timeout = 1000
+add_newline = true
+
+format = """
+$nix_shell\
+$directory\
+$git_state\
+$git_branch\
+$git_status\
+$cmd_duration\
+$line_break\
+$character"""
+
+[character]
+success_symbol = "[❯](purple)"
+error_symbol = "[❯](red)"
+vimcmd_symbol = "[❮](green)"
+
+[nix_shell]
+symbol = "❄ "
+style = "bold green"
+format = "[$symbol]($style) "

@@ -1,0 +1,26 @@
+.claude
+.luarc.json
+.undodir
+bin/*.txt
+git/allowed_signers
+lazy-lock.json
+nvim/session.vim
+private_aliases
+tmux/plugins
+
+# never commit local junk or secrets
+.DS_Store
+.env
+*.log
+*.key
+*.crt
+*.pem
+/artifacts
+
+# local-only tools, not published here
+bin/ask
+bin/ask-context.sh
+bin/ask-fan
+bin/claude-worktree.sh
+bin/clone-for-worktree.sh
+bin/render-stream.sh

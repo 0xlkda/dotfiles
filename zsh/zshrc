@@ -1,0 +1,36 @@
+# pre-flight
+unalias -a
+alias reload="exec zsh -l"   # fresh login shell — re-runs zprofile, zshenv, zshrc in the right order
+alias rl=reload
+
+# Source modular config
+source ~/code/dotfiles/zsh/conf.d/options.zsh
+source ~/code/dotfiles/zsh/conf.d/keybindings.zsh
+source ~/code/dotfiles/zsh/conf.d/aliases.zsh
+source ~/code/dotfiles/zsh/conf.d/git.zsh
+source ~/code/dotfiles/zsh/conf.d/macos.zsh
+# machine-local, gitignored — may not exist on a fresh clone
+[[ -f ~/code/dotfiles/zsh/private_aliases ]] && source ~/code/dotfiles/zsh/private_aliases
+
+# Completions
+# fpath must include our functions dir *before* compinit, and .zshrc runs for
+# every interactive shell (unlike .zprofile, which is login-shell only).
+fpath=("$HOME/code/dotfiles/zsh/functions" $fpath)
+zstyle ':completion:*' completer _expand _complete _ignored _approximate
+zstyle ':completion:*' list-suffixes true
+zstyle :compinstall filename ~/code/dotfiles/zsh/zshrc
+autoload -Uz compinit
+compinit
+
+# tabtab (npm completion)
+[[ -f ~/.config/tabtab/zsh/__tabtab.zsh ]] && . ~/.config/tabtab/zsh/__tabtab.zsh || true
+
+# Tools
+eval "$(starship init zsh)"
+eval "$(direnv hook zsh)"
+# op completion is provided by the vendored zsh/functions/_op (autoloaded via
+# fpath), so we don't spawn `op completion zsh` on every startup. Refresh it with:
+#   op completion zsh > ~/code/dotfiles/zsh/functions/_op
+[[ -f ~/.config/op/plugins.sh ]] && source ~/.config/op/plugins.sh
+
+export LESS="-R --mouse"

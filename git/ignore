@@ -1,0 +1,19 @@
+# Folder view configuration files
+.DS_Store
+
+# Application specific files
+node_modules
+.vscode
+
+# build
+build
+dist
+
+# cache
+.cache
+
+# typescript buildinfo
+.tsbuildinfo
+
+# logs
+*.log
