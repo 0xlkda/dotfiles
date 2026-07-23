@@ -128,4 +128,10 @@ alias gla='git log --oneline --graph --all -20'
 alias gls='git log --stat -5'
 alias glp='git log -p'
 
-wip() { gac && gc "WIP: $*" --no-verify }
+wip() {
+  gac || return
+  local message="$*"
+  local files=("${(@f)$(git diff --staged --name-only)}")
+  [[ -n "$message" ]] || message="${(j:, :)files}"
+  gc "WIP: $message" --no-verify
+}
